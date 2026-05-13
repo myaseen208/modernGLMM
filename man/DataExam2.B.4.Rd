@@ -3,7 +3,7 @@
 \docType{data}
 \name{DataExam2.B.4}
 \alias{DataExam2.B.4}
-\title{Data for Example 2.B.4 from Generalized Linear Mixed Models: Modern Concepts, Methods and Applications by Walter W. Stroup (p-54)}
+\title{Data for Example 2.B.4 from Generalized Linear Mixed Models: Modern Concepts, Methods and Applications by Stroup, Ptukhina, and Garai (2024, 2nd ed.)}
 \format{
 A \code{data.frame} with 6 rows and 4 variables.
 }
@@ -17,7 +17,7 @@ Exam2.B.4 is used to illustrate one way treatment design with Binomial observati
 \itemize{
        \item obs number of observations
        \item trt three treatments with class factor
-       \item Nij  number of bernouli trials on each individual
+       \item Nij  number of Bernoulli trials on each individual
        \item y  number of successes on each individual
        }
 }
@@ -26,12 +26,9 @@ data(DataExam2.B.4)
 }
 \references{
 \enumerate{
-\item Stroup, W. W. (2012).\emph{Generalized linear mixed models: modern concepts, methods and applications}.
-             CRC press.
+\item Stroup, W. W., Ptukhina, M., and Garai, S. (2024).\emph{Generalized linear mixed models: modern concepts, methods and applications}.
+             CRC Press.
  }
-}
-\seealso{
-\code{\link{Exam2.B.4}}
 }
 \author{
 \enumerate{

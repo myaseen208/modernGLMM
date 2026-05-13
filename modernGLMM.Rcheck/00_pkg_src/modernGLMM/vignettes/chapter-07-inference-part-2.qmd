@@ -1,0 +1,100 @@
+---
+title: "Chapter 7: Inference, Part II"
+subtitle: "Fixed-Effects Inference in Linear Mixed Models"
+author: "Muhammad Yaseen"
+date: today
+vignette: >
+  %\VignetteIndexEntry{Chapter 7: Inference, Part II}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    theme: [cosmo, theme.scss]
+    df-print: kable
+    fig-width: 7
+    fig-height: 5
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+```{r}
+#| label: setup
+library(modernGLMM)
+library(emmeans)
+library(car)
+```
+
+## Overview
+
+Chapter 7 covers fixed-effects inference: constructing estimable functions,
+computing contrasts, and performing multiple comparisons in (G)LMMs.
+
+Key topics:
+
+- **Estimability**: not all linear combinations of $\boldsymbol{\beta}$ can be
+  estimated; `emmeans` handles this transparently.
+- **Contrasts**: custom linear combinations via `emmeans::contrast()`.
+- **Multiple comparisons**: Tukey, Bonferroni, Scheffé, and FDR adjustments.
+- **Interaction dissection**: `emmeans::joint_tests()` for simple effects.
+
+## Treatment Structure Example (DataSet8.1)
+
+The 2×3 factorial from Chapter 8 is used here to illustrate contrast coding.
+
+```{r}
+data(DataSet8.1)
+DataSet8.1$a <- factor(DataSet8.1$a)
+DataSet8.1$b <- factor(DataSet8.1$b)
+
+fit <- stats::lm(y ~ a * b, data = DataSet8.1)
+```
+
+### Estimated marginal means
+
+```{r}
+emm <- emmeans::emmeans(fit, ~ a * b)
+print(emm)
+```
+
+### All pairwise comparisons within each level of `a`
+
+```{r}
+pairs(
+  emmeans::emmeans(fit, ~ b | a),
+  adjust = "tukey"
+)
+```
+
+### Simple effects (ANOVA for b within each level of a)
+
+```{r}
+emmeans::joint_tests(fit, by = "a")
+```
+
+### Custom contrasts
+
+```{r}
+emmeans::contrast(emm, list(
+  "a0: b0 vs b1" = c(1, -1, 0, 0, 0, 0),
+  "a1: b0 vs b1" = c(0, 0, 0, 1, -1, 0)
+))
+```
+
+## Key Takeaways
+
+- `emmeans::emmeans()` computes estimable marginal means automatically.
+- `emmeans::contrast()` accepts named lists of contrast vectors.
+- `emmeans::joint_tests()` provides F-tests for each term, optionally `by`
+  a conditioning variable (equivalent to SAS `SLICE`).
+- Multiplicity adjustment (`adjust = "tukey"`, `"bonferroni"`, `"fdr"`) is
+  passed as an argument to `pairs()` or `contrast()`.
+
+## References
+
+Stroup, W. W., Ptukhina, M., and Garai, S. (2024). *Generalized Linear Mixed
+Models: Modern Concepts, Methods and Applications (2nd ed.)*. CRC Press.

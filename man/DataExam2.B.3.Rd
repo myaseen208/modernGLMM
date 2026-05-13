@@ -3,7 +3,7 @@
 \docType{data}
 \name{DataExam2.B.3}
 \alias{DataExam2.B.3}
-\title{Data for Example 2.B.3 from Generalized Linear Mixed Models: Modern Concepts, Methods and Applications by Walter W. Stroup (p-55)}
+\title{Data for Example 2.B.3 from Generalized Linear Mixed Models: Modern Concepts, Methods and Applications by Stroup, Ptukhina, and Garai (2024, 2nd ed.)}
 \format{
 A \code{data.frame} with 6 rows and 2 variables.
 }
@@ -24,12 +24,9 @@ data(DataExam2.B.3)
 }
 \references{
 \enumerate{
-\item Stroup, W. W. (2012).\emph{Generalized linear mixed models: modern concepts, methods and applications}.
-             CRC press.
+\item Stroup, W. W., Ptukhina, M., and Garai, S. (2024).\emph{Generalized linear mixed models: modern concepts, methods and applications}.
+             CRC Press.
  }
-}
-\seealso{
-\code{\link{Exam2.B.3}}
 }
 \author{
 \enumerate{

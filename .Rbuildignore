@@ -3,7 +3,15 @@
 ^packrat/
 ^\.Rprofile$
 ^cran-comments\.md$
-^README.Rmd$
-^_pkgdown.yml$
+^README\.Rmd$
+^_pkgdown\.yml$
 ^docs$
 ^CRAN-SUBMISSION$
+^\.Rhistory$
+^vignettes/.*_files$
+^vignettes/\.quarto$
+^vignettes/.*\.html$
+^vignettes/.*_cache$
+^README[.]html$
+^inst/doc/.*_files$
+^data-raw$

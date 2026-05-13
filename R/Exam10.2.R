@@ -1,0 +1,41 @@
+#' @title Example 10.2 from Generalized Linear Mixed Models: Modern Concepts, Methods and Applications by Stroup, Ptukhina, and Garai (2024, 2nd ed.)
+#' @name   Exam10.2
+#' @description Exam10.2 Two-way nested random effects model and BLUP estimation
+#' @author \enumerate{
+#'          \item  Muhammad Yaseen (\email{myaseen208@@gmail.com})
+#'          \item Adeela Munawar (\email{adeela.uaf@@gmail.com})
+#'          }
+#' @references \enumerate{
+#' \item Stroup, W. W., Ptukhina, M., and Garai, S. (2024).
+#'      \emph{Generalized Linear Mixed Models: Modern Concepts, Methods and Applications (2nd ed.)}.
+#'        CRC Press.
+#'  }
+#'
+#' @seealso
+#'    \code{\link{DataSet10.2}}
+#'
+#' @import lmerTest
+#'
+#' @examples
+#'
+#' data(DataSet10.2)
+#' DataSet10.2$a <- factor(x = DataSet10.2$a)
+#' DataSet10.2$b <- factor(x = DataSet10.2$b)
+#'
+#' ## Random effects nested model (b nested within a)
+#' Exam10.2lmer <- lmerTest::lmer(y ~ 1 + (1 | a / b), data = DataSet10.2)
+#' summary(Exam10.2lmer)
+#'
+#' ## Fixed effects nested model (for comparison)
+#' Exam10.2lm <- stats::lm(y ~ a + b %in% a, data = DataSet10.2)
+#' summary(Exam10.2lm)
+#'
+#' ## Overall mean — narrow inference
+#' emmeans::emmeans(Exam10.2lm, specs = ~1)
+#'
+#' ## BLUP Estimates for each level of a
+#' blup_coef <- unlist(lme4::ranef(Exam10.2lmer)$a)
+#' BLUPa <- sapply(seq_along(blup_coef), \(i) mean(DataSet10.2$y) + blup_coef[i])
+#' BLUPa
+#'
+NULL

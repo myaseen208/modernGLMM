@@ -1,0 +1,176 @@
+---
+title: "Chapter 8: Treatment and Explanatory Variable Structure"
+subtitle: "Factorial Designs, Interaction Models, and Response Surface Methods"
+author: "Muhammad Yaseen"
+date: last-modified
+vignette: >
+  %\VignetteIndexEntry{Chapter 8: Treatment and Explanatory Variable Structure}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    theme: cosmo
+    df-print: kable
+    fig-width: 7
+    fig-height: 5
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+```{r}
+#| label: setup
+library(modernGLMM)
+library(lme4)
+library(lmerTest)
+library(emmeans)
+library(ggplot2)
+```
+
+## Overview
+
+Chapter 8 covers treatment and regression structures for GLMMs:
+
+- **Factorial designs** with qualitative factors
+- **Analysis of covariance** (ANCOVA)
+- **Response surface methodology** (RSM)
+- **Nested and crossed** factor structures
+
+## Example 8.1 — Two-Way Factorial (All Qualitative)
+
+The two-way factorial model:
+
+$$y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha\beta)_{ij} + \varepsilon_{ijk}$$
+
+```{r}
+data(DataSet8.1)
+DataSet8.1$a <- factor(DataSet8.1$a)
+DataSet8.1$b <- factor(DataSet8.1$b)
+str(DataSet8.1)
+```
+
+```{r}
+Exam8.1.lm <- stats::lm(y ~ a * b, data = DataSet8.1)
+summary(Exam8.1.lm)
+anova(Exam8.1.lm)
+```
+
+```{r}
+emm8.1 <- emmeans::emmeans(Exam8.1.lm, ~ a * b)
+print(emm8.1)
+```
+
+```{r}
+## Simple effects: b within each level of a
+emmeans::contrast(
+  emmeans::emmeans(Exam8.1.lm, ~ b | a),
+  method = "pairwise", adjust = "tukey"
+)
+```
+
+```{r}
+#| label: fig-8-1
+#| fig-cap: "Interaction plot: Factor A × Factor B"
+emmeans::emmip(Exam8.1.lm, a ~ b, CIs = TRUE) +
+  theme_bw() +
+  labs(title = "Chapter 8: A × B Interaction")
+```
+
+## Example 8.2 — ANCOVA
+
+Analysis of covariance with treatment and continuous covariate $x$:
+
+$$y_{ij} = \mu + \tau_i + \beta x_{ij} + \varepsilon_{ij}$$
+
+```{r}
+data(DataSet8.2)
+DataSet8.2$trt <- factor(DataSet8.2$trt)
+str(DataSet8.2)
+```
+
+```{r}
+Exam8.2.lm <- stats::lm(y ~ trt + x, data = DataSet8.2)
+summary(Exam8.2.lm)
+anova(Exam8.2.lm)
+```
+
+```{r}
+## Adjusted means (covariate at its mean)
+emm8.2 <- emmeans::emmeans(Exam8.2.lm, ~ trt,
+                            at = list(x = mean(DataSet8.2$x)))
+print(emm8.2)
+emmeans::contrast(emm8.2, method = "pairwise")
+```
+
+## Example 8.3 — Heterogeneous Slopes ANCOVA
+
+```{r}
+data(DataSet8.3)
+DataSet8.3$trt <- factor(DataSet8.3$trt)
+
+Exam8.3.lm <- stats::lm(y ~ trt * x, data = DataSet8.3)
+summary(Exam8.3.lm)
+anova(Exam8.3.lm)
+```
+
+```{r}
+#| label: fig-8-3
+#| fig-cap: "Heterogeneous slopes: y vs x by treatment"
+ggplot(DataSet8.3, aes(x = x, y = y, colour = trt, group = trt)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(title = "Chapter 8: ANCOVA — Heterogeneous Slopes",
+       x = "Covariate x", y = "Response y") +
+  theme_bw()
+```
+
+## Example 8.7 — Response Surface
+
+```{r}
+data(DataSet8.7)
+DataSet8.7$a <- factor(DataSet8.7$a)
+str(DataSet8.7)
+```
+
+```{r}
+## Quadratic response surface within groups
+Exam8.7.lm <- stats::lm(y ~ a + x + I(x^2) + a:x, data = DataSet8.7)
+summary(Exam8.7.lm)
+```
+
+```{r}
+#| label: fig-8-7
+#| fig-cap: "Response surface: y vs x by group a"
+xseq <- seq(min(DataSet8.7$x), max(DataSet8.7$x), length.out = 50L)
+pred_df <- do.call(rbind, lapply(levels(DataSet8.7$a), function(ai) {
+  nd <- data.frame(a = factor(ai, levels = levels(DataSet8.7$a)), x = xseq)
+  nd$y_hat <- stats::predict(Exam8.7.lm, newdata = nd)
+  nd
+}))
+
+ggplot(DataSet8.7, aes(x = x, y = y, colour = a)) +
+  geom_point(alpha = 0.5) +
+  geom_line(data = pred_df, aes(x = x, y = y_hat, colour = a),
+            linewidth = 1) +
+  labs(title = "Chapter 8: Response surface by group",
+       x = "x", y = "y", colour = "Group") +
+  theme_bw()
+```
+
+## Key Takeaways
+
+- Factorial interactions require **simple effects** comparisons
+  (comparing one factor at each level of the other).
+- ANCOVA requires checking the **homogeneity of slopes** assumption.
+- `emmeans` handles adjusted means, custom contrasts, and
+  interaction decomposition seamlessly.
+- Response surface models use polynomial terms; for GLMMs, the
+  polynomial is on the linear predictor scale.
+
+## References
+
+Stroup, W. W., Ptukhina, M., and Garai, S. (2024). *Generalized Linear Mixed Models: Modern Concepts, Methods and Applications* (2nd ed.). CRC Press.

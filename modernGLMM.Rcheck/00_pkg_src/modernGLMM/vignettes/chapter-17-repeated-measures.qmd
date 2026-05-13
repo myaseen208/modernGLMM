@@ -1,0 +1,185 @@
+---
+title: "Chapter 17: Correlated Errors, Part I: Repeated Measures"
+subtitle: "Covariance Structures for Correlated Observations"
+author: "Muhammad Yaseen"
+date: last-modified
+vignette: >
+  %\VignetteIndexEntry{Chapter 17: Correlated Errors, Part I: Repeated Measures}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    theme: cosmo
+    df-print: kable
+    fig-width: 8
+    fig-height: 5
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+```{r}
+#| label: setup
+library(modernGLMM)
+library(nlme)
+library(emmeans)
+library(ggplot2)
+```
+
+## Overview
+
+Chapter 17 addresses **repeated measures designs** where the same subject
+is observed multiple times.  Key challenges:
+
+- Observations on the same subject are **correlated**
+- The correlation structure needs to be specified or estimated
+- Standard ANOVA assuming independence is incorrect
+
+### Common Covariance Structures
+
+| Name | Symbol | Description |
+|---|---|---|
+| Compound Symmetric | CS | Equal correlation $\rho$ between all pairs |
+| AR(1) | AR1 | Correlation $\rho^{\|t-t'\|}$ decays with lag |
+| ARH(1) | ARH1 | AR(1) with heterogeneous variances per time |
+| SP(POW) | SPPOW | Power model for unequally-spaced times |
+
+## Example 17.1 — Crossover with ARH(1) (Section 17.3.1)
+
+`DataSet17.1`: 41 subjects, 2-treatment crossover design, 6 equally-spaced
+time points per period (2 periods), plus a baseline covariate.
+492 observations total.
+
+```{r}
+data(DataSet17.1)
+str(DataSet17.1)
+cat("Subjects per sequence:\n")
+print(table(unique(DataSet17.1[, c("id", "sequence")])$sequence))
+```
+
+```{r}
+#| label: fig-17-1-spaghetti
+#| fig-cap: "Individual trajectories by treatment and period"
+ggplot(DataSet17.1,
+       aes(x = t, y = y, group = id, colour = trt)) +
+  geom_line(alpha = 0.4) +
+  stat_summary(aes(group = trt), fun = mean, geom = "line",
+               linewidth = 1.5) +
+  facet_wrap(~ period, labeller = label_both) +
+  labs(title = "Chapter 17: Subject trajectories by treatment and period",
+       x = "Time within period", y = "Response",
+       colour = "Treatment") +
+  theme_bw()
+```
+
+### Covariance model comparison: CS, AR(1), ARH(1)
+
+```{r}
+## CS: compound symmetry via random subject intercept
+fit_cs <- nlme::lme(
+  fixed   = y ~ period + trt / t + baseline,
+  random  = ~ 1 | id,
+  data    = DataSet17.1,
+  method  = "REML"
+)
+
+## AR(1)
+fit_ar1 <- nlme::lme(
+  fixed       = y ~ period + trt / t + baseline,
+  random      = list(id = nlme::pdDiag(~ t)),
+  correlation = nlme::corAR1(form = ~ t | id / period),
+  data        = DataSet17.1,
+  method      = "REML"
+)
+
+## ARH(1): heterogeneous variances per time + AR(1)
+fit_arh1 <- nlme::lme(
+  fixed       = y ~ period + trt / t + baseline,
+  random      = list(id = nlme::pdDiag(~ t)),
+  correlation = nlme::corAR1(form = ~ t | id / period),
+  weights     = nlme::varIdent(form = ~ 1 | t),
+  data        = DataSet17.1,
+  method      = "REML"
+)
+
+stats::AIC(fit_cs, fit_ar1, fit_arh1)
+```
+
+### Treatment contrasts (equal intercepts, equal slopes)
+
+```{r}
+emm_int <- emmeans::emmeans(fit_arh1, ~ trt, at = list(t = 0))
+emmeans::contrast(emm_int, method = "pairwise")
+
+emm_slp <- emmeans::emtrends(fit_arh1, ~ trt, var = "t")
+emmeans::contrast(emm_slp, method = "pairwise")
+```
+
+## Example 17.2 — Sparse Longitudinal with SP(POW) (Section 17.3.2)
+
+`DataSet17.2`: 41 subjects (17 on trt=1, 24 on trt=2) observed at up to
+9 unequally-spaced times (0, 1, 2, 4, 8, 16, 32, 64, 128).
+Only 101 of 369 possible observations are present (sparse).
+
+```{r}
+data(DataSet17.2)
+str(DataSet17.2)
+cat("Observations per treatment:\n")
+print(table(DataSet17.2$trt))
+cat("Unique times:", sort(unique(DataSet17.2$time)), "\n")
+```
+
+```{r}
+#| label: fig-17-2-profiles
+#| fig-cap: "Sparse longitudinal profiles by treatment"
+ggplot(DataSet17.2,
+       aes(x = time, y = y, group = subject, colour = trt)) +
+  geom_line(alpha = 0.4) +
+  scale_x_continuous(trans = "log1p",
+                     breaks = c(0, 1, 2, 4, 8, 16, 32, 64, 128)) +
+  labs(title = "Chapter 17: Sparse profiles by treatment (log1p time scale)",
+       x = "Time (log1p scale)", y = "Response",
+       colour = "Treatment") +
+  theme_bw()
+```
+
+### SP(POW) model: spatial-power covariance for unequal times
+
+```{r}
+## SP(POW) approximated via corExp (exponential = continuous AR(1))
+fit_sppow <- nlme::lme(
+  fixed       = y ~ trt + time + trt:time,
+  random      = ~ 1 + time | subject,
+  correlation = nlme::corExp(form = ~ time | subject, nugget = FALSE),
+  data        = DataSet17.2,
+  method      = "REML",
+  control     = nlme::lmeControl(opt = "optim", maxIter = 200)
+)
+summary(fit_sppow)
+```
+
+```{r}
+emm_trt <- emmeans::emmeans(fit_sppow, ~ trt,
+                              at = list(time = c(0, 1, 4, 16, 64)))
+print(emm_trt)
+```
+
+## Key Takeaways
+
+- Repeated measures require a covariance model; CS is often adequate
+  but ARH(1) better represents decaying and heterogeneous correlation.
+- SP(POW) generalises AR(1) to unequally-spaced and incomplete time grids.
+- Use `AIC` to select among covariance structures (fit with REML for
+  final model, ML for covariance comparison if needed).
+- `nlme` offers greater flexibility for covariance structures than `lme4`.
+
+## References
+
+Stroup, W. W., Ptukhina, M., and Garai, S. (2024). *Generalized Linear Mixed Models: Modern Concepts, Methods and Applications* (2nd ed.). CRC Press.
+
+Verbeke, G., & Molenberghs, G. (2000).
+*Linear Mixed Models for Longitudinal Data*. Springer.

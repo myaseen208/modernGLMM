@@ -1,0 +1,57 @@
+---
+title: "Verification and Reproducibility"
+author: "Muhammad Yaseen"
+date: last-modified
+vignette: >
+  %\VignetteIndexEntry{Verification and Reproducibility}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    number-sections: true
+    theme: cosmo
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+```{r}
+read_artifact <- function(path) {
+  candidates <- c(
+    file.path("inst", "verification", path),
+    file.path("..", "inst", "verification", path)
+  )
+  full_path <- candidates[file.exists(candidates)][1]
+  if (length(full_path) == 0L || !file.exists(full_path)) {
+    return(paste0("Artifact not found: `inst/verification/", path, "`."))
+  }
+  paste(readLines(full_path, warn = FALSE), collapse = "\n")
+}
+```
+
+## Current Scope
+
+```{r, results='asis'}
+cat(read_artifact("chapter-summary-table.md"))
+```
+
+## Mismatch Log
+
+```{r, results='asis'}
+cat(read_artifact("mismatch-report.md"))
+```
+
+## Chapter 11 Taxonomy
+
+```{r, results='asis'}
+cat(read_artifact("ch11-mismatch-taxonomy.md"))
+```
+
+## Remaining Work
+
+```{r, results='asis'}
+cat(read_artifact("remaining-verification-work.md"))
+```

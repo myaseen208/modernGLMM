@@ -1,4 +1,4 @@
-#' @title Data for Example 2.B.3 from Generalized Linear Mixed Models: Modern Concepts, Methods and Applications by Walter W. Stroup (p-55)
+#' @title Data for Example 2.B.3 from Generalized Linear Mixed Models: Modern Concepts, Methods and Applications by Stroup, Ptukhina, and Garai (2024, 2nd ed.)
 #' @name   DataExam2.B.3
 #' @docType data
 #' @keywords datasets
@@ -15,11 +15,9 @@
 #'          \item Adeela Munawar (\email{adeela.uaf@@gmail.com})
 #'          }
 #' @references \enumerate{
-#' \item Stroup, W. W. (2012).\emph{Generalized linear mixed models: modern concepts, methods and applications}.
-#'              CRC press.
+#' \item Stroup, W. W., Ptukhina, M., and Garai, S. (2024).\emph{Generalized linear mixed models: modern concepts, methods and applications}.
+#'              CRC Press.
 #'  }
-#' @seealso
-#'    \code{\link{Exam2.B.3}}
 #' @examples
 #' data(DataExam2.B.3)
 NULL

@@ -1,0 +1,171 @@
+---
+title: "Chapter 9: Multi-Level Models"
+subtitle: "Nested Factorial, Split-Plot, and Blocked Designs"
+author: "Muhammad Yaseen"
+date: last-modified
+vignette: >
+  %\VignetteIndexEntry{Chapter 9: Multi-Level Models}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    theme: cosmo
+    df-print: kable
+    fig-width: 7
+    fig-height: 5
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+```{r}
+#| label: setup
+library(modernGLMM)
+library(lme4)
+library(lmerTest)
+library(emmeans)
+```
+
+## Overview
+
+Chapter 9 extends the GLMM framework to **binary and binomial responses**.
+A binary observation $y_i \in \{0, 1\}$ follows a Bernoulli distribution;
+a binomial aggregate $y_i \sim \text{Binomial}(n_i, p_i)$ counts successes
+among $n_i$ trials.
+
+The canonical link for both is the **logit**:
+
+$$\eta_i = \text{logit}(p_i) = \log\frac{p_i}{1-p_i} = \mathbf{x}_i^\top\boldsymbol{\beta} + \mathbf{z}_i^\top\mathbf{b}$$
+
+with $\mathbf{b} \sim \mathcal{N}(\mathbf{0}, \mathbf{G})$.
+
+## Example 9.1 — Nested Factorial Structure
+
+Dataset: 3 sets, 2 treatments per set, arranged in blocks nested within sets.
+
+```{r}
+data(DataSet9.1)
+DataSet9.1$block <- factor(DataSet9.1$block)
+DataSet9.1$set   <- factor(DataSet9.1$set)
+DataSet9.1$trt   <- factor(DataSet9.1$trt)
+str(DataSet9.1)
+```
+
+### Fit the LMM (Gaussian approximation)
+
+```{r}
+Exam9.1Lmer <- lmerTest::lmer(
+  y ~ set + set:trt + (1 | set:block),
+  data    = DataSet9.1,
+  control = lme4::lmerControl(optimizer = "bobyqa")
+)
+summary(Exam9.1Lmer)
+stats::anova(Exam9.1Lmer, ddf = "Kenward-Roger")
+```
+
+### Estimated Marginal Means
+
+```{r}
+emm9.1 <- emmeans::emmeans(Exam9.1Lmer, ~ trt | set)
+print(emm9.1)
+
+emmeans::contrast(emm9.1, method = "pairwise", by = "set")
+```
+
+### Interpretation
+
+```{r}
+if (requireNamespace("report", quietly = TRUE)) {
+  report::report(Exam9.1Lmer)
+}
+```
+
+## Example 9.2 — Split-Plot with Row-Column Structure
+
+```{r}
+data(DataSet9.2)
+DataSet9.2$block <- factor(DataSet9.2$block)
+DataSet9.2$row   <- factor(DataSet9.2$row)
+DataSet9.2$col   <- factor(DataSet9.2$col)
+DataSet9.2$a     <- factor(DataSet9.2$a)
+DataSet9.2$b     <- factor(DataSet9.2$b)
+str(DataSet9.2)
+```
+
+```{r}
+Exam9.2Lmer <- lmerTest::lmer(
+  y ~ a * b + (1 | block) + (1 | block:a) + (1 | block:b),
+  data    = DataSet9.2,
+  control = lme4::lmerControl(optimizer = "bobyqa")
+)
+summary(Exam9.2Lmer)
+stats::anova(Exam9.2Lmer, ddf = "Kenward-Roger")
+```
+
+```{r}
+emm9.2 <- emmeans::emmeans(Exam9.2Lmer, ~ a * b)
+print(emm9.2)
+emmeans::contrast(emm9.2, method = "pairwise",
+                  by = "a", adjust = "tukey")
+```
+
+## Example 9.3 — Factorial with Blocks
+
+```{r}
+data(DataSet9.3)
+DataSet9.3$block <- factor(DataSet9.3$block)
+DataSet9.3$aa    <- factor(DataSet9.3$a)
+DataSet9.3$bb    <- factor(DataSet9.3$b)
+DataSet9.3$cc    <- factor(DataSet9.3$c)
+DataSet9.3$a2    <- DataSet9.3$a^2
+DataSet9.3$b2    <- DataSet9.3$b^2
+DataSet9.3$c2    <- DataSet9.3$c^2
+DataSet9.3$ab    <- DataSet9.3$a * DataSet9.3$b
+DataSet9.3$ac    <- DataSet9.3$a * DataSet9.3$c
+DataSet9.3$bc    <- DataSet9.3$b * DataSet9.3$c
+str(DataSet9.3)
+```
+
+```{r}
+Exam9.3Lmer <- lmerTest::lmer(
+  y ~ a + a2 + b + b2 + c + bc + (1 | block),
+  data    = DataSet9.3,
+  control = lme4::lmerControl(optimizer = "bobyqa")
+)
+summary(Exam9.3Lmer)
+stats::anova(Exam9.3Lmer, ddf = "Kenward-Roger", type = 1)
+```
+
+## Overdispersion Diagnostics
+
+```{r}
+if (requireNamespace("performance", quietly = TRUE)) {
+  tryCatch(
+    performance::check_model(Exam9.1Lmer),
+    error = function(e) message("check_model() error: ", conditionMessage(e))
+  )
+}
+```
+
+```{r}
+if (requireNamespace("DHARMa", quietly = TRUE)) {
+  sim_r <- DHARMa::simulateResiduals(Exam9.1Lmer, plot = TRUE)
+}
+```
+
+## Key Takeaways
+
+- **Nested and split-plot structures** require matching random effects
+  specifications to the design structure.
+- The `(1 | set:block)` term captures blocks nested within sets without adding an unprinted random set variance component.
+- `emmeans` provides estimated marginal means with proper standard errors
+  that account for the random effects structure.
+- DHARMa diagnostics help identify departures from model assumptions.
+
+## References
+
+Stroup, W. W., Ptukhina, M., and Garai, S. (2024). *Generalized Linear Mixed Models: Modern Concepts, Methods and Applications* (2nd ed.). CRC Press.

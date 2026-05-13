@@ -1,0 +1,151 @@
+---
+title: "Chapter 6: Inference, Part I"
+subtitle: "The Unified Framework for Generalised Linear Mixed Models"
+author: "Muhammad Yaseen"
+date: last-modified
+vignette: >
+  %\VignetteIndexEntry{Chapter 6: Inference, Part I}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    theme: cosmo
+    df-print: kable
+    fig-width: 7
+    fig-height: 5
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+```{r}
+#| label: setup
+library(modernGLMM)
+library(lme4)
+library(emmeans)
+library(ggplot2)
+```
+
+## Overview
+
+Chapter 6 unifies the models developed in earlier chapters under the
+**Generalised Linear Mixed Model (GLMM)** framework.
+
+The GLMM has three components:
+
+1. **Random component**: $Y_i \mid \mathbf{b} \sim$ exponential family
+   with mean $\mu_i$
+2. **Systematic component** (linear predictor):
+   $\eta_i = \mathbf{x}_i^\top\boldsymbol{\beta} + \mathbf{z}_i^\top\mathbf{b}$
+3. **Link function**: $g(\mu_i) = \eta_i$
+
+### Common link functions
+
+| Distribution | Link | $g(\mu)$ |
+|---|---|---|
+| Gaussian | Identity | $\mu$ |
+| Binomial | Logit | $\log[\mu/(1-\mu)]$ |
+| Poisson | Log | $\log(\mu)$ |
+| Gamma | Log | $\log(\mu)$ |
+| Beta | Logit | $\log[\mu/(1-\mu)]$ |
+
+### Random effects structure
+
+$$\mathbf{b} \sim \mathcal{N}(\mathbf{0}, \mathbf{G}(\boldsymbol{\theta}))$$
+
+The variance component vector $\boldsymbol{\theta}$ is estimated by
+REML (for Gaussian) or by maximum likelihood / Laplace approximation
+(for non-Gaussian families).
+
+## The lme4 Formula Language
+
+The GLMM formula in `lme4` follows a compact syntax:
+
+```r
+response ~ fixed_effects + (random_slope | grouping_factor)
+```
+
+| Formula part | Meaning |
+|---|---|
+| `(1 \| g)` | Random intercept by group $g$ |
+| `(x \| g)` | Random intercept + slope for $x$ by $g$ |
+| `(0 + x \| g)` | Random slope only (no intercept) |
+| `(1 \| g/h)` | Random intercept, $h$ nested in $g$ |
+
+## Illustration: Poisson GLMM
+
+The following illustrates a Poisson GLMM using the blocked count data
+from Chapter 11 (`DataSet11.3`):
+
+```{r}
+data(DataSet11.3)
+DataSet11.3$block <- factor(DataSet11.3$block)
+DataSet11.3$trt   <- factor(DataSet11.3$trt)
+
+## Fit Poisson GLMM
+fit_pois <- lme4::glmer(
+  count ~ trt + (1 | block),
+  family  = stats::poisson(link = "log"),
+  data    = DataSet11.3,
+  control = lme4::glmerControl(optimizer = "bobyqa")
+)
+summary(fit_pois)
+```
+
+```{r}
+## Overdispersion check
+if (requireNamespace("performance", quietly = TRUE)) {
+  performance::check_overdispersion(fit_pois)
+}
+```
+
+```{r}
+## DHARMa diagnostics
+if (requireNamespace("DHARMa", quietly = TRUE)) {
+  DHARMa::simulateResiduals(fit_pois, plot = TRUE)
+}
+```
+
+```{r}
+emm6 <- emmeans::emmeans(fit_pois, ~ trt, type = "response")
+print(emm6)
+```
+
+```{r}
+if (requireNamespace("report", quietly = TRUE)) {
+  report::report(fit_pois)
+}
+```
+
+## The Modern GLMM Ecosystem
+
+| Package | Purpose |
+|---|---|
+| `lme4` | Core LMM/GLMM fitting |
+| `lmerTest` | Satterthwaite df for LMMs |
+| `glmmTMB` | Flexible GLMMs (NB, beta, zero-inflated, etc.) |
+| `emmeans` | Marginal means and contrasts |
+| `DHARMa` | Simulation-based residual diagnostics |
+| `performance` | ICC, overdispersion, model fit |
+| `parameters` | Tidy parameter tables |
+| `report` | Automatic model interpretation |
+| `broom.mixed` | Tidy outputs |
+
+## Key Takeaways
+
+- The GLMM unifies all models: LM, GLM, LMM, and GLMM are special cases.
+- The choice of link function and distribution is driven by the
+  **data generating process**, not convenience.
+- Modern tools (`DHARMa`, `performance`) provide powerful diagnostics
+  unavailable in the original SAS/PROC GLIMMIX workflow.
+
+## References
+
+Stroup, W. W., Ptukhina, M., and Garai, S. (2024). *Generalized Linear Mixed Models: Modern Concepts, Methods and Applications* (2nd ed.). CRC Press.
+
+Bates, D., Maechler, M., Bolker, B., & Walker, S. (2015). Fitting linear
+mixed-effects models using lme4. *Journal of Statistical Software*, 67(1), 1–48.

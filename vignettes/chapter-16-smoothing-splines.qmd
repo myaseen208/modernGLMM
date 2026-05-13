@@ -1,0 +1,146 @@
+---
+title: "Chapter 16: Smoothing Splines and Additive Models"
+subtitle: "Nonparametric Regression and Penalized Spline Models"
+author: "Muhammad Yaseen"
+date: today
+vignette: >
+  %\VignetteIndexEntry{Chapter 16: Smoothing Splines and Additive Models}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    theme: [cosmo, theme.scss]
+    df-print: kable
+    fig-width: 7
+    fig-height: 5
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+```{r}
+#| label: setup
+library(modernGLMM)
+library(lme4)
+library(lmerTest)
+library(ggplot2)
+library(splines)
+```
+
+## Overview
+
+Chapter 16 uses the **mixed model representation of penalized splines** to
+fit smooth curves. The key insight is that a penalized spline fit can be
+expressed as a LMM:
+
+$$\mathbf{y} = \mathbf{X}\boldsymbol{\beta} + \mathbf{Z}\mathbf{u} + \boldsymbol{\varepsilon}$$
+
+where:
+- $\mathbf{X}\boldsymbol{\beta}$: polynomial fixed effects (trend)
+- $\mathbf{Z}\mathbf{u}$: spline basis random effects ($\mathbf{u} \sim \mathcal{N}(\mathbf{0}, \sigma^2_u\mathbf{I})$)
+
+The ratio $\sigma^2_e / \sigma^2_u$ controls the smoothing penalty.
+
+## Spline Regression Example (DataSet8.7)
+
+DataSet8.7 contains spline regression data from Chapter 8.
+
+```{r}
+data(DataSet8.7)
+DataSet8.7$a <- factor(DataSet8.7$a)
+str(DataSet8.7)
+```
+
+### Truncated power basis spline (mixed model)
+
+```{r}
+# Create knots at quantiles of x
+knots <- quantile(DataSet8.7$x, probs = seq(0.1, 0.9, by = 0.1))
+
+# Truncated power basis
+Z_spline <- outer(DataSet8.7$x, knots, FUN = \(x, k) pmax(x - k, 0)^2)
+colnames(Z_spline) <- paste0("z", seq_len(ncol(Z_spline)))
+
+spline_data <- cbind(DataSet8.7, as.data.frame(Z_spline))
+
+# Fit via lme4 using the mixed model representation
+# Fixed: intercept + linear trend; Random: spline knot effects
+spline_form <- as.formula(paste(
+  "y ~ x + a +",
+  paste(paste0("(0 + ", colnames(Z_spline), " | a)"), collapse = " + ")
+))
+```
+
+### Natural cubic spline via ns()
+
+```{r}
+fit_ns <- stats::lm(y ~ splines::ns(x, df = 6) + a, data = DataSet8.7)
+summary(fit_ns)
+
+pred_data <- DataSet8.7
+pred_data$fitted <- stats::fitted(fit_ns)
+
+ggplot2::ggplot(pred_data, ggplot2::aes(x = x, y = y, colour = a, group = a)) +
+  ggplot2::geom_point(alpha = 0.5) +
+  ggplot2::geom_line(ggplot2::aes(y = fitted), linewidth = 1) +
+  ggplot2::labs(
+    title  = "Natural Cubic Spline Fit",
+    x      = "x",
+    y      = "y",
+    colour = "Group (a)"
+  ) +
+  ggplot2::theme_bw()
+```
+
+### Penalized spline via mgcv
+
+```{r}
+if (requireNamespace("mgcv", quietly = TRUE)) {
+  s <- mgcv::s
+  fit_gam <- mgcv::gam(
+    y ~ a + s(x, by = a, k = 8),
+    data = DataSet8.7,
+    method = "REML"
+  )
+  summary(fit_gam)
+
+  if (requireNamespace("gratia", quietly = TRUE)) {
+    gratia::draw(fit_gam)
+  } else {
+    plot(fit_gam, pages = 1, shade = TRUE)
+  }
+}
+```
+
+### Additive mixed model via gamm4
+
+```{r}
+if (requireNamespace("gamm4", quietly = TRUE)) {
+  s <- mgcv::s
+  fit_gamm4 <- gamm4::gamm4(
+    y ~ a + s(x, by = a, k = 8),
+    random = ~(1 | a),
+    data = DataSet8.7
+  )
+  summary(fit_gamm4$gam)
+  lme4::VarCorr(fit_gamm4$mer)
+}
+```
+
+## Key Takeaways
+
+- Penalized splines are LMMs: fixed polynomial trend + random spline
+  deviations; the smoothing parameter is $\sigma^2_e / \sigma^2_u$.
+- `splines::ns()` in `lm()` gives a natural cubic spline with $df$ knots.
+- `mgcv::gam()` estimates the smoothing penalty by REML.
+- `gamm4::gamm4()` exposes the mixed-model representation when the optional
+  package is available.
+
+## References
+
+Stroup, W. W., Ptukhina, M., and Garai, S. (2024). *Generalized Linear Mixed
+Models: Modern Concepts, Methods and Applications (2nd ed.)*. CRC Press.

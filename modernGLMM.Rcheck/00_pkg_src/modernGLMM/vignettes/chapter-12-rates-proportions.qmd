@@ -1,0 +1,149 @@
+---
+title: "Chapter 12: Rates and Proportions"
+subtitle: "Beta Regression and Binomial GLMMs for Rates"
+author: "Muhammad Yaseen"
+date: last-modified
+vignette: >
+  %\VignetteIndexEntry{Chapter 12: Rates and Proportions}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    theme: cosmo
+    df-print: kable
+    fig-width: 7
+    fig-height: 5
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+```{r}
+#| label: setup
+library(modernGLMM)
+library(lme4)
+library(emmeans)
+library(ggplot2)
+```
+
+## Overview
+
+Chapter 12 addresses responses that are **proportions or rates** — either
+continuous values strictly in $(0, 1)$ (Section 12.6) or binomial counts
+with a fixed denominator (Section 12.3).
+
+Two primary approaches:
+
+1. **Beta GLMM**: models a continuous proportion using the Beta distribution
+   with a logit link; accommodates between-run variability via random effects
+2. **Binomial GLMM**: models the number of successes out of a fixed total
+   with a nested or split-plot random-effect structure
+
+## Example 12.1 — Continuous Proportions: Beta GLMM (Section 12.6.2)
+
+`DataSet12.1`: 2 treatments × 12 runs × 6 dose levels = 144 observations.
+Response is a continuous proportion in $(0, 1)$.
+
+```{r}
+data(DataSet12.1)
+str(DataSet12.1)
+## Mean proportion by treatment and dose
+with(DataSet12.1, tapply(proportion, list(trt, dose), mean))
+```
+
+```{r}
+#| label: fig-12-1-dose
+#| fig-cap: "Dose-response profiles by treatment"
+ggplot(DataSet12.1, aes(x = dose, y = proportion,
+                         colour = trt, group = trt)) +
+  stat_summary(fun = mean, geom = "line", linewidth = 1.2) +
+  stat_summary(fun = mean, geom = "point", size = 3) +
+  labs(title = "Chapter 12: Dose-response by treatment",
+       x = "Dose level", y = "Mean proportion",
+       colour = "Treatment") +
+  theme_bw()
+```
+
+### Beta GLMM via glmmTMB
+
+```{r}
+if (requireNamespace("glmmTMB", quietly = TRUE)) {
+  fit_beta <- glmmTMB::glmmTMB(
+    proportion ~ trt * dose + (1 | run),
+    family  = glmmTMB::beta_family(link = "logit"),
+    data    = DataSet12.1
+  )
+  summary(fit_beta)
+}
+```
+
+```{r}
+if (requireNamespace("glmmTMB", quietly = TRUE)) {
+  emm_beta <- emmeans::emmeans(fit_beta, ~ trt | dose,
+                                at = list(dose = c(0, 5)),
+                                type = "response")
+  print(emm_beta)
+  emmeans::contrast(emm_beta, method = "pairwise")
+}
+```
+
+## Example 12.2 — Binomial Nested Factorial (Section 12.3.2)
+
+`DataSet12.2`: 10 blocks × 6 treatments (factor A with 2 levels, factor B
+with 3 levels nested within A) = 60 observations.
+Response is count of successes `f` out of total `n`.
+
+```{r}
+data(DataSet12.2)
+str(DataSet12.2)
+## Observed proportions by A and B
+with(DataSet12.2, tapply(f / n, list(a, b), mean))
+```
+
+```{r}
+fit_nb <- lme4::glmer(
+  cbind(f, n - f) ~ a / b + (1 + a | block),
+  family  = stats::binomial(link = "logit"),
+  data    = DataSet12.2,
+  control = lme4::glmerControl(optimizer = "bobyqa")
+)
+summary(fit_nb)
+```
+
+```{r}
+if (requireNamespace("car", quietly = TRUE)) {
+  car::Anova(fit_nb, type = "III")
+}
+```
+
+```{r}
+## B(A) means on probability scale
+emm_ba <- emmeans::emmeans(fit_nb, ~ b | a, type = "response")
+print(emm_ba)
+```
+
+## Comparing Approaches
+
+| Approach | Distribution | When to use |
+|---|---|---|
+| Beta GLMM | Beta$(μφ, (1-μ)φ)$ | Continuous proportions in $(0,1)$; run-level random effects |
+| Binomial GLMM | Binomial$(n, π)$ | Count/total with known $n$; factorial or nested designs |
+
+## Key Takeaways
+
+- **Beta GLMM** is the appropriate model for continuous proportions.
+- **Binomial GLMM** is correct when the denominator $n$ is a fixed count.
+- Both models use the logit link, making linear predictors directly
+  comparable.
+- Random effects (run, block) account for over-dispersion and design structure.
+
+## References
+
+Stroup, W. W., Ptukhina, M., and Garai, S. (2024). *Generalized Linear Mixed Models: Modern Concepts, Methods and Applications* (2nd ed.). CRC Press.
+
+Ferrari, S., & Cribari-Neto, F. (2004). Beta regression for modelling
+rates and proportions. *Journal of Applied Statistics*, 31(7), 799–815.

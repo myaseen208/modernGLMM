@@ -1,0 +1,170 @@
+---
+title: "Chapter 2: Design Matters"
+subtitle: "Rationale, Small-Sample Methods, and Two-Sample Comparisons"
+author: "Muhammad Yaseen"
+date: last-modified
+vignette: >
+  %\VignetteIndexEntry{Chapter 2: Design Matters}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    theme: cosmo
+    df-print: kable
+    fig-width: 7
+    fig-height: 5
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+```{r}
+#| label: setup
+library(modernGLMM)
+library(emmeans)
+library(ggplot2)
+```
+
+## Overview
+
+Chapter 2 establishes the inferential framework used throughout the book.
+Key topics include:
+
+- Likelihood-based inference
+- Wald, likelihood ratio, and score tests
+- Small-sample adjustments (Kenward-Roger, Satterthwaite)
+- Two-sample design examples
+
+## Example 2.B.2 — Dose-Response Binomial Data
+
+```{r}
+data(DataExam2.B.2)
+str(DataExam2.B.2)
+knitr::kable(DataExam2.B.2,
+             caption = "Example 2.B.2: Dose-response binomial data")
+```
+
+### Logistic regression
+
+```{r}
+fit_2b2 <- stats::glm(
+  cbind(y, n - y) ~ x,
+  family = stats::binomial(link = "logit"),
+  data   = DataExam2.B.2
+)
+summary(fit_2b2)
+```
+
+```{r}
+if (requireNamespace("parameters", quietly = TRUE)) {
+  parameters::model_parameters(fit_2b2)
+}
+```
+
+```{r}
+if (requireNamespace("report", quietly = TRUE)) {
+  report::report(fit_2b2)
+}
+```
+
+### Predicted probabilities
+
+```{r}
+#| label: fig-2b2-fit
+#| fig-cap: "Fitted logistic curve for Example 2.B.2"
+xnew <- data.frame(x = seq(0, 10, by = 0.1))
+xnew$p_hat <- stats::predict(fit_2b2, newdata = xnew, type = "response")
+
+ggplot() +
+  geom_line(data = xnew, aes(x = x, y = p_hat), colour = "#E41A1C") +
+  geom_point(data = DataExam2.B.2,
+             aes(x = x, y = y / n), size = 2.5) +
+  labs(title = "Example 2.B.2: Logistic dose-response",
+       x = "Dose (x)", y = "Proportion (y/n)") +
+  theme_bw()
+```
+
+## Example 2.B.3 — Three Treatment Comparison (Gaussian)
+
+```{r}
+data(DataExam2.B.3)
+DataExam2.B.3$trt <- factor(DataExam2.B.3$trt)
+str(DataExam2.B.3)
+```
+
+```{r}
+fit_2b3 <- stats::lm(y ~ trt, data = DataExam2.B.3)
+summary(fit_2b3)
+anova(fit_2b3)
+```
+
+```{r}
+emm_2b3 <- emmeans::emmeans(fit_2b3, ~ trt)
+print(emm_2b3)
+emmeans::contrast(emm_2b3, method = "pairwise", adjust = "tukey")
+```
+
+## Example 2.B.4 — Binomial Response, Three Treatments
+
+```{r}
+data(DataExam2.B.4)
+DataExam2.B.4$trt <- factor(DataExam2.B.4$trt)
+str(DataExam2.B.4)
+```
+
+```{r}
+fit_2b4 <- stats::glm(
+  cbind(Yij, Nij - Yij) ~ trt,
+  family = stats::binomial(link = "logit"),
+  data   = DataExam2.B.4
+)
+summary(fit_2b4)
+```
+
+```{r}
+emm_2b4 <- emmeans::emmeans(fit_2b4, ~ trt, type = "response")
+print(emm_2b4)
+emmeans::contrast(emm_2b4, method = "pairwise")
+```
+
+## Example 2.B.7 — Two-Way Factorial
+
+```{r}
+data(DataExam2.B.7)
+DataExam2.B.7$Rep <- factor(DataExam2.B.7$Rep)
+DataExam2.B.7$a   <- factor(DataExam2.B.7$a)
+DataExam2.B.7$b   <- factor(DataExam2.B.7$b)
+str(DataExam2.B.7)
+```
+
+```{r}
+fit_2b7 <- lmerTest::lmer(
+  y ~ a * b + (1 | Rep),
+  data    = DataExam2.B.7,
+  control = lme4::lmerControl(optimizer = "bobyqa")
+)
+summary(fit_2b7)
+anova(fit_2b7)
+```
+
+```{r}
+emm_2b7 <- emmeans::emmeans(fit_2b7, ~ a * b)
+emmeans::contrast(emm_2b7, method = "pairwise",
+                  by = "a", adjust = "tukey")
+```
+
+## Key Takeaways
+
+- Likelihood-based inference is the foundation of GLMMs.
+- For Gaussian models, $t$- and $F$-tests follow exactly; for GLMMs,
+  Wald and likelihood ratio statistics are approximate.
+- `emmeans` provides Satterthwaite-adjusted degrees of freedom for
+  mixed model comparisons.
+
+## References
+
+Stroup, W. W., Ptukhina, M., and Garai, S. (2024). *Generalized Linear Mixed Models: Modern Concepts, Methods and Applications* (2nd ed.). CRC Press.

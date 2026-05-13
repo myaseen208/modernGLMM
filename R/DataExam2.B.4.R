@@ -1,4 +1,4 @@
-#' @title Data for Example 2.B.4 from Generalized Linear Mixed Models: Modern Concepts, Methods and Applications by Walter W. Stroup (p-54)
+#' @title Data for Example 2.B.4 from Generalized Linear Mixed Models: Modern Concepts, Methods and Applications by Stroup, Ptukhina, and Garai (2024, 2nd ed.)
 #' @name   DataExam2.B.4
 #' @docType data
 #' @keywords datasets
@@ -9,7 +9,7 @@
 #'        \itemize{
 #'        \item obs number of observations
 #'        \item trt three treatments with class factor
-#'        \item Nij  number of bernouli trials on each individual
+#'        \item Nij  number of Bernoulli trials on each individual
 #'        \item y  number of successes on each individual
 #'        }
 #' @author \enumerate{
@@ -17,11 +17,9 @@
 #'          \item Adeela Munawar (\email{adeela.uaf@@gmail.com})
 #'          }
 #' @references \enumerate{
-#' \item Stroup, W. W. (2012).\emph{Generalized linear mixed models: modern concepts, methods and applications}.
-#'              CRC press.
+#' \item Stroup, W. W., Ptukhina, M., and Garai, S. (2024).\emph{Generalized linear mixed models: modern concepts, methods and applications}.
+#'              CRC Press.
 #'  }
-#' @seealso
-#'    \code{\link{Exam2.B.4}}
 #' @examples
 #' data(DataExam2.B.4)
 NULL

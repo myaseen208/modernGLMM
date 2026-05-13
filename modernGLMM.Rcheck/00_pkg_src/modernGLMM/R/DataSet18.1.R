@@ -1,0 +1,63 @@
+#' @title Data for Example 18.1 — Alliance Wheat Trial: Gaussian Spatial (Chapter 18)
+#' @name   DataSet18.1
+#' @docType data
+#' @keywords datasets
+#' @usage data(DataSet18.1)
+#'
+#' @description
+#' Wheat yield data from a 12×12 field grid (144 plots) with 48 treatments
+#' and 3 complete blocks (columns 1–4, 5–8, 9–12).  Implements Section 18.3
+#' of Stroup et al. (2024), Data Set 18.1 (SAS names \code{ch15_ex1} /
+#' \code{asademo}).  Demonstrates spatial covariance model selection
+#' (spherical, exponential, Gaussian) via AICC for a Gaussian response.
+#'
+#' \strong{Reconstruction note:} The actual data appear in the SAS Data and
+#' Program Library as Data Set 18.1 (Alliance wheat trial).  This version is
+#' reconstructed from the published design description (48 treatments, 12×12
+#' grid, 3 column blocks) and published spatial parameters (range=4.1214,
+#' \eqn{\sigma^2}=14.0107, pp.569-571) using \code{set.seed(2024)}.
+#' Published AICC values and range estimates will not be reproduced exactly.
+#'
+#' @format A \code{data.frame} with 144 rows and 5 variables:
+#' \describe{
+#'   \item{row}{Field row position (integer, 1–12)}
+#'   \item{col}{Field column position (integer, 1–12)}
+#'   \item{block}{Complete block factor: columns 1-4 = block 1,
+#'     columns 5-8 = block 2, columns 9-12 = block 3}
+#'   \item{trt}{Treatment factor with 48 levels (t01–t48);
+#'     each treatment appears once per block}
+#'   \item{y}{Continuous wheat yield response}
+#' }
+#'
+#' @details
+#' Spatial models replace the iid residual assumption with a covariance
+#' function of Euclidean distance \eqn{d_{ij}} between plots.  The spherical
+#' covariance (SP(SPH)), which is the best model in the book, is:
+#' \deqn{C(d_{ij}) = \begin{cases}
+#'   \sigma^2 \left[1 - \frac{3d_{ij}}{2r} + \frac{d_{ij}^3}{2r^3}\right]
+#'   & d_{ij} < r \\
+#'   0 & d_{ij} \ge r
+#' \end{cases}}
+#' where \eqn{r} is the range parameter and \eqn{\sigma^2} is the sill.
+#'
+#' Published results (2nd ed. pp.569-571):
+#' SP(SPH): range=4.1214, residual \eqn{\sigma^2}=14.0107.
+#' AICC: Spherical=512.9, Exponential=521.9, Gaussian=530.9,
+#' Incomplete block=588.8, Complete block=597.9.
+#'
+#' @references
+#' \enumerate{
+#'   \item Stroup, W. W., Ptukhina, M., and Garai, S. (2024).
+#'     \emph{Generalized Linear Mixed Models: Modern Concepts,
+#'     Methods and Applications}. CRC Press. Section 18.3, pp.563-573.
+#'   \item Pinheiro, J., & Bates, D. (2000).
+#'     \emph{Mixed-Effects Models in S and S-PLUS}. Springer.
+#' }
+#'
+#' @seealso \code{\link{Exam18.1}}
+#'
+#' @examples
+#' data(DataSet18.1)
+#' str(DataSet18.1)
+#' with(DataSet18.1, table(block))
+NULL

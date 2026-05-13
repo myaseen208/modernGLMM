@@ -2,26 +2,29 @@
 % Please edit documentation in R/Exam9.4.R
 \name{Exam9.4}
 \alias{Exam9.4}
-\title{Example 9.4 from Generalized Linear Mixed Models: Modern Concepts, Methods and Applications by Walter W. Stroup (p-288)}
+\title{Example 9.4 from Generalized Linear Mixed Models: Modern Concepts, Methods and Applications by Stroup, Ptukhina, and Garai (2024, 2nd ed.)}
 \description{
-Exam9.4 Relationship between BLUP and Fixed Effect Estimators
+Exam9.4 Multifactor treatment and Multilevel design structures
 }
 \examples{
+
 data(DataSet9.4)
+DataSet9.4$block <- factor(x = DataSet9.4$block)
 DataSet9.4$a <- factor(x = DataSet9.4$a)
 DataSet9.4$b <- factor(x = DataSet9.4$b)
 
-library(lmerTest)
-Exam9.4lmer <- lmer(y ~ a + (1|b) + (1|a/b), data = DataSet9.4)
-summary(Exam9.4lmer)
-library(emmeans)
-emmeans(Exam9.4lmer, spec = ~a)
+Exam9.4lmer <- lmerTest::lmer(
+  y ~ a * b + (1|block) + (1|block:a) + (1|block:b),
+  data = DataSet9.4
+)
+stats::anova(Exam9.4lmer, ddf = "Kenward-Roger")
 
+emmeans::emmeans(object = Exam9.4lmer, specs = ~a | b)
 }
 \references{
 \enumerate{
-\item Stroup, W. W. (2012).
-     \emph{Generalized Linear Mixed Models: Modern Concepts, Methods and Applications}.
+\item Stroup, W. W., Ptukhina, M., and Garai, S. (2024).
+     \emph{Generalized Linear Mixed Models: Modern Concepts, Methods and Applications (2nd ed.)}.
        CRC Press.
  }
 }

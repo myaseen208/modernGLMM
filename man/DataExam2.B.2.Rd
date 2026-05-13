@@ -3,7 +3,7 @@
 \docType{data}
 \name{DataExam2.B.2}
 \alias{DataExam2.B.2}
-\title{Data for Example 2.B.2 from Generalized Linear Mixed Models: Modern Concepts, Methods and Applications by Walter W. Stroup (p-54)}
+\title{Data for Example 2.B.2 from Generalized Linear Mixed Models: Modern Concepts, Methods and Applications by Stroup, Ptukhina, and Garai (2024, 2nd ed.)}
 \format{
 A \code{data.frame} with 11 rows and 3 variables.
 }
@@ -16,7 +16,7 @@ Exam2.B.2 is used to visualize the effect of glm model statement with binomial d
 \details{
 \itemize{
        \item x independent variable
-       \item n bernouli trials (bernouli outcomes on each individual)
+       \item n Bernoulli trials (Bernoulli outcomes on each individual)
        \item y number of successes on each individual
      }
 }
@@ -25,12 +25,9 @@ data(DataExam2.B.2)
 }
 \references{
 \enumerate{
-\item Stroup, W. W. (2012).\emph{Generalized linear mixed models: modern concepts, methods and applications}.
-             CRC press.
+\item Stroup, W. W., Ptukhina, M., and Garai, S. (2024).\emph{Generalized linear mixed models: modern concepts, methods and applications}.
+             CRC Press.
  }
-}
-\seealso{
-\link{Exam2.B.2}
 }
 \author{
 \enumerate{

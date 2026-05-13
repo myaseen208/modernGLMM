@@ -1,0 +1,77 @@
+#' @title Example 8.6 from Generalized Linear Mixed Models: Modern Concepts, Methods and Applications by Stroup, Ptukhina, and Garai (2024, 2nd ed.)
+#' @name   Exam8.6
+#' @description Exam8.6 Nonlinear Mean Models (Quantitative by quantitative models)
+#' @author \enumerate{
+#'          \item  Muhammad Yaseen (\email{myaseen208@@gmail.com})
+#'          \item Adeela Munawar (\email{adeela.uaf@@gmail.com})
+#'          }
+#' @references \enumerate{
+#' \item Stroup, W. W., Ptukhina, M., and Garai, S. (2024).
+#'      \emph{Generalized Linear Mixed Models: Modern Concepts, Methods and Applications (2nd ed.)}.
+#'        CRC Press.
+#'  }
+#'
+#'  @seealso
+#'    \code{\link{DataSet8.6}}
+#'
+#' @import parameters
+#' @import ggplot2
+#'
+#' @examples
+#'
+#' data(DataSet8.6)
+#'
+#' DataSet8.6 <- collapse::fmutate(
+#'   DataSet8.6,
+#'   logx1 = ifelse(x1 == 0, log(x1 + 0.1), log(x1)),
+#'   logx2 = ifelse(x2 == 0, log(x2 + 0.1), log(x2))
+#' )
+#' DataSet8.6
+#'
+#' Exam8.6.lm <- stats::lm(formula = response ~ x1*x2 + logx1*logx2, data = DataSet8.6)
+#' summary(Exam8.6.lm)
+#' parameters::model_parameters(Exam8.6.lm)
+#'
+#' ##---3D scatter plot via ggplot2 (observed data)
+#' ggplot2::ggplot(DataSet8.6, ggplot2::aes(x = x1, y = x2, colour = response, size = response)) +
+#'   ggplot2::geom_point(alpha = 0.8) +
+#'   ggplot2::scale_colour_viridis_c(option = "plasma") +
+#'   ggplot2::labs(
+#'     title  = "Observed Response by x1 and x2",
+#'     x      = "x1",
+#'     y      = "x2",
+#'     colour = "response"
+#'   ) +
+#'   ggplot2::theme_bw() +
+#'   ggplot2::guides(size = "none")
+#'
+#' ##---Fitted response surface (tile/heatmap)
+#' grid_data <- expand.grid(
+#'   x1 = seq(min(DataSet8.6$x1), max(DataSet8.6$x1), length.out = 50),
+#'   x2 = seq(min(DataSet8.6$x2), max(DataSet8.6$x2), length.out = 50)
+#' )
+#' grid_data <- collapse::fmutate(
+#'   grid_data,
+#'   logx1 = ifelse(x1 == 0, log(x1 + 0.1), log(x1)),
+#'   logx2 = ifelse(x2 == 0, log(x2 + 0.1), log(x2))
+#' )
+#' grid_data$Yhat <- stats::predict(Exam8.6.lm, newdata = grid_data)
+#'
+#' ggplot2::ggplot(grid_data, ggplot2::aes(x = x1, y = x2, fill = Yhat)) +
+#'   ggplot2::geom_tile() +
+#'   ggplot2::scale_fill_viridis_c(option = "plasma", name = expression(hat(Y))) +
+#'   ggplot2::geom_point(
+#'     data   = DataSet8.6,
+#'     mapping = ggplot2::aes(x = x1, y = x2, colour = response),
+#'     inherit.aes = FALSE,
+#'     size   = 2
+#'   ) +
+#'   ggplot2::scale_colour_viridis_c(option = "inferno", name = "Observed") +
+#'   ggplot2::labs(
+#'     title = "Fitted Response Surface by Hoerl Function",
+#'     x     = "x1",
+#'     y     = "x2"
+#'   ) +
+#'   ggplot2::theme_bw()
+#'
+NULL
