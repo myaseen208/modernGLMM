@@ -1,7 +1,6 @@
 # Chapter 9: Multi-Level Models
 
 ``` r
-
 library(modernGLMM)
 library(lme4)
 library(lmerTest)
@@ -28,7 +27,6 @@ Dataset: 3 sets, 2 treatments per set, arranged in blocks nested within
 sets.
 
 ``` r
-
 data(DataSet9.1)
 DataSet9.1$block <- factor(DataSet9.1$block)
 DataSet9.1$set   <- factor(DataSet9.1$set)
@@ -45,7 +43,6 @@ str(DataSet9.1)
 ### 2.1 Fit the LMM (Gaussian approximation)
 
 ``` r
-
 Exam9.1Lmer <- lmerTest::lmer(
   y ~ set + set:trt + (1 | set:block),
   data    = DataSet9.1,
@@ -94,7 +91,6 @@ summary(Exam9.1Lmer)
     fixed-effect model matrix is rank deficient so dropping 6 columns / coefficients
 
 ``` r
-
 stats::anova(Exam9.1Lmer, ddf = "Kenward-Roger")
 ```
 
@@ -106,7 +102,6 @@ stats::anova(Exam9.1Lmer, ddf = "Kenward-Roger")
 ### 2.2 Estimated Marginal Means
 
 ``` r
-
 emm9.1 <- emmeans::emmeans(Exam9.1Lmer, ~ trt | set)
 print(emm9.1)
 ```
@@ -127,7 +122,6 @@ print(emm9.1)
     Confidence level used: 0.95 
 
 ``` r
-
 emmeans::contrast(emm9.1, method = "pairwise", by = "set")
 ```
 
@@ -149,7 +143,6 @@ emmeans::contrast(emm9.1, method = "pairwise", by = "set")
 ### 2.3 Interpretation
 
 ``` r
-
 if (requireNamespace("report", quietly = TRUE)) {
   report::report(Exam9.1Lmer)
 }
@@ -186,7 +179,6 @@ if (requireNamespace("report", quietly = TRUE)) {
 ## 3 Example 9.2 — Split-Plot with Row-Column Structure
 
 ``` r
-
 data(DataSet9.2)
 DataSet9.2$block <- factor(DataSet9.2$block)
 DataSet9.2$row   <- factor(DataSet9.2$row)
@@ -205,7 +197,6 @@ str(DataSet9.2)
      $ y    : num  19.2 23.2 15 15.9 22.4 27.1 21.3 22.9 29.6 27.4 ...
 
 ``` r
-
 Exam9.2Lmer <- lmerTest::lmer(
   y ~ a * b + (1 | block) + (1 | block:a) + (1 | block:b),
   data    = DataSet9.2,
@@ -260,7 +251,6 @@ summary(Exam9.2Lmer)
     a3:b3  0.229 -0.206 -0.412 -0.217 -0.435  0.250  0.500  0.500
 
 ``` r
-
 stats::anova(Exam9.2Lmer, ddf = "Kenward-Roger")
 ```
 
@@ -271,7 +261,6 @@ stats::anova(Exam9.2Lmer, ddf = "Kenward-Roger")
 | a:b | 94.71857 | 23.679643 |     4 | 5.853597 | 10.547380 | 0.0075334 |
 
 ``` r
-
 emm9.2 <- emmeans::emmeans(Exam9.2Lmer, ~ a * b)
 print(emm9.2)
 ```
@@ -291,7 +280,6 @@ print(emm9.2)
     Confidence level used: 0.95 
 
 ``` r
-
 emmeans::contrast(emm9.2, method = "pairwise",
                   by = "a", adjust = "tukey")
 ```
@@ -320,7 +308,6 @@ emmeans::contrast(emm9.2, method = "pairwise",
 ## 4 Example 9.3 — Factorial with Blocks
 
 ``` r
-
 data(DataSet9.3)
 DataSet9.3$block <- factor(DataSet9.3$block)
 DataSet9.3$aa    <- factor(DataSet9.3$a)
@@ -352,7 +339,6 @@ str(DataSet9.3)
      $ bc   : int  1 -1 -1 1 0 0 0 0 0 0 ...
 
 ``` r
-
 Exam9.3Lmer <- lmerTest::lmer(
   y ~ a + a2 + b + b2 + c + bc + (1 | block),
   data    = DataSet9.3,
@@ -401,7 +387,6 @@ summary(Exam9.3Lmer)
     bc  0.000  0.000  0.000  0.000  0.000  0.000
 
 ``` r
-
 stats::anova(Exam9.3Lmer, ddf = "Kenward-Roger", type = 1)
 ```
 
@@ -417,7 +402,6 @@ stats::anova(Exam9.3Lmer, ddf = "Kenward-Roger", type = 1)
 ## 5 Overdispersion Diagnostics
 
 ``` r
-
 if (requireNamespace("performance", quietly = TRUE)) {
   tryCatch(
     performance::check_model(Exam9.1Lmer),
@@ -427,7 +411,6 @@ if (requireNamespace("performance", quietly = TRUE)) {
 ```
 
 ``` r
-
 if (requireNamespace("DHARMa", quietly = TRUE)) {
   sim_r <- DHARMa::simulateResiduals(Exam9.1Lmer, plot = TRUE)
 }

@@ -1,7 +1,6 @@
 # Chapter 21: Precision, Power, Sample Size, and Planning
 
 ``` r
-
 library(modernGLMM)
 library(ggplot2)
 library(emmeans)
@@ -40,7 +39,6 @@ df_2}\right)\\
 ## 3 Example 21.1 — Power Curves
 
 ``` r
-
 data(DataSet21.1)
 str(DataSet21.1)
 ```
@@ -51,7 +49,6 @@ str(DataSet21.1)
      $ power      : num  0.0872 0.1394 0.1949 0.2521 0.3098 ...
 
 ``` r
-
 ggplot(
   DataSet21.1,
   aes(x = n_per_group, y = power,
@@ -84,7 +81,6 @@ effect size
 ## 4 Minimum Sample Sizes
 
 ``` r
-
 power_anova <- function(n, k = 3L, f = 0.5, alpha = 0.05) {
   df1 <- k - 1L
   df2 <- k * (n - 1L)
@@ -114,7 +110,7 @@ knitr::kable(results, caption = "Minimum n per group for 80% and 90% power")
 | Medium (f=0.5) | 0.5 |          14 |          18 |
 | Large (f=0.8)  | 0.8 |           7 |           8 |
 
-Minimum n per group for 80% and 90% power {.table .caption-top}
+Minimum n per group for 80% and 90% power
 
 ## 5 Mixed Model Power Considerations
 
@@ -131,7 +127,6 @@ depend on the design structure. Key considerations:
   recommended.
 
 ``` r
-
 ## Illustration: effective sample size with ICC
 icc_effect <- function(m, icc) 1 + (m - 1) * icc
 
@@ -141,7 +136,6 @@ cat("Design effect (m=5 obs/cluster) at various ICC:\n")
     Design effect (m=5 obs/cluster) at various ICC:
 
 ``` r
-
 iccs <- c(0.0, 0.1, 0.3, 0.5)
 for (icc in iccs) {
   cat(sprintf("  ICC = %.1f -> DEFF = %.2f\n", icc, icc_effect(5, icc)))

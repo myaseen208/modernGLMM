@@ -20,7 +20,6 @@ against the printed text.
 ## Installation
 
 ``` r
-
 if (!requireNamespace("remotes", quietly = TRUE)) {
   install.packages("remotes")
 }
@@ -29,15 +28,15 @@ remotes::install_github("myaseen208/modernGLMM")
 
 ## Implemented Examples
 
-| Chapter | Topic | Functions |
-|----|----|----|
-| 1 | Linear and logistic regression review | `Exam1.1`, `Exam1.2` |
-| 3 | Treatment structures and factorial designs | `Exam3.2`, `Exam3.3`, `Exam3.5`, `Exam3.9` |
-| 8 | Mixed model foundations and splines | `Exam8.1`, `Exam8.2`, `Exam8.3`, `Exam8.7` |
-| 9 | Variance component estimation | `Exam9.1`, `Exam9.2`, `Exam9.3`, `Exam9.4` |
-| 10 | BLUPs and predictable functions | `Exam10.1`, `Exam10.2`, `Exam10.4` |
-| 11 | Count data GLMMs | `Exam11.1`, `Exam11.3` |
-| 21 | Power analysis for GLMMs | `Exam21.1` |
+| Chapter | Topic                                      | Functions                                  |
+|---------|--------------------------------------------|--------------------------------------------|
+| 1       | Linear and logistic regression review      | `Exam1.1`, `Exam1.2`                       |
+| 3       | Treatment structures and factorial designs | `Exam3.2`, `Exam3.3`, `Exam3.5`, `Exam3.9` |
+| 8       | Mixed model foundations and splines        | `Exam8.1`, `Exam8.2`, `Exam8.3`, `Exam8.7` |
+| 9       | Variance component estimation              | `Exam9.1`, `Exam9.2`, `Exam9.3`, `Exam9.4` |
+| 10      | BLUPs and predictable functions            | `Exam10.1`, `Exam10.2`, `Exam10.4`         |
+| 11      | Count data GLMMs                           | `Exam11.1`, `Exam11.3`                     |
+| 21      | Power analysis for GLMMs                   | `Exam21.1`                                 |
 
 Chapters 12–18 depend on the SAS Data and Program Library that
 accompanies the book. These chapters are included as documented
@@ -49,13 +48,13 @@ those data (see `inst/verification/datasets-not-yet-available.md`).
 Numerical results have been independently verified against the 2nd
 edition.
 
-| Status | Count | Description |
-|----|---:|----|
-| EXACT | 477 | Matches book value within tolerance ( |
-| APPROX | 10 | Matches within wider tolerance ( |
-| MISMATCH_IRREDUCIBLE | 14 | Documented irreducible discrepancy (SAS/R estimation differences) |
-| UNVERIF_CONFIRMED_ABSENT | 30 | No printed target in 2nd edition or dataset not yet available |
-| **Pass rate** | **97.2%** | 487 / 501 verifiable quantities |
+| Status                   |     Count | Description                                                       |
+|--------------------------|----------:|-------------------------------------------------------------------|
+| EXACT                    |       477 | Matches book value within tolerance (                             |
+| APPROX                   |        10 | Matches within wider tolerance (                                  |
+| MISMATCH_IRREDUCIBLE     |        14 | Documented irreducible discrepancy (SAS/R estimation differences) |
+| UNVERIF_CONFIRMED_ABSENT |        30 | No printed target in 2nd edition or dataset not yet available     |
+| **Pass rate**            | **97.2%** | 487 / 501 verifiable quantities                                   |
 
 Full results: `inst/verification/verification-results.csv`
 
@@ -71,7 +70,6 @@ Documented irreducible mismatches arise from:
 ## Quick Start
 
 ``` r
-
 library(modernGLMM)
 
 # Chapter 11: Poisson GLMM for count data
@@ -95,7 +93,6 @@ accompanying the book. To request access, contact:
 ## Citation
 
 ``` r
-
 citation("modernGLMM")
 ```
 

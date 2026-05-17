@@ -20,7 +20,6 @@ Exam8.1 explains multifactor models with all factors qualitative
 ## Examples
 
 ``` r
-
 data(DataSet8.1)
 
 DataSet8.1$a <- factor(x = DataSet8.1$a)

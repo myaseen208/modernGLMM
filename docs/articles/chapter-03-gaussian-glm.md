@@ -1,7 +1,6 @@
 # Chapter 3: Setting the Stage
 
 ``` r
-
 library(modernGLMM)
 library(emmeans)
 library(ggplot2)
@@ -25,7 +24,6 @@ The model is:
 \\\text{logit}(p_i) = \mu + \tau_i, \quad i = 0, 1\\
 
 ``` r
-
 data(DataSet3.1)
 DataSet3.1$trt <- factor(DataSet3.1$trt)
 str(DataSet3.1)
@@ -39,7 +37,6 @@ str(DataSet3.1)
      $ F  : int  0 5 1 5 5 0 4 3 1 5 ...
 
 ``` r
-
 Exam3.2.glm <- stats::glm(
   cbind(F, N - F) ~ trt,
   family = stats::binomial(link = "logit"),
@@ -47,7 +44,6 @@ Exam3.2.glm <- stats::glm(
 )
 summary(Exam3.2.glm)
 ```
-
 
     Call:
     stats::glm(formula = cbind(F, N - F) ~ trt, family = stats::binomial(link = "logit"),
@@ -69,19 +65,17 @@ summary(Exam3.2.glm)
     Number of Fisher Scoring iterations: 4
 
 ``` r
-
 if (requireNamespace("parameters", quietly = TRUE)) {
   parameters::model_parameters(Exam3.2.glm)
 }
 ```
 
-| Parameter | Coefficient | SE | CI | CI_low | CI_high | z | df_error | p |
-|:---|---:|---:|---:|---:|---:|---:|---:|---:|
-| (Intercept) | -2.154165 | 0.1961678 | 0.95 | -2.559677 | -1.787830 | -10.981239 | Inf | 0e+00 |
-| trt1 | 1.268215 | 0.2339132 | 0.95 | 0.820860 | 1.740639 | 5.421734 | Inf | 1e-07 |
+| Parameter   | Coefficient |        SE |   CI |    CI_low |   CI_high |          z | df_error |     p |
+|:------------|------------:|----------:|-----:|----------:|----------:|-----------:|---------:|------:|
+| (Intercept) |   -2.154165 | 0.1961678 | 0.95 | -2.559677 | -1.787830 | -10.981239 |      Inf | 0e+00 |
+| trt1        |    1.268215 | 0.2339132 | 0.95 |  0.820860 |  1.740639 |   5.421734 |      Inf | 1e-07 |
 
 ``` r
-
 ## Marginal means on probability scale
 emm3.2 <- emmeans::emmeans(Exam3.2.glm, ~ trt, type = "response")
 print(emm3.2)
@@ -95,7 +89,6 @@ print(emm3.2)
     Intervals are back-transformed from the logit scale 
 
 ``` r
-
 emmeans::contrast(emm3.2, method = "pairwise")
 ```
 
@@ -105,7 +98,6 @@ emmeans::contrast(emm3.2, method = "pairwise")
     Tests are performed on the log odds ratio scale 
 
 ``` r
-
 if (requireNamespace("report", quietly = TRUE)) {
   tryCatch(
     print(report::report(Exam3.2.glm)),
@@ -135,7 +127,6 @@ if (requireNamespace("report", quietly = TRUE)) {
 ## 3 Example 3.3 — Multi-Location Factorial
 
 ``` r
-
 data(DataSet3.2)
 DataSet3.2$loc <- factor(DataSet3.2$loc)
 DataSet3.2$trt <- factor(DataSet3.2$trt)
@@ -155,11 +146,9 @@ str(DataSet3.2)
      $ B     : int  0 1 0 1 0 1 0 1 0 1 ...
 
 ``` r
-
 Exam3.3.lm <- stats::lm(Y ~ loc + trt, data = DataSet3.2)
 summary(Exam3.3.lm)
 ```
-
 
     Call:
     stats::lm(formula = Y ~ loc + trt, data = DataSet3.2)
@@ -189,7 +178,6 @@ summary(Exam3.3.lm)
     F-statistic:   4.5 on 10 and 21 DF,  p-value: 0.001795
 
 ``` r
-
 anova(Exam3.3.lm)
 ```
 
@@ -200,7 +188,6 @@ anova(Exam3.3.lm)
 | Residuals |  21 | 60.4175 |  2.877024 |       NA |        NA |
 
 ``` r
-
 emm3.3 <- emmeans::emmeans(Exam3.3.lm, ~ trt)
 print(emm3.3)
 ```
@@ -215,7 +202,6 @@ print(emm3.3)
     Confidence level used: 0.95 
 
 ``` r
-
 emmeans::contrast(emm3.3, method = "pairwise", adjust = "none")
 ```
 
@@ -232,7 +218,6 @@ emmeans::contrast(emm3.3, method = "pairwise", adjust = "none")
 ### 3.1 Interaction plot
 
 ``` r
-
 emm_plot3.3 <- as.data.frame(emm3.3)
 ggplot(emm_plot3.3, aes(x = trt, y = emmean)) +
   geom_point(size = 3, colour = "#2c5f8a") +
@@ -249,7 +234,6 @@ Figure 1: Treatment means averaged over locations
 ## 4 Example 3.5 — Factorial Treatment Structure
 
 ``` r
-
 DataSet3.2$A <- factor(DataSet3.2$A)
 DataSet3.2$B <- factor(DataSet3.2$B)
 str(DataSet3.2)
@@ -268,11 +252,9 @@ str(DataSet3.2)
      $ B     : Factor w/ 2 levels "0","1": 1 2 1 2 1 2 1 2 1 2 ...
 
 ``` r
-
 Exam3.5.lm <- stats::lm(Y ~ A * B + loc, data = DataSet3.2)
 summary(Exam3.5.lm)
 ```
-
 
     Call:
     stats::lm(formula = Y ~ A * B + loc, data = DataSet3.2)
@@ -302,7 +284,6 @@ summary(Exam3.5.lm)
     F-statistic:   4.5 on 10 and 21 DF,  p-value: 0.001795
 
 ``` r
-
 anova(Exam3.5.lm)
 ```
 
@@ -315,7 +296,6 @@ anova(Exam3.5.lm)
 | Residuals |  21 | 60.41750 |  2.877024 |         NA |        NA |
 
 ``` r
-
 emm3.5 <- emmeans::emmeans(Exam3.5.lm, ~ A * B)
 print(emm3.5)
 ```
@@ -330,7 +310,6 @@ print(emm3.5)
     Confidence level used: 0.95 
 
 ``` r
-
 emmeans::contrast(
   emmeans::emmeans(Exam3.5.lm, ~ A | B),
   method = "pairwise",
@@ -349,7 +328,6 @@ emmeans::contrast(
     Results are averaged over the levels of: loc 
 
 ``` r
-
 emmeans::contrast(
   emmeans::emmeans(Exam3.5.lm, ~ B | A),
   method = "pairwise",

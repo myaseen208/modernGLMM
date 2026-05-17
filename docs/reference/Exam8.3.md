@@ -21,7 +21,6 @@ some quantitative(Unequal slopes ANCOVA)
 ## Examples
 
 ``` r
-
 data(DataSet8.3)
 
 DataSet8.3$trt <- factor(x = DataSet8.3$trt )

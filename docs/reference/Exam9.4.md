@@ -21,7 +21,6 @@ Exam9.4 Multifactor treatment and Multilevel design structures
 ## Examples
 
 ``` r
-
 data(DataSet9.4)
 DataSet9.4$block <- factor(x = DataSet9.4$block)
 DataSet9.4$a <- factor(x = DataSet9.4$a)

@@ -21,7 +21,6 @@ Exam10.2 Two-way nested random effects model and BLUP estimation
 ## Examples
 
 ``` r
-
 data(DataSet10.2)
 DataSet10.2$a <- factor(x = DataSet10.2$a)
 DataSet10.2$b <- factor(x = DataSet10.2$b)

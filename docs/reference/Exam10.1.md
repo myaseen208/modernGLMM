@@ -21,7 +21,6 @@ Exam10.1 One-way random effects model and BLUP estimation
 ## Examples
 
 ``` r
-
 data(DataSet10.1)
 DataSet10.1$a <- factor(x = DataSet10.1$a)
 

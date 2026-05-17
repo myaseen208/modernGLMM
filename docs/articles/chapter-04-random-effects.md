@@ -64,7 +64,6 @@ any hypothesis test involving them is not meaningful. The `emmeans`
 package performs estimability checks automatically.
 
 ``` r
-
 ## Illustration: rank-deficient design leads to non-estimable contrasts
 X <- matrix(c(1,1,0, 1,0,1, 1,1,0), nrow = 3, byrow = TRUE)
 rankX <- qr(X)$rank
@@ -74,7 +73,6 @@ cat("Rank of X:", rankX, "  (columns:", ncol(X), ")\n")
     Rank of X: 2   (columns: 3 )
 
 ``` r
-
 cat("Columns span a", rankX, "-dimensional space —",
     ncol(X) - rankX, "parameter(s) are not independently estimable.\n")
 ```
@@ -95,7 +93,6 @@ Hypothesis tests in linear models rely on **quadratic forms**
   by their respective degrees of freedom.
 
 ``` r
-
 ## Non-centrality parameter for a one-way ANOVA (k=3, n=5, sigma^2=9)
 mu    <- c(20, 25, 25)
 mubar <- mean(mu)
@@ -108,7 +105,6 @@ cat("Non-centrality parameter lambda =", round(lambda, 5), "\n")
     Non-centrality parameter lambda = 9.25926 
 
 ``` r
-
 ## Power at F_{2,12} critical value
 df1 <- 2; df2 <- 12
 Fc  <- stats::qf(0.95, df1, df2)

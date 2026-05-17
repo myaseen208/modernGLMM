@@ -3,6 +3,17 @@ url: https://github.com/myaseen208/modernGLMM/
 template:
   bootstrap: 5
   math-rendering: mathjax
+  includes:
+    in_header: |
+      <script>
+      window.MathJax = {
+        tex: {
+          macros: {
+            boldsymbol: ["\\pmb{#1}", 1]
+          }
+        }
+      };
+      </script>
   bslib:
     base_font:
       google: Crimson Pro

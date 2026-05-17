@@ -21,6 +21,15 @@
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="R Implementation of Examples from Stroup, Ptukhina and Garai (2024) Generalized Linear Mixed Models">
 <meta name="description" content='Provides reproducible R implementations of all worked examples from Stroup, W. W., Ptukhina, M., and Garai, S. (2024) "Generalized Linear Mixed Models: Modern Concepts, Methods and Applications", second edition, CRC Press. Examples are implemented using lme4, glmmTMB, nlme, emmeans, and car, covering Gaussian and non-Gaussian responses, multi-level designs, BLUPs, treatment structures, count data, repeated measures, and power analysis. Numerical results have been independently verified against the book: 97.2% of verifiable quantities match exactly or within tolerance. Examples from Chapters 12–18 that depend on the SAS Data and Program Library accompanying the book are included as documented functions; full numerical verification awaits access to those datasets.'>
 <meta property="og:description" content='Provides reproducible R implementations of all worked examples from Stroup, W. W., Ptukhina, M., and Garai, S. (2024) "Generalized Linear Mixed Models: Modern Concepts, Methods and Applications", second edition, CRC Press. Examples are implemented using lme4, glmmTMB, nlme, emmeans, and car, covering Gaussian and non-Gaussian responses, multi-level designs, BLUPs, treatment structures, count data, repeated measures, and power analysis. Numerical results have been independently verified against the book: 97.2% of verifiable quantities match exactly or within tolerance. Examples from Chapters 12–18 that depend on the SAS Data and Program Library accompanying the book are included as documented functions; full numerical verification awaits access to those datasets.'>
+<script>
+window.MathJax = {
+  tex: {
+    macros: {
+      boldsymbol: ["\\pmb{#1}", 1]
+    }
+  }
+};
+</script>
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -109,55 +118,55 @@
 <col width="25%">
 <col width="40%">
 </colgroup>
-<thead><tr>
+<thead><tr class="header">
 <th>Chapter</th>
 <th>Topic</th>
 <th>Functions</th>
 </tr></thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>1</td>
 <td>Linear and logistic regression review</td>
 <td>
 <code>Exam1.1</code>, <code>Exam1.2</code>
 </td>
 </tr>
-<tr>
+<tr class="even">
 <td>3</td>
 <td>Treatment structures and factorial designs</td>
 <td>
 <code>Exam3.2</code>, <code>Exam3.3</code>, <code>Exam3.5</code>, <code>Exam3.9</code>
 </td>
 </tr>
-<tr>
+<tr class="odd">
 <td>8</td>
 <td>Mixed model foundations and splines</td>
 <td>
 <code>Exam8.1</code>, <code>Exam8.2</code>, <code>Exam8.3</code>, <code>Exam8.7</code>
 </td>
 </tr>
-<tr>
+<tr class="even">
 <td>9</td>
 <td>Variance component estimation</td>
 <td>
 <code>Exam9.1</code>, <code>Exam9.2</code>, <code>Exam9.3</code>, <code>Exam9.4</code>
 </td>
 </tr>
-<tr>
+<tr class="odd">
 <td>10</td>
 <td>BLUPs and predictable functions</td>
 <td>
 <code>Exam10.1</code>, <code>Exam10.2</code>, <code>Exam10.4</code>
 </td>
 </tr>
-<tr>
+<tr class="even">
 <td>11</td>
 <td>Count data GLMMs</td>
 <td>
 <code>Exam11.1</code>, <code>Exam11.3</code>
 </td>
 </tr>
-<tr>
+<tr class="odd">
 <td>21</td>
 <td>Power analysis for GLMMs</td>
 <td><code>Exam21.1</code></td>
@@ -176,33 +185,33 @@
 <col width="25%">
 <col width="46%">
 </colgroup>
-<thead><tr>
+<thead><tr class="header">
 <th>Status</th>
 <th align="right">Count</th>
 <th>Description</th>
 </tr></thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>EXACT</td>
 <td align="right">477</td>
 <td>Matches book value within tolerance (</td>
 </tr>
-<tr>
+<tr class="even">
 <td>APPROX</td>
 <td align="right">10</td>
 <td>Matches within wider tolerance (</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>MISMATCH_IRREDUCIBLE</td>
 <td align="right">14</td>
 <td>Documented irreducible discrepancy (SAS/R estimation differences)</td>
 </tr>
-<tr>
+<tr class="even">
 <td>UNVERIF_CONFIRMED_ABSENT</td>
 <td align="right">30</td>
 <td>No printed target in 2nd edition or dataset not yet available</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><strong>Pass rate</strong></td>
 <td align="right"><strong>97.2%</strong></td>
 <td>487 / 501 verifiable quantities</td>

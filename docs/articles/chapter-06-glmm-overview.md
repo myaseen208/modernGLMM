@@ -1,7 +1,6 @@
 # Chapter 6: Inference, Part I
 
 ``` r
-
 library(modernGLMM)
 library(lme4)
 library(emmeans)
@@ -46,7 +45,6 @@ REML (for Gaussian) or by maximum likelihood / Laplace approximation
 The GLMM formula in `lme4` follows a compact syntax:
 
 ``` r
-
 response ~ fixed_effects + (random_slope | grouping_factor)
 ```
 
@@ -63,7 +61,6 @@ The following illustrates a Poisson GLMM using the blocked count data
 from Chapter 11 (`DataSet11.3`):
 
 ``` r
-
 data(DataSet11.3)
 DataSet11.3$block <- factor(DataSet11.3$block)
 DataSet11.3$trt   <- factor(DataSet11.3$trt)
@@ -111,7 +108,6 @@ summary(fit_pois)
     trt3 -0.260  0.690
 
 ``` r
-
 ## Overdispersion check
 if (requireNamespace("performance", quietly = TRUE)) {
   performance::check_overdispersion(fit_pois)
@@ -125,7 +121,6 @@ if (requireNamespace("performance", quietly = TRUE)) {
                     p-value = < 0.001
 
 ``` r
-
 ## DHARMa diagnostics
 if (requireNamespace("DHARMa", quietly = TRUE)) {
   DHARMa::simulateResiduals(fit_pois, plot = TRUE)
@@ -139,7 +134,6 @@ if (requireNamespace("DHARMa", quietly = TRUE)) {
     Scaled residual values: 0.7574428 0.6786155 0.5365879 0.47588 0.944 0.7954783 0.5746475 0.7175266 0.02834456 0.7374608 0.7252719 0.7522183 0.02194105 0.3661984 0.3275792 0.98 0.4298969 0.4834902 0.2166665 0.385463 ...
 
 ``` r
-
 emm6 <- emmeans::emmeans(fit_pois, ~ trt, type = "response")
 print(emm6)
 ```
@@ -153,7 +147,6 @@ print(emm6)
     Intervals are back-transformed from the log scale 
 
 ``` r
-
 if (requireNamespace("report", quietly = TRUE)) {
   report::report(fit_pois)
 }

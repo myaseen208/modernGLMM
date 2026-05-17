@@ -21,7 +21,6 @@ Exam10.4 Relationship between BLUP and Fixed Effect Estimators
 ## Examples
 
 ``` r
-
 data(DataSet10.4)
 DataSet10.4$a <- factor(x = DataSet10.4$a)
 DataSet10.4$b <- factor(x = DataSet10.4$b)

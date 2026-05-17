@@ -1,7 +1,6 @@
 # Chapter 14: Multinomial Data
 
 ``` r
-
 library(modernGLMM)
 library(emmeans)
 library(ggplot2)
@@ -36,7 +35,6 @@ categories**. Two cases arise:
 modrat \< severe), stored as frequency counts (`y`).
 
 ``` r
-
 data(DataSet14.1)
 str(DataSet14.1)
 ```
@@ -48,7 +46,6 @@ str(DataSet14.1)
      $ y     : int  1 4 23 2 7 23 4 7 18 8 ...
 
 ``` r
-
 ## Marginal rating distribution by treatment
 with(DataSet14.1, tapply(y, list(trt, rating), sum))
 ```
@@ -62,7 +59,6 @@ with(DataSet14.1, tapply(y, list(trt, rating), sum))
     5    170     80     30
 
 ``` r
-
 marg14 <- aggregate(y ~ trt + rating, data = DataSet14.1, FUN = sum)
 marg14$rating <- factor(marg14$rating,
                         levels = c("slight", "modrat", "severe"),
@@ -81,7 +77,6 @@ ggplot(marg14, aes(x = trt, y = y, fill = rating)) +
 Figure 1: Distribution of ordinal ratings by treatment (marginal counts)
 
 ``` r
-
 ## Fixed-effects proportional-odds via MASS::polr (no random block effect)
 ## NOTE: ignores block random effect; for illustration of fixed-effect structure.
 ## A full proportional-odds GLMM would require ordinal::clmm or glmmTMB >= 1.2.
@@ -128,7 +123,6 @@ proportional-odds assumption fails; variety effects differ by rating
 boundary.
 
 ``` r
-
 data(DataSet14.2)
 str(DataSet14.2)
 ```
@@ -140,7 +134,6 @@ str(DataSet14.2)
      $ y      : int  16 15 15 6 33 6 22 3 21 16 ...
 
 ``` r
-
 ## Marginal variety × rating totals (match published table p.438)
 with(DataSet14.2, tapply(y, list(variety, rating), sum))
 ```
@@ -151,7 +144,6 @@ with(DataSet14.2, tapply(y, list(variety, rating), sum))
     3 262  30 244
 
 ``` r
-
 marg14b <- aggregate(y ~ variety + rating, data = DataSet14.2, FUN = sum)
 marg14b$rating <- factor(marg14b$rating, levels = c("A", "B", "C"))
 ggplot(marg14b, aes(x = variety, y = y, fill = rating)) +
@@ -168,7 +160,6 @@ ggplot(marg14b, aes(x = variety, y = y, fill = rating)) +
 Figure 2: Quality rating distribution by variety (marginal counts)
 
 ``` r
-
 ## Proportional-odds (fixed effects only, no grower RE) via MASS::polr
 ## Expected to show near-zero variety effect (proportional-odds assumption fails).
 ## Full GLMM with grower random effect requires ordinal::clmm or glmmTMB >= 1.2.

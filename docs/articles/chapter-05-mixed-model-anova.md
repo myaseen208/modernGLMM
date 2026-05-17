@@ -36,7 +36,6 @@ Key members relevant to GLMMs:
 | Gamma    | reciprocal | \\-\log(-\theta)\\     | \\-1/\theta\\             |
 
 ``` r
-
 ## Canonical link and variance function for common families
 fams <- list(
   Gaussian  = stats::gaussian(link = "identity"),
@@ -50,14 +49,12 @@ cat("Family    | Link\n")
     Family    | Link
 
 ``` r
-
 cat("----------|---------\n")
 ```
 
     ----------|---------
 
 ``` r
-
 for (nm in names(fams)) cat(sprintf("%-10s| %s\n", nm, fams[[nm]]$link))
 ```
 
@@ -98,7 +95,6 @@ comparing models with different fixed effects via likelihood ratio
 tests.
 
 ``` r
-
 ## Illustration: ML vs REML variance component estimates
 if (requireNamespace("lme4", quietly = TRUE)) {
   set.seed(42)

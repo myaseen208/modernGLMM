@@ -65,7 +65,6 @@ ecosystem:
 ## Workflow Example
 
 
-
     data(DataSet11.1)
     fit <- stats::glm(y ~ trt, family = stats::poisson(link = "log"), data = DataSet11.1)
     summary(fit)
