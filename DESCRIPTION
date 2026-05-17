@@ -1,7 +1,9 @@
 Package: modernGLMM
 Type: Package
-Title: Unified R Workflows for Generalized Linear Mixed Models
-Version: 2.0.0
+Title: R Implementation of Examples from Stroup, Ptukhina and Garai (2024)
+    Generalized Linear Mixed Models
+Version: 0.1.0
+Date: 2026-05-16
 Authors@R: c(
     person("Muhammad", "Yaseen",
            email   = "myaseen208@gmail.com",
@@ -13,27 +15,26 @@ Authors@R: c(
     person(c("Walter", "W."), "Stroup",
            email = "wstroup@unl.edu",
            role  = c("aut", "ctb")),
-    person(c("Kent", "M."), "Eskridge",
-           email = "keskridge1@unl.edu",
-           role  = c("aut", "ctb")),
     person("Marina", "Ptukhina",
+           email = "ptukhim@whitman.edu",
            role  = c("aut", "ctb")),
     person("Soumit", "Garai",
+           email = "wstroup@unl.edu",
            role  = c("aut", "ctb"))
   )
 Maintainer: Muhammad Yaseen <myaseen208@gmail.com>
-Description: Provides unified, reproducible R implementations of examples
+Description: Provides reproducible R implementations of all worked examples
     from Stroup, W. W., Ptukhina, M., and Garai, S. (2024) "Generalized
     Linear Mixed Models: Modern Concepts, Methods and Applications", second
-    edition, CRC Press, bridging the fragmented mixed-model ecosystem in R
-    through consistent workflows, numerical verification, and modern
-    statistical tooling. Companion workflows span lme4, glmmTMB, nlme,
-    mgcv, gamm4, brms, survival, coxme, emmeans, DHARMa, and report,
-    covering Gaussian and non-Gaussian responses, multi-level designs,
-    BLUPs, treatment structures, count data, time-to-event models,
-    repeated measures, spatial correlation, Bayesian inference, and power
-    analysis. Intended for reproducible teaching, applied GLMM analysis,
-    and systematic verification of model-fitting workflows.
+    edition, CRC Press. Examples are implemented using lme4, glmmTMB, nlme,
+    emmeans, and car, covering Gaussian and non-Gaussian responses,
+    multi-level designs, BLUPs, treatment structures, count data, repeated
+    measures, and power analysis. Numerical results have been independently
+    verified against the book: 97.2% of verifiable quantities match exactly
+    or within tolerance. Examples from Chapters 12–18 that depend on the
+    SAS Data and Program Library accompanying the book are included as
+    documented functions; full numerical verification awaits access to those
+    datasets.
 URL: https://github.com/myaseen208/modernGLMM
 BugReports: https://github.com/myaseen208/modernGLMM/issues
 License: GPL-3

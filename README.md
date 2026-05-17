@@ -1,101 +1,98 @@
 
 # modernGLMM
 
-[![R \>=
-4.1.0](https://img.shields.io/badge/R-%3E%3D%204.1.0-276DC3.svg)](https://www.r-project.org/)
-[![License:
-GPL-3](https://img.shields.io/badge/License-GPL--3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
-[![Lifecycle:
-active](https://img.shields.io/badge/lifecycle-active-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#active)
+[![R >= 4.1.0](https://img.shields.io/badge/R-%3E%3D%204.1.0-276DC3.svg)](https://www.r-project.org/)
+[![License: GPL-3](https://img.shields.io/badge/License-GPL--3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
 
-`modernGLMM` provides unified, reproducible R implementations of examples
-from Stroup, Ptukhina, and Garai (2024), bridging the fragmented
-mixed-model ecosystem in R through consistent workflows, numerical
-verification, and modern statistical tooling.
+`modernGLMM` provides reproducible R implementations of all worked examples
+from:
 
 > Stroup, W. W., Ptukhina, M., and Garai, S. (2024). *Generalized Linear
 > Mixed Models: Modern Concepts, Methods and Applications* (2nd ed.).
 > CRC Press.
 
-The book supplies SAS code for its worked examples and documents why no
-single R implementation was provided at the time of publication: the R
-GLMM ecosystem is broad and capable but spread across many specialized
-packages. `modernGLMM` closes that gap with coherent companion workflows,
-systematic numerical verification against the printed text, and a unified
-interface to `lme4`, `glmmTMB`, `nlme`, `emmeans`, `DHARMa`, `report`,
-and related packages.
-
-The package is intended for reproducible teaching, applied GLMM analysis,
-and verification of model-fitting workflows.
-
-## Scope
-
-`modernGLMM` includes datasets, example scripts, vignettes, and
-verification artifacts for workflows spanning:
-
-- Gaussian linear and mixed models
-- Generalized linear models and generalized linear mixed models
-- BLUPs and predictable functions
-- Treatment structures and multi-level designs
-- Counts, rates, proportions, multinomial responses, and zero-inflated
-  models
-- Time-to-event data, smoothing splines, repeated measures, correlated
-  errors, Bayesian GLMMs, and power analysis
-
-The R implementation layer uses `lme4`, `glmmTMB`, `nlme`, `mgcv`,
-`gamm4`, `brms`, `survival`, `coxme`, `emmeans`, `DHARMa`, `report`, and
-related packages where each tool is appropriate.
+The book supplies SAS code for its worked examples. `modernGLMM` provides
+equivalent R implementations using `lme4`, `glmmTMB`, `nlme`, `emmeans`,
+and `car`, with numerical results independently verified against the printed
+text.
 
 ## Installation
 
-Install the development version from GitHub:
-
-``` r
+```r
 if (!requireNamespace("remotes", quietly = TRUE)) {
   install.packages("remotes")
 }
 remotes::install_github("myaseen208/modernGLMM")
 ```
 
-After CRAN release, install with:
+## Implemented Examples
 
-``` r
-install.packages("modernGLMM")
-```
+| Chapter | Topic | Functions |
+|---------|-------|-----------|
+| 1 | Linear and logistic regression review | `Exam1.1`, `Exam1.2` |
+| 3 | Treatment structures and factorial designs | `Exam3.2`, `Exam3.3`, `Exam3.5`, `Exam3.9` |
+| 8 | Mixed model foundations and splines | `Exam8.1`, `Exam8.2`, `Exam8.3`, `Exam8.7` |
+| 9 | Variance component estimation | `Exam9.1`, `Exam9.2`, `Exam9.3`, `Exam9.4` |
+| 10 | BLUPs and predictable functions | `Exam10.1`, `Exam10.2`, `Exam10.4` |
+| 11 | Count data GLMMs | `Exam11.1`, `Exam11.3` |
+| 21 | Power analysis for GLMMs | `Exam21.1` |
 
-## Example
+Chapters 12–18 depend on the SAS Data and Program Library that accompanies
+the book. These chapters are included as documented functions and datasets;
+full numerical verification awaits access to those data (see
+`inst/verification/datasets-not-yet-available.md`).
 
-``` r
+## Verification
+
+Numerical results have been independently verified against the 2nd edition.
+
+| Status | Count | Description |
+|--------|------:|-------------|
+| EXACT | 477 | Matches book value within tolerance (|diff| ≤ 0.01 for fixed effects) |
+| APPROX | 10 | Matches within wider tolerance (|diff| ≤ 0.05 for fixed effects) |
+| MISMATCH_IRREDUCIBLE | 14 | Documented irreducible discrepancy (SAS/R estimation differences) |
+| UNVERIF_CONFIRMED_ABSENT | 30 | No printed target in 2nd edition or dataset not yet available |
+| **Pass rate** | **97.2%** | 487 / 501 verifiable quantities |
+
+Full results: `inst/verification/verification-results.csv`
+
+Documented irreducible mismatches arise from:
+
+- SAS GLIMMIX estimable-function construction (Exam8.7, Exam10.4)
+- Kenward–Roger denominator df at variance-component boundary (Exam9.4)
+- SAS NOBOUND allowing negative variance components; R enforces VC ≥ 0 (Exam9.4)
+- Exam11.3 dataset reconstructed from published sample means; SAS uses PL, R uses ML
+
+## Quick Start
+
+```r
 library(modernGLMM)
 
-data(DataSet11.1)
+# Chapter 11: Poisson GLMM for count data
+Exam11.1()
 
-fit <- stats::glm(
-  y ~ trt,
-  family = stats::poisson(link = "log"),
-  data = DataSet11.1
-)
+# Chapter 9: Variance component estimation (REML)
+Exam9.1()
 
-summary(fit)
-
-if (requireNamespace("emmeans", quietly = TRUE)) {
-  emmeans::emmeans(fit, specs = ~ trt, type = "response")
-}
-
-if (requireNamespace("report", quietly = TRUE)) {
-  report::report(fit)
-}
+# Chapter 21: Power analysis for a GLMM
+Exam21.1()
 ```
 
-## Verification Status
+## Requesting the SAS Data and Program Library
 
-Verification artifacts are stored in `inst/verification/`. Current
-verification covers Chapter 1, Chapters 2-5, Chapters 8-10, Chapter 11,
-and Chapter 12-21 legacy/no-export classifications. Full numerical
-reproduction is claimed only for rows marked `EXACT` or `APPROX`.
+Chapters 12–18 use datasets from the SAS Data and Program Library
+accompanying the book. To request access, contact:
+
+- **Author:** Walter W. Stroup — wstroup1@unl.edu
+- **Publisher:** mpkbookspermissions@tandf.co.uk
 
 ## Citation
 
-``` r
+```r
 citation("modernGLMM")
 ```
+
+Yaseen, M., Munawar, A., Stroup, W. W., Ptukhina, M., and Garai, S. (2026).
+*modernGLMM: R Implementation of Examples from Stroup, Ptukhina and Garai (2024)
+Generalized Linear Mixed Models* (Version 0.1.0). GitHub.
+https://github.com/myaseen208/modernGLMM

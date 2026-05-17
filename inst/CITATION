@@ -1,15 +1,14 @@
 bibentry(
   bibtype = "Manual",
-  title = "modernGLMM: Unified R Workflows for Generalized Linear Mixed Models",
+  title = "modernGLMM: R Implementation of Examples from Stroup, Ptukhina and Garai (2024) Generalized Linear Mixed Models",
   author = c(
     person("Muhammad", "Yaseen"),
     person("Adeela", "Munawar"),
     person(c("Walter", "W."), "Stroup"),
-    person(c("Kent", "M."), "Eskridge"),
     person("Marina", "Ptukhina"),
     person("Soumit", "Garai")
   ),
   year = "2026",
-  note = "R package version 2.0.0",
+  note = "R package version 0.1.0",
   url = "https://github.com/myaseen208/modernGLMM"
 )

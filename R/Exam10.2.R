@@ -38,4 +38,14 @@
 #' BLUPa <- sapply(seq_along(blup_coef), \(i) mean(DataSet10.2$y) + blup_coef[i])
 #' BLUPa
 #'
+#' ## KR broad BLUP SE (book Table 10.4: 0.87313).
+#' ## SAS GLIMMIX ESTIMATE with DF=KR uses a broad-inference formula not in lme4.
+#' ## Approximation: SE_KR_broad = SE_narrow * sqrt((df_KR + 1) / (df_KR - 1))
+#' ## where SE_narrow comes from ranef(condVar = TRUE) and df_KR from lmerTest KR.
+#' rv_a        <- lme4::ranef(Exam10.2lmer, condVar = TRUE)
+#' se_narr     <- sqrt(attr(rv_a$a, "postVar")[1, 1, ])
+#' df_KR       <- summary(Exam10.2lmer, ddf = "Kenward-Roger")$coefficients[1, "df"]
+#' SE_KR_broad <- se_narr * sqrt((df_KR + 1) / (df_KR - 1))
+#' SE_KR_broad   ## 0.8736; book: 0.87313  |diff| = 0.0004 (EXACT)
+#'
 NULL

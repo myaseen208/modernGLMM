@@ -92,7 +92,8 @@ and conditional responses drawn from an exponential-family distribution.
   \item Muhammad Yaseen (\email{myaseen208@gmail.com})
   \item Adeela Munawar (\email{adeela.uaf@gmail.com})
   \item Walter W. Stroup (\email{wstroup@unl.edu})
-  \item Kent M. Eskridge (\email{keskridge1@unl.edu})
+  \item Marina Ptukhina (\email{ptukhim@whitman.edu})
+  \item Soumit Garai
 }
 }
 \keyword{internal}
