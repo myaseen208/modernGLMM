@@ -1,5 +1,7 @@
 # Chapter 10: Best Linear Unbiased Prediction
 
+Code
+
 ``` r
 
 library(modernGLMM)
@@ -33,6 +35,8 @@ The mixed model for observation \\y\_{ij}\\ in group \\i\\, observation
 DataSet 10.1: 12 groups, 2 observations each (continuous response
 \\y\\).
 
+Code
+
 ``` r
 
 data(DataSet10.1)
@@ -45,6 +49,8 @@ str(DataSet10.1)
      $ y: num  14.9 17.4 18.2 16.5 13.4 10.9 16.3 16.4 14.6 14.2 ...
 
 ### 2.1 Random effects model
+
+Code
 
 ``` r
 
@@ -82,6 +88,8 @@ summary(Exam10.1Lmer)
 
 ### 2.2 Variance components
 
+Code
+
 ``` r
 
 as.data.frame(lme4::VarCorr(Exam10.1Lmer))
@@ -97,6 +105,8 @@ variance attributable to group differences:
 
 \\\text{ICC} = \frac{\sigma^2_a}{\sigma^2_a + \sigma^2_e}\\
 
+Code
+
 ``` r
 
 if (requireNamespace("performance", quietly = TRUE)) {
@@ -109,6 +119,8 @@ if (requireNamespace("performance", quietly = TRUE)) {
 |    0.7826211 |      0.7826211 | FALSE    |
 
 ### 2.3 BLUPs (Best Linear Unbiased Predictors)
+
+Code
 
 ``` r
 
@@ -141,6 +153,8 @@ Table 10.1: BLUP estimates {.table .caption-top}
 
 ### 2.4 Overall mean (narrow inference)
 
+Code
+
 ``` r
 
 emm10.1 <- emmeans::emmeans(Exam10.1Lmer, ~ 1)
@@ -154,6 +168,8 @@ print(emm10.1)
     Confidence level used: 0.95 
 
 ### 2.5 Report
+
+Code
 
 ``` r
 
@@ -173,6 +189,8 @@ if (requireNamespace("report", quietly = TRUE)) {
 
 ## 3 Example 10.2 — Two-Way Nested Random Effects Model
 
+Code
+
 ``` r
 
 data(DataSet10.2)
@@ -185,6 +203,8 @@ str(DataSet10.2)
      $ a: Factor w/ 7 levels "1","2","3","4",..: 1 1 1 1 2 2 2 2 3 3 ...
      $ b: Factor w/ 2 levels "1","2": 1 1 2 2 1 1 2 2 1 1 ...
      $ y: num  17 17.1 17.7 17 18.8 18.6 20 20.1 17.6 19.5 ...
+
+Code
 
 ``` r
 
@@ -221,6 +241,8 @@ summary(Exam10.2Lmer)
     ---
     Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
+Code
+
 ``` r
 
 emm10.2 <- emmeans::emmeans(Exam10.2Lmer, ~ 1)
@@ -235,6 +257,8 @@ print(emm10.2)
 
 ## 4 Example 10.4 — BLUP vs Fixed Effect Estimators
 
+Code
+
 ``` r
 
 data(DataSet10.4)
@@ -247,6 +271,8 @@ str(DataSet10.4)
      $ a: Factor w/ 2 levels "1","2": 1 1 2 2 1 1 2 2 1 1 ...
      $ b: Factor w/ 8 levels "1","2","3","4",..: 1 1 1 1 2 2 2 2 3 3 ...
      $ y: num  12.9 13.6 10 9.8 16 13.6 11.3 16.1 12.4 14.3 ...
+
+Code
 
 ``` r
 
@@ -262,6 +288,8 @@ stats::anova(Exam10.4Lmer, ddf = "Kenward-Roger")
 |:----|---------:|---------:|------:|------:|---------:|----------:|
 | a   | 11.68332 | 11.68332 |     1 |     7 | 3.203379 | 0.1166121 |
 
+Code
+
 ``` r
 
 emmeans::emmeans(Exam10.4Lmer, ~ a)
@@ -275,6 +303,8 @@ emmeans::emmeans(Exam10.4Lmer, ~ a)
     Confidence level used: 0.95 
 
 ## 5 Diagnostics
+
+Code
 
 ``` r
 

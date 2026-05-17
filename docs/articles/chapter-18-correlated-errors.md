@@ -1,5 +1,7 @@
 # Chapter 18: Correlated Errors, Part II: Spatial Variability
 
+Code
+
 ``` r
 
 library(modernGLMM)
@@ -30,6 +32,8 @@ sill.
 `DataSet18.1`: 12×12 field grid, 48 wheat variety treatments, 3 complete
 column blocks (columns 1–4, 5–8, 9–12). 144 plots total.
 
+Code
+
 ``` r
 
 data(DataSet18.1)
@@ -43,6 +47,8 @@ str(DataSet18.1)
      $ trt  : Factor w/ 48 levels "1","2","3","4",..: 2 42 24 38 6 33 40 18 4 34 ...
      $ y    : num  60.1 86.2 49.6 75.2 69.2 ...
 
+Code
+
 ``` r
 
 with(DataSet18.1, table(block))
@@ -51,6 +57,8 @@ with(DataSet18.1, table(block))
     block
      1  2  3
     48 48 48 
+
+Code
 
 ``` r
 
@@ -69,6 +77,8 @@ Figure 1: Spatial yield map (12×12 grid)
 
 ### 2.1 Baseline: complete block model (no spatial covariance)
 
+Code
+
 ``` r
 
 fit_rcb <- stats::lm(y ~ trt + block, data = DataSet18.1)
@@ -78,6 +88,8 @@ cat("RCB AIC:", stats::AIC(fit_rcb), "\n")
     RCB AIC: 836.6678 
 
 ### 2.2 Spatial models via nlme::gls
+
+Code
 
 ``` r
 
@@ -108,6 +120,8 @@ stats::AIC(fit_sph, fit_exp)
 
 ### 2.3 Spatial range and sill from best model
 
+Code
+
 ``` r
 
 tryCatch(
@@ -128,6 +142,8 @@ tryCatch(
 
 ### 2.4 Empirical variogram
 
+Code
+
 ``` r
 
 vario <- nlme::Variogram(fit_sph, form = ~ row + col, resType = "normalized")
@@ -144,6 +160,8 @@ Figure 2: Empirical variogram from spherical model
 blocks), 64 plots. Response is number of Hessian fly-damaged plants out
 of total (`y / n`).
 
+Code
+
 ``` r
 
 data(DataSet18.2)
@@ -158,6 +176,8 @@ str(DataSet18.2)
      $ y      : int  7 0 7 0 5 2 4 6 4 0 ...
      $ n      : int  20 20 20 20 20 20 20 20 20 20 ...
 
+Code
+
 ``` r
 
 ## Observed resistance rates by variety
@@ -168,6 +188,8 @@ with(DataSet18.2, tapply(y / n, variety, mean))
     0.2875 0.2500 0.1500 0.1000 0.3000 0.3125 0.2250 0.1375 0.0500 0.0375 0.0125
         12     13     14     15     16
     0.1875 0.1875 0.1250 0.0000 0.1000 
+
+Code
 
 ``` r
 
@@ -185,6 +207,8 @@ ggplot(DataSet18.2, aes(x = col, y = row, fill = y / n)) +
 Figure 3: Hessian fly damage map (spatial layout)
 
 ### 3.1 RCB model (baseline)
+
+Code
 
 ``` r
 
@@ -241,6 +265,8 @@ summary(fit_rcb18)
     boundary (singular) fit: see help('isSingular')
 
 ### 3.2 G-side spherical spatial GLMM via glmmTMB
+
+Code
 
 ``` r
 

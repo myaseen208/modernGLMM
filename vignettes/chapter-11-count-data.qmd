@@ -18,10 +18,6 @@ execute:
   message: false
 ---
 
-```{r}
-#| label: setup
-knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
-```
 
 ## Count Models
 

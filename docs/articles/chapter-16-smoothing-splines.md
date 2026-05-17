@@ -1,5 +1,7 @@
 # Chapter 16: Smoothing Splines and Additive Models
 
+Code
+
 ``` r
 
 library(modernGLMM)
@@ -18,15 +20,19 @@ be expressed as a LMM:
 \\\mathbf{y} = \mathbf{X}\pmb{\beta} + \mathbf{Z}\mathbf{u} +
 \pmb{\varepsilon}\\
 
-where: - \\\mathbf{X}\pmb{\beta}\\: polynomial fixed effects (trend) -
-\\\mathbf{Z}\mathbf{u}\\: spline basis random effects (\\\mathbf{u} \sim
-\mathcal{N}(\mathbf{0}, \sigma^2_u\mathbf{I})\\)
+where:
+
+- \\\mathbf{X}\pmb{\beta}\\: polynomial fixed effects (trend)
+- \\\mathbf{Z}\mathbf{u}\\: spline basis random effects (\\\mathbf{u}
+  \sim \mathcal{N}(\mathbf{0}, \sigma^2_u\mathbf{I})\\)
 
 The ratio \\\sigma^2_e / \sigma^2_u\\ controls the smoothing penalty.
 
 ## 2 Spline Regression Example (DataSet8.7)
 
 DataSet8.7 contains spline regression data from Chapter 8.
+
+Code
 
 ``` r
 
@@ -41,6 +47,8 @@ str(DataSet8.7)
      $ y: num  3.5 3 7.3 5.2 5.2 5.5 3.1 7.1 5 6.3 ...
 
 ### 2.1 Truncated power basis spline (mixed model)
+
+Code
 
 ``` r
 
@@ -62,6 +70,8 @@ spline_form <- as.formula(paste(
 ```
 
 ### 2.2 Natural cubic spline via ns()
+
+Code
 
 ``` r
 
@@ -94,6 +104,8 @@ summary(fit_ns)
     Multiple R-squared:  0.8865,    Adjusted R-squared:  0.8834
     F-statistic: 292.2 on 7 and 262 DF,  p-value: < 2.2e-16
 
+Code
+
 ``` r
 
 pred_data <- DataSet8.7
@@ -114,6 +126,8 @@ ggplot2::ggplot(pred_data, ggplot2::aes(x = x, y = y, colour = a, group = a)) +
 ![](chapter-16-smoothing-splines_files/figure-html/unnamed-chunk-3-1.png)
 
 ### 2.3 Penalized spline via mgcv
+
+Code
 
 ``` r
 
@@ -137,6 +151,8 @@ if (requireNamespace("mgcv", quietly = TRUE)) {
 ![](chapter-16-smoothing-splines_files/figure-html/unnamed-chunk-4-1.png)
 
 ### 2.4 Additive mixed model via gamm4
+
+Code
 
 ``` r
 

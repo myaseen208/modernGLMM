@@ -13,6 +13,7 @@ format:
     toc-depth: 3
     number-sections: true
     theme: cosmo
+    code-fold: show
     df-print: kable
     fig-width: 7
     fig-height: 5

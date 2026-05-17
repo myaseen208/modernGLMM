@@ -1,5 +1,7 @@
 # Chapter 6: Inference, Part I
 
+Code
+
 ``` r
 
 library(modernGLMM)
@@ -60,6 +62,8 @@ response ~ fixed_effects + (random_slope | grouping_factor)
 The following illustrates a Poisson GLMM using the blocked count data
 from Chapter 11 (`DataSet11.3`):
 
+Code
+
 ``` r
 
 data(DataSet11.3)
@@ -108,6 +112,8 @@ summary(fit_pois)
     trt2 -0.235
     trt3 -0.260  0.690
 
+Code
+
 ``` r
 
 ## Overdispersion check
@@ -121,6 +127,8 @@ if (requireNamespace("performance", quietly = TRUE)) {
            dispersion ratio =   7.129
       Pearson's Chi-Squared = 185.365
                     p-value = < 0.001
+
+Code
 
 ``` r
 
@@ -136,6 +144,8 @@ if (requireNamespace("DHARMa", quietly = TRUE)) {
 
     Scaled residual values: 0.7574428 0.6786155 0.5365879 0.47588 0.944 0.7954783 0.5746475 0.7175266 0.02834456 0.7374608 0.7252719 0.7522183 0.02194105 0.3661984 0.3275792 0.98 0.4298969 0.4834902 0.2166665 0.385463 ...
 
+Code
+
 ``` r
 
 emm6 <- emmeans::emmeans(fit_pois, ~ trt, type = "response")
@@ -149,6 +159,8 @@ print(emm6)
 
     Confidence level used: 0.95
     Intervals are back-transformed from the log scale 
+
+Code
 
 ``` r
 

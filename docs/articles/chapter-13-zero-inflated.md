@@ -1,5 +1,7 @@
 # Chapter 13: Zero-Inflated and Hurdle Models
 
+Code
+
 ``` r
 
 library(modernGLMM)
@@ -24,6 +26,8 @@ The zero-inflated Poisson model:
 \pi_i)\frac{e^{-\lambda_i}\lambda_i^y}{y!}, \quad y \> 0\\
 
 ## 2 Zero-Inflated Poisson GLMM
+
+Code
 
 ``` r
 
@@ -88,6 +92,8 @@ if (requireNamespace("glmmTMB", quietly = TRUE)) {
 
 ## 3 Hurdle Model
 
+Code
+
 ``` r
 
 if (requireNamespace("glmmTMB", quietly = TRUE) && exists("zi_data")) {
@@ -133,6 +139,8 @@ if (requireNamespace("glmmTMB", quietly = TRUE) && exists("zi_data")) {
     Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 ## 4 Diagnostics
+
+Code
 
 ``` r
 

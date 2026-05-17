@@ -1,5 +1,7 @@
 # Chapter 1: Modeling Basics
 
+Code
+
 ``` r
 
 library(modernGLMM)
@@ -26,6 +28,8 @@ The chapter uses a dose–response dataset (Table 1.1) to contrast:
 
 Table 1.1 records the number of successes \\y\\ out of \\N_x\\ trials
 across 11 dose levels \\x = 0, 1, \ldots, 10\\.
+
+Code
 
 ``` r
 
@@ -59,6 +63,8 @@ The LM fits a straight line on the probability scale:
 \\p_i = \beta_0 + \beta_1 x_i + \varepsilon_i, \quad \varepsilon_i \sim
 \mathcal{N}(0, \sigma^2)\\
 
+Code
+
 ``` r
 
 Exam1.1.lm <- stats::lm(formula = y / Nx ~ x, data = Table1.1)
@@ -83,6 +89,8 @@ The logistic GLM uses:
 
 so fitted values are automatically constrained to \\(0, 1)\\.
 
+Code
+
 ``` r
 
 Exam1.1.glm <- stats::glm(
@@ -99,6 +107,8 @@ if (requireNamespace("parameters", quietly = TRUE)) {
 |:---|---:|---:|---:|---:|---:|---:|---:|---:|
 | (Intercept) | -4.1085728 | 0.7421399 | 0.95 | -5.7305417 | -2.795709 | -5.536116 | Inf | 0 |
 | x | 0.7640431 | 0.1272572 | 0.95 | 0.5397411 | 1.043573 | 6.003930 | Inf | 0 |
+
+Code
 
 ``` r
 
@@ -129,6 +139,8 @@ if (requireNamespace("report", quietly = TRUE)) {
     computed using a Wald z-distribution approximation.
 
 ## 5 Comparison: LM vs GLM
+
+Code
 
 ``` r
 
@@ -165,12 +177,16 @@ proportions
 
 ## 6 Correlation of Fitted Values with Observed
 
+Code
+
 ``` r
 
 cat("LM  correlation with observed:", round(cor(Table1.1$p_obs, Table1.1$p_lm),  4), "\n")
 ```
 
     LM  correlation with observed: 0.9575 
+
+Code
 
 ``` r
 
@@ -183,6 +199,8 @@ The GLM consistently achieves higher correlation because it uses the
 correct probability model.
 
 ## 7 Estimated Marginal Means
+
+Code
 
 ``` r
 

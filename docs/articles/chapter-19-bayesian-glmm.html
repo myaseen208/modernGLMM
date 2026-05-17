@@ -99,10 +99,11 @@
 
 
     <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="downlit sourceCode r">
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/myaseen208/modernGLMM">modernGLMM</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lme4/lme4/" class="external-link">lme4</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rvlenth.github.io/emmeans/" class="external-link">emmeans</a></span><span class="op">)</span></span></code></pre></div>
+</details>
 </div>
 <section class="level2" data-number="1"><h2 data-number="1" id="overview">
 <span class="header-section-number">1</span> Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
@@ -126,19 +127,20 @@
 </h2>
 <p>Typical weakly informative priors for GLMMs:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="downlit sourceCode r">
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Using brms (requires Stan backend)</span></span>
 <span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"brms"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">priors</span> <span class="op">&lt;-</span> <span class="fu">brms</span><span class="fu">::</span><span class="fu"><a href="https://paulbuerkner.com/brms/reference/set_prior.html" class="external-link">prior</a></span><span class="op">(</span><span class="fu">normal</span><span class="op">(</span><span class="fl">0</span>, <span class="fl">10</span><span class="op">)</span>, class <span class="op">=</span> <span class="va">b</span><span class="op">)</span> <span class="op">+</span></span>
 <span>            <span class="fu">brms</span><span class="fu">::</span><span class="fu"><a href="https://paulbuerkner.com/brms/reference/set_prior.html" class="external-link">prior</a></span><span class="op">(</span><span class="fu">normal</span><span class="op">(</span><span class="fl">0</span>, <span class="fl">10</span><span class="op">)</span>, class <span class="op">=</span> <span class="va">Intercept</span><span class="op">)</span> <span class="op">+</span></span>
 <span>            <span class="fu">brms</span><span class="fu">::</span><span class="fu"><a href="https://paulbuerkner.com/brms/reference/set_prior.html" class="external-link">prior</a></span><span class="op">(</span><span class="fu">cauchy</span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2.5</span><span class="op">)</span>, class <span class="op">=</span> <span class="va">sd</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
+</details>
 </div>
 </section><section class="level2" data-number="3"><h2 data-number="3" id="bayesian-one-way-random-effects-model">
 <span class="header-section-number">3</span> Bayesian One-Way Random Effects Model<a class="anchor" aria-label="anchor" href="#bayesian-one-way-random-effects-model"></a>
 </h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="downlit sourceCode r">
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"brms"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">DataSet10.1</span><span class="op">)</span></span>
 <span>  <span class="va">DataSet10.1</span><span class="op">$</span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">DataSet10.1</span><span class="op">$</span><span class="va">a</span><span class="op">)</span></span>
@@ -161,7 +163,7 @@
 <span>  <span class="op">)</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fit_bayes</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
+</details><div class="cell-output cell-output-stdout">
 <pre><code>REML estimates:
        grp        var1 var2     vcov    sdcor
 1        a (Intercept) &lt;NA&gt; 5.511402 2.347638
@@ -169,8 +171,8 @@
 
 SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).
 Chain 1:
-Chain 1: Gradient evaluation took 1.2e-05 seconds
-Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.12 seconds.
+Chain 1: Gradient evaluation took 1.3e-05 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.13 seconds.
 Chain 1: Adjust your expectations accordingly!
 Chain 1:
 Chain 1:
@@ -187,15 +189,15 @@ Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 1:
-Chain 1:  Elapsed Time: 0.04 seconds (Warm-up)
-Chain 1:                0.042 seconds (Sampling)
-Chain 1:                0.082 seconds (Total)
+Chain 1:  Elapsed Time: 0.037 seconds (Warm-up)
+Chain 1:                0.038 seconds (Sampling)
+Chain 1:                0.075 seconds (Total)
 Chain 1:
 
 SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 2).
 Chain 2:
-Chain 2: Gradient evaluation took 9e-06 seconds
-Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.09 seconds.
+Chain 2: Gradient evaluation took 8e-06 seconds
+Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.08 seconds.
 Chain 2: Adjust your expectations accordingly!
 Chain 2:
 Chain 2:
@@ -212,15 +214,15 @@ Chain 2: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 2:
-Chain 2:  Elapsed Time: 0.054 seconds (Warm-up)
-Chain 2:                0.042 seconds (Sampling)
-Chain 2:                0.096 seconds (Total)
+Chain 2:  Elapsed Time: 0.039 seconds (Warm-up)
+Chain 2:                0.038 seconds (Sampling)
+Chain 2:                0.077 seconds (Total)
 Chain 2:
 
 SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 3).
 Chain 3:
-Chain 3: Gradient evaluation took 1e-05 seconds
-Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.1 seconds.
+Chain 3: Gradient evaluation took 8e-06 seconds
+Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.08 seconds.
 Chain 3: Adjust your expectations accordingly!
 Chain 3:
 Chain 3:
@@ -237,15 +239,15 @@ Chain 3: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 3:
-Chain 3:  Elapsed Time: 0.042 seconds (Warm-up)
-Chain 3:                0.035 seconds (Sampling)
-Chain 3:                0.077 seconds (Total)
+Chain 3:  Elapsed Time: 0.039 seconds (Warm-up)
+Chain 3:                0.033 seconds (Sampling)
+Chain 3:                0.072 seconds (Total)
 Chain 3:
 
 SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 4).
 Chain 4:
-Chain 4: Gradient evaluation took 1e-05 seconds
-Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.1 seconds.
+Chain 4: Gradient evaluation took 9e-06 seconds
+Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.09 seconds.
 Chain 4: Adjust your expectations accordingly!
 Chain 4:
 Chain 4:
@@ -262,9 +264,9 @@ Chain 4: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 4:
-Chain 4:  Elapsed Time: 0.043 seconds (Warm-up)
-Chain 4:                0.046 seconds (Sampling)
-Chain 4:                0.089 seconds (Total)
+Chain 4:  Elapsed Time: 0.04 seconds (Warm-up)
+Chain 4:                0.042 seconds (Sampling)
+Chain 4:                0.082 seconds (Total)
 Chain 4: </code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
@@ -297,11 +299,11 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <span class="header-section-number">4</span> Posterior Predictive Check<a class="anchor" aria-label="anchor" href="#posterior-predictive-check"></a>
 </h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"brms"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu">brms</span><span class="fu">::</span><span class="fu"><a href="https://mc-stan.org/bayesplot/reference/pp_check.html" class="external-link">pp_check</a></span><span class="op">(</span><span class="va">fit_bayes</span>, ndraws <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<div class="cell-output-display">
+</details><div class="cell-output-display">
 <div>
 <figure><p><img src="chapter-19-bayesian-glmm_files/figure-html/unnamed-chunk-3-1.png" width="672"></p>
 </figure>
@@ -312,12 +314,12 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <span class="header-section-number">5</span> Posterior for Variance Components<a class="anchor" aria-label="anchor" href="#posterior-for-variance-components"></a>
 </h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="downlit sourceCode r">
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"brms"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu">brms</span><span class="fu">::</span><span class="fu"><a href="https://paulbuerkner.com/brms/reference/mcmc_plot.brmsfit.html" class="external-link">mcmc_plot</a></span><span class="op">(</span><span class="va">fit_bayes</span>, variable <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sd_a__Intercept"</span>, <span class="st">"sigma"</span><span class="op">)</span>,</span>
 <span>                  type <span class="op">=</span> <span class="st">"hist"</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<div class="cell-output-display">
+</details><div class="cell-output-display">
 <div>
 <figure><p><img src="chapter-19-bayesian-glmm_files/figure-html/unnamed-chunk-4-1.png" width="672"></p>
 </figure>

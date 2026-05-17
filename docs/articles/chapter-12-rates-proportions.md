@@ -1,5 +1,7 @@
 # Chapter 12: Rates and Proportions
 
+Code
+
 ``` r
 
 library(modernGLMM)
@@ -27,6 +29,8 @@ Two primary approaches:
 `DataSet12.1`: 2 treatments × 12 runs × 6 dose levels = 144
 observations. Response is a continuous proportion in \\(0, 1)\\.
 
+Code
+
 ``` r
 
 data(DataSet12.1)
@@ -39,6 +43,8 @@ str(DataSet12.1)
      $ dose      : int  0 1 2 3 4 5 0 1 2 3 ...
      $ proportion: num  0.688 0.957 0.863 0.74 0.89 ...
 
+Code
+
 ``` r
 
 ## Mean proportion by treatment and dose
@@ -48,6 +54,8 @@ with(DataSet12.1, tapply(proportion, list(trt, dose), mean))
               0         1         2         3         4         5
     0 0.6939107 0.7212031 0.7210461 0.8140771 0.8964916 0.8705738
     1 0.6766403 0.7444827 0.8466202 0.9294818 0.9419682 0.9697002
+
+Code
 
 ``` r
 
@@ -66,6 +74,8 @@ ggplot(DataSet12.1, aes(x = dose, y = proportion,
 Figure 1: Dose-response profiles by treatment
 
 ### 2.1 Beta GLMM via glmmTMB
+
+Code
 
 ``` r
 
@@ -103,6 +113,8 @@ if (requireNamespace("glmmTMB", quietly = TRUE)) {
     trt1:dose    0.32889    0.07601   4.327 1.51e-05 ***
     ---
     Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Code
 
 ``` r
 
@@ -144,6 +156,8 @@ if (requireNamespace("glmmTMB", quietly = TRUE)) {
 B with 3 levels nested within A) = 60 observations. Response is count of
 successes `f` out of total `n`.
 
+Code
+
 ``` r
 
 data(DataSet12.2)
@@ -157,6 +171,8 @@ str(DataSet12.2)
      $ f    : int  9 9 8 13 10 10 14 14 15 6 ...
      $ n    : int  20 20 20 20 20 20 20 20 20 20 ...
 
+Code
+
 ``` r
 
 ## Observed proportions by A and B
@@ -166,6 +182,8 @@ with(DataSet12.2, tapply(f / n, list(a, b), mean))
            B0   B1   B2
     setA 0.52 0.59 0.50
     setB 0.28 0.33 0.48
+
+Code
 
 ``` r
 
@@ -220,6 +238,8 @@ summary(fit_nb)
     Model is nearly unidentifiable: large eigenvalue ratio
      - Rescale variables?
 
+Code
+
 ``` r
 
 if (requireNamespace("car", quietly = TRUE)) {
@@ -232,6 +252,8 @@ if (requireNamespace("car", quietly = TRUE)) {
 | (Intercept) |  0.1111518 |   1 |   0.7388367 |
 | a           |  5.2974165 |   1 |   0.0213571 |
 | a:b         | 12.3267596 |   4 |   0.0150798 |
+
+Code
 
 ``` r
 

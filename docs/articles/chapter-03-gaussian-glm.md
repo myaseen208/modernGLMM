@@ -1,5 +1,7 @@
 # Chapter 3: Setting the Stage
 
+Code
+
 ``` r
 
 library(modernGLMM)
@@ -24,6 +26,8 @@ The model is:
 
 \\\text{logit}(p_i) = \mu + \tau_i, \quad i = 0, 1\\
 
+Code
+
 ``` r
 
 data(DataSet3.1)
@@ -37,6 +41,8 @@ str(DataSet3.1)
      $ Y  : num  7.33 11.01 8.51 13.22 9.34 ...
      $ N  : int  21 28 28 42 32 22 33 25 19 29 ...
      $ F  : int  0 5 1 5 5 0 4 3 1 5 ...
+
+Code
 
 ``` r
 
@@ -68,6 +74,8 @@ summary(Exam3.2.glm)
 
     Number of Fisher Scoring iterations: 4
 
+Code
+
 ``` r
 
 if (requireNamespace("parameters", quietly = TRUE)) {
@@ -79,6 +87,8 @@ if (requireNamespace("parameters", quietly = TRUE)) {
 |:---|---:|---:|---:|---:|---:|---:|---:|---:|
 | (Intercept) | -2.154165 | 0.1961678 | 0.95 | -2.559677 | -1.787830 | -10.981239 | Inf | 0e+00 |
 | trt1 | 1.268215 | 0.2339132 | 0.95 | 0.820860 | 1.740639 | 5.421734 | Inf | 1e-07 |
+
+Code
 
 ``` r
 
@@ -94,6 +104,8 @@ print(emm3.2)
     Confidence level used: 0.95
     Intervals are back-transformed from the logit scale 
 
+Code
+
 ``` r
 
 emmeans::contrast(emm3.2, method = "pairwise")
@@ -103,6 +115,8 @@ emmeans::contrast(emm3.2, method = "pairwise")
      trt0 / trt1      0.281 0.0658 Inf    1  -5.422 <0.0001
 
     Tests are performed on the log odds ratio scale 
+
+Code
 
 ``` r
 
@@ -134,6 +148,8 @@ if (requireNamespace("report", quietly = TRUE)) {
 
 ## 3 Example 3.3 — Multi-Location Factorial
 
+Code
+
 ``` r
 
 data(DataSet3.2)
@@ -153,6 +169,8 @@ str(DataSet3.2)
      $ count2: int  8 4 4 4 1 21 6 15 4 12 ...
      $ A     : int  0 0 1 1 0 0 1 1 0 0 ...
      $ B     : int  0 1 0 1 0 1 0 1 0 1 ...
+
+Code
 
 ``` r
 
@@ -188,6 +206,8 @@ summary(Exam3.3.lm)
     Multiple R-squared:  0.6818,    Adjusted R-squared:  0.5303
     F-statistic:   4.5 on 10 and 21 DF,  p-value: 0.001795
 
+Code
+
 ``` r
 
 anova(Exam3.3.lm)
@@ -198,6 +218,8 @@ anova(Exam3.3.lm)
 | loc       |   7 | 68.7250 |  9.817857 | 3.412505 | 0.0135440 |
 | trt       |   3 | 60.7525 | 20.250833 | 7.038813 | 0.0018727 |
 | Residuals |  21 | 60.4175 |  2.877024 |       NA |        NA |
+
+Code
 
 ``` r
 
@@ -213,6 +235,8 @@ print(emm3.3)
 
     Results are averaged over the levels of: loc
     Confidence level used: 0.95 
+
+Code
 
 ``` r
 
@@ -231,6 +255,8 @@ emmeans::contrast(emm3.3, method = "pairwise", adjust = "none")
 
 ### 3.1 Interaction plot
 
+Code
+
 ``` r
 
 emm_plot3.3 <- as.data.frame(emm3.3)
@@ -247,6 +273,8 @@ ggplot(emm_plot3.3, aes(x = trt, y = emmean)) +
 Figure 1: Treatment means averaged over locations
 
 ## 4 Example 3.5 — Factorial Treatment Structure
+
+Code
 
 ``` r
 
@@ -266,6 +294,8 @@ str(DataSet3.2)
      $ count2: int  8 4 4 4 1 21 6 15 4 12 ...
      $ A     : Factor w/ 2 levels "0","1": 1 1 2 2 1 1 2 2 1 1 ...
      $ B     : Factor w/ 2 levels "0","1": 1 2 1 2 1 2 1 2 1 2 ...
+
+Code
 
 ``` r
 
@@ -301,6 +331,8 @@ summary(Exam3.5.lm)
     Multiple R-squared:  0.6818,    Adjusted R-squared:  0.5303
     F-statistic:   4.5 on 10 and 21 DF,  p-value: 0.001795
 
+Code
+
 ``` r
 
 anova(Exam3.5.lm)
@@ -313,6 +345,8 @@ anova(Exam3.5.lm)
 | loc       |   7 | 68.72500 |  9.817857 |  3.4125047 | 0.0135440 |
 | A:B       |   1 |  0.55125 |  0.551250 |  0.1916043 | 0.6660538 |
 | Residuals |  21 | 60.41750 |  2.877024 |         NA |        NA |
+
+Code
 
 ``` r
 
@@ -328,6 +362,8 @@ print(emm3.5)
 
     Results are averaged over the levels of: loc
     Confidence level used: 0.95 
+
+Code
 
 ``` r
 
@@ -347,6 +383,8 @@ emmeans::contrast(
      A0 - A1     -2.95 0.848 21  -3.478  0.0022
 
     Results are averaged over the levels of: loc 
+
+Code
 
 ``` r
 

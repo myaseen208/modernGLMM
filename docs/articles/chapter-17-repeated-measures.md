@@ -1,5 +1,7 @@
 # Chapter 17: Correlated Errors, Part I: Repeated Measures
 
+Code
+
 ``` r
 
 library(modernGLMM)
@@ -32,6 +34,8 @@ subject is observed multiple times. Key challenges:
 equally-spaced time points per period (2 periods), plus a baseline
 covariate. 492 observations total.
 
+Code
+
 ``` r
 
 data(DataSet17.1)
@@ -47,12 +51,16 @@ str(DataSet17.1)
      $ baseline: num  2.5 2.5 2.5 2.5 2.5 ...
      $ y       : num  6.83 4.74 6.1 7.01 7.26 ...
 
+Code
+
 ``` r
 
 cat("Subjects per sequence:\n")
 ```
 
     Subjects per sequence:
+
+Code
 
 ``` r
 
@@ -62,6 +70,8 @@ print(table(unique(DataSet17.1[, c("id", "sequence")])$sequence))
 
     01 10
     17 24 
+
+Code
 
 ``` r
 
@@ -82,6 +92,8 @@ ggplot(DataSet17.1,
 Figure 1: Individual trajectories by treatment and period
 
 ### 2.1 Covariance model comparison: CS, AR(1), ARH(1)
+
+Code
 
 ``` r
 
@@ -123,6 +135,8 @@ stats::AIC(fit_cs, fit_ar1, fit_arh1)
 
 ### 2.2 Treatment contrasts (equal intercepts, equal slopes)
 
+Code
+
 ``` r
 
 emm_int <- emmeans::emmeans(fit_arh1, ~ trt, at = list(t = 0))
@@ -134,6 +148,8 @@ emmeans::contrast(emm_int, method = "pairwise")
 
     Results are averaged over the levels of: period
     Degrees-of-freedom method: containment 
+
+Code
 
 ``` r
 
@@ -153,6 +169,8 @@ emmeans::contrast(emm_slp, method = "pairwise")
 9 unequally-spaced times (0, 1, 2, 4, 8, 16, 32, 64, 128). Only 101 of
 369 possible observations are present (sparse).
 
+Code
+
 ``` r
 
 data(DataSet17.2)
@@ -165,12 +183,16 @@ str(DataSet17.2)
      $ time   : num  32 128 2 4 128 0 4 8 16 0 ...
      $ y      : num  -0.123 -19.122 6.697 8.426 -36.56 ...
 
+Code
+
 ``` r
 
 cat("Observations per treatment:\n")
 ```
 
     Observations per treatment:
+
+Code
 
 ``` r
 
@@ -181,12 +203,16 @@ print(table(DataSet17.2$trt))
      1  2
     48 53 
 
+Code
+
 ``` r
 
 cat("Unique times:", sort(unique(DataSet17.2$time)), "\n")
 ```
 
     Unique times: 0 1 2 4 8 16 32 64 128 
+
+Code
 
 ``` r
 
@@ -206,6 +232,8 @@ ggplot(DataSet17.2,
 Figure 2: Sparse longitudinal profiles by treatment
 
 ### 3.1 SP(POW) model: spatial-power covariance for unequal times
+
+Code
 
 ``` r
 
@@ -257,6 +285,8 @@ summary(fit_sppow)
 
     Number of Observations: 101
     Number of Groups: 41 
+
+Code
 
 ``` r
 

@@ -12,6 +12,7 @@ format:
     toc-depth: 2
     number-sections: true
     theme: cosmo
+    code-fold: show
 execute:
   echo: false
   warning: false

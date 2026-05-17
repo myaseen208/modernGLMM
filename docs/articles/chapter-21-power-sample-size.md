@@ -1,5 +1,7 @@
 # Chapter 21: Precision, Power, Sample Size, and Planning
 
+Code
+
 ``` r
 
 library(modernGLMM)
@@ -39,6 +41,8 @@ df_2}\right)\\
 
 ## 3 Example 21.1 — Power Curves
 
+Code
+
 ``` r
 
 data(DataSet21.1)
@@ -49,6 +53,8 @@ str(DataSet21.1)
      $ n_per_group: int  5 10 15 20 25 30 35 40 45 50 ...
      $ effect_size: num  0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 ...
      $ power      : num  0.0872 0.1394 0.1949 0.2521 0.3098 ...
+
+Code
 
 ``` r
 
@@ -82,6 +88,8 @@ Figure 1: Power curves for one-way ANOVA (k = 3) by sample size and
 effect size
 
 ## 4 Minimum Sample Sizes
+
+Code
 
 ``` r
 
@@ -130,6 +138,8 @@ depend on the design structure. Key considerations:
   carry uncertainty; sensitivity analysis over a range of values is
   recommended.
 
+Code
+
 ``` r
 
 ## Illustration: effective sample size with ICC
@@ -139,6 +149,8 @@ cat("Design effect (m=5 obs/cluster) at various ICC:\n")
 ```
 
     Design effect (m=5 obs/cluster) at various ICC:
+
+Code
 
 ``` r
 

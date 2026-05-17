@@ -35,6 +35,8 @@ Key members relevant to GLMMs:
 | Poisson  | log        | \\e^\theta\\           | \\e^\theta\\              |
 | Gamma    | reciprocal | \\-\log(-\theta)\\     | \\-1/\theta\\             |
 
+Code
+
 ``` r
 
 ## Canonical link and variance function for common families
@@ -49,12 +51,16 @@ cat("Family    | Link\n")
 
     Family    | Link
 
+Code
+
 ``` r
 
 cat("----------|---------\n")
 ```
 
     ----------|---------
+
+Code
 
 ``` r
 
@@ -96,6 +102,8 @@ because it accounts for the degrees of freedom used by
 \\\hat{\pmb{\beta}}\\. Use REML for final estimates; use ML when
 comparing models with different fixed effects via likelihood ratio
 tests.
+
+Code
 
 ``` r
 

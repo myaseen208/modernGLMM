@@ -1,5 +1,7 @@
 # Chapter 15: Time-to-Event Data
 
+Code
+
 ``` r
 
 library(modernGLMM)
@@ -27,6 +29,8 @@ Core concepts:
 \sigma^2)\\
 
 ## 2 Kaplan-Meier Curves
+
+Code
 
 ``` r
 
@@ -64,6 +68,8 @@ if (requireNamespace("survival", quietly = TRUE)) {
 
 ## 3 Cox Proportional Hazards Frailty Model
 
+Code
+
 ``` r
 
 if (requireNamespace("survival", quietly = TRUE) && exists("surv_data")) {
@@ -82,6 +88,8 @@ if (requireNamespace("survival", quietly = TRUE) && exists("surv_data")) {
     -7.232501e-07 
 
 ## 4 Cox Mixed-Effects Model
+
+Code
 
 ``` r
 

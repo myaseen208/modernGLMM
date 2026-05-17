@@ -99,10 +99,11 @@
 
 
     <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="downlit sourceCode r">
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/myaseen208/modernGLMM">modernGLMM</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rvlenth.github.io/emmeans/" class="external-link">emmeans</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/bprice2652/car_repo" class="external-link">car</a></span><span class="op">)</span></span></code></pre></div>
+</details>
 </div>
 <section class="level2" data-number="1"><h2 data-number="1" id="overview">
 <span class="header-section-number">1</span> Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
@@ -123,21 +124,22 @@
 </h2>
 <p>The 2×3 factorial from Chapter 8 is used here to illustrate contrast coding.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="downlit sourceCode r">
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">DataSet8.1</span><span class="op">)</span></span>
 <span><span class="va">DataSet8.1</span><span class="op">$</span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">DataSet8.1</span><span class="op">$</span><span class="va">a</span><span class="op">)</span></span>
 <span><span class="va">DataSet8.1</span><span class="op">$</span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">DataSet8.1</span><span class="op">$</span><span class="va">b</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">a</span> <span class="op">*</span> <span class="va">b</span>, data <span class="op">=</span> <span class="va">DataSet8.1</span><span class="op">)</span></span></code></pre></div>
+</details>
 </div>
 <section class="level3" data-number="2.1"><h3 data-number="2.1" id="estimated-marginal-means">
 <span class="header-section-number">2.1</span> Estimated marginal means<a class="anchor" aria-label="anchor" href="#estimated-marginal-means"></a>
 </h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="downlit sourceCode r">
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">emm</span> <span class="op">&lt;-</span> <span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rvlenth.github.io/emmeans/reference/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">fit</span>, <span class="op">~</span> <span class="va">a</span> <span class="op">*</span> <span class="va">b</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">emm</span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
+</details><div class="cell-output cell-output-stdout">
 <pre><code> a b emmean   SE df lower.CL upper.CL
  0 0   50.5 2.56 18     45.1     55.9
  1 0   67.8 2.56 18     62.4     73.1
@@ -154,12 +156,12 @@ Confidence level used: 0.95 </code></pre>
 <a class="anchor" aria-label="anchor" href="#all-pairwise-comparisons-within-each-level-of-a"></a>
 </h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/pairs.html" class="external-link">pairs</a></span><span class="op">(</span></span>
 <span>  <span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rvlenth.github.io/emmeans/reference/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">fit</span>, <span class="op">~</span> <span class="va">b</span> <span class="op">|</span> <span class="va">a</span><span class="op">)</span>,</span>
 <span>  adjust <span class="op">=</span> <span class="st">"tukey"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
+</details><div class="cell-output cell-output-stdout">
 <pre><code>a = 0:
  contrast estimate   SE df t.ratio p.value
  b0 - b1     -9.25 3.62 18  -2.554  0.0498
@@ -179,9 +181,9 @@ P value adjustment: tukey method for comparing a family of 3 estimates </code></
 <span class="header-section-number">2.3</span> Simple effects (ANOVA for b within each level of a)<a class="anchor" aria-label="anchor" href="#simple-effects-anova-for-b-within-each-level-of-a"></a>
 </h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="downlit sourceCode r">
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rvlenth.github.io/emmeans/reference/joint_tests.html" class="external-link">joint_tests</a></span><span class="op">(</span><span class="va">fit</span>, by <span class="op">=</span> <span class="st">"a"</span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output-display">
+</details><div class="cell-output-display">
 <div class="kable-table">
 <table class="table caption-top">
 <thead><tr class="header">
@@ -221,12 +223,12 @@ P value adjustment: tukey method for comparing a family of 3 estimates </code></
 <span class="header-section-number">2.4</span> Custom contrasts<a class="anchor" aria-label="anchor" href="#custom-contrasts"></a>
 </h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="downlit sourceCode r">
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rvlenth.github.io/emmeans/reference/contrast.html" class="external-link">contrast</a></span><span class="op">(</span><span class="va">emm</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>  <span class="st">"a0: b0 vs b1"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="op">-</span><span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>,</span>
 <span>  <span class="st">"a1: b0 vs b1"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span>, <span class="op">-</span><span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span></span>
 <span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
+</details><div class="cell-output cell-output-stdout">
 <pre><code> contrast     estimate   SE df t.ratio p.value
  a0: b0 vs b1   -17.25 3.62 18  -4.763  0.0002
  a1: b0 vs b1    -4.25 3.62 18  -1.173  0.2559</code></pre>

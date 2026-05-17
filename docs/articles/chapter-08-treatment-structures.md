@@ -1,5 +1,7 @@
 # Chapter 8: Treatment and Explanatory Variable Structure
 
+Code
+
 ``` r
 
 library(modernGLMM)
@@ -25,6 +27,8 @@ The two-way factorial model:
 \\y\_{ijk} = \mu + \alpha_i + \beta_j + (\alpha\beta)\_{ij} +
 \varepsilon\_{ijk}\\
 
+Code
+
 ``` r
 
 data(DataSet8.1)
@@ -37,6 +41,8 @@ str(DataSet8.1)
      $ a: Factor w/ 2 levels "0","1": 1 1 1 1 1 1 1 1 1 1 ...
      $ b: Factor w/ 3 levels "0","1","2": 1 1 1 1 2 2 2 2 3 3 ...
      $ y: int  55 48 51 48 60 59 66 54 75 61 ...
+
+Code
 
 ``` r
 
@@ -67,6 +73,8 @@ summary(Exam8.1.lm)
     Multiple R-squared:  0.7352,    Adjusted R-squared:  0.6617
     F-statistic: 9.997 on 5 and 18 DF,  p-value: 0.0001049
 
+Code
+
 ``` r
 
 anova(Exam8.1.lm)
@@ -78,6 +86,8 @@ anova(Exam8.1.lm)
 | b         |   2 | 603.2500 | 301.62500 | 11.496559 | 0.0006068 |
 | a:b       |   2 | 316.0833 | 158.04167 |  6.023822 | 0.0099348 |
 | Residuals |  18 | 472.2500 |  26.23611 |        NA |        NA |
+
+Code
 
 ``` r
 
@@ -94,6 +104,8 @@ print(emm8.1)
      1 2   71.0 2.56 18     65.6     76.4
 
     Confidence level used: 0.95 
+
+Code
 
 ``` r
 
@@ -118,6 +130,8 @@ emmeans::contrast(
 
     P value adjustment: tukey method for comparing a family of 3 estimates 
 
+Code
+
 ``` r
 
 emmeans::emmip(Exam8.1.lm, a ~ b, CIs = TRUE) +
@@ -135,6 +149,8 @@ Analysis of covariance with treatment and continuous covariate \\x\\:
 
 \\y\_{ij} = \mu + \tau_i + \beta x\_{ij} + \varepsilon\_{ij}\\
 
+Code
+
 ``` r
 
 data(DataSet8.2)
@@ -146,6 +162,8 @@ str(DataSet8.2)
      $ trt: Factor w/ 4 levels "1","2","3","4": 1 1 1 1 1 2 2 2 2 2 ...
      $ x  : int  12 13 12 7 14 10 6 12 10 11 ...
      $ y  : num  46 41.8 46.9 57 36.9 ...
+
+Code
 
 ``` r
 
@@ -175,6 +193,8 @@ summary(Exam8.2.lm)
     Multiple R-squared:  0.9029,    Adjusted R-squared:  0.877
     F-statistic: 34.88 on 4 and 15 DF,  p-value: 1.968e-07
 
+Code
+
 ``` r
 
 anova(Exam8.2.lm)
@@ -185,6 +205,8 @@ anova(Exam8.2.lm)
 | trt       |   3 | 385.28225 | 128.427416 | 19.30303 | 2.08e-05 |
 | x         |   1 | 542.89514 | 542.895141 | 81.59879 | 2.00e-07 |
 | Residuals |  15 |  99.79838 |   6.653225 |       NA |       NA |
+
+Code
 
 ``` r
 
@@ -202,6 +224,8 @@ print(emm8.2)
 
     Confidence level used: 0.95 
 
+Code
+
 ``` r
 
 emmeans::contrast(emm8.2, method = "pairwise")
@@ -218,6 +242,8 @@ emmeans::contrast(emm8.2, method = "pairwise")
     P value adjustment: tukey method for comparing a family of 4 estimates 
 
 ## 4 Example 8.3 — Heterogeneous Slopes ANCOVA
+
+Code
 
 ``` r
 
@@ -253,6 +279,8 @@ summary(Exam8.3.lm)
     Multiple R-squared:  0.9696,    Adjusted R-squared:  0.9519
     F-statistic:  54.7 on 7 and 12 DF,  p-value: 3.676e-08
 
+Code
+
 ``` r
 
 anova(Exam8.3.lm)
@@ -264,6 +292,8 @@ anova(Exam8.3.lm)
 | x         |   1 | 1444.11688 | 1444.116881 | 197.247458 | 0.0000000 |
 | trt:x     |   3 |  184.50998 |   61.503328 |   8.400549 | 0.0028089 |
 | Residuals |  12 |   87.85615 |    7.321346 |         NA |        NA |
+
+Code
 
 ``` r
 
@@ -281,6 +311,8 @@ Figure 2: Heterogeneous slopes: y vs x by treatment
 
 ## 5 Example 8.7 — Response Surface
 
+Code
+
 ``` r
 
 data(DataSet8.7)
@@ -292,6 +324,8 @@ str(DataSet8.7)
      $ a: Factor w/ 2 levels "1","2": 1 1 1 1 1 1 1 1 1 1 ...
      $ x: int  0 0 0 1 1 1 2 2 2 3 ...
      $ y: num  3.5 3 7.3 5.2 5.2 5.5 3.1 7.1 5 6.3 ...
+
+Code
 
 ``` r
 
@@ -321,6 +355,8 @@ summary(Exam8.7.lm)
     Residual standard error: 5.687 on 265 degrees of freedom
     Multiple R-squared:  0.8878,    Adjusted R-squared:  0.8861
     F-statistic: 524.1 on 4 and 265 DF,  p-value: < 2.2e-16
+
+Code
 
 ``` r
 

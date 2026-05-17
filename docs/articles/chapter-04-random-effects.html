@@ -136,18 +136,18 @@
 <p>A linear combination <span class="math inline">\(\mathbf{c}^\top \pmb{\beta}\)</span> is <strong>estimable</strong> if and only if <span class="math inline">\(\mathbf{c}^\top\)</span> lies in the row space of <span class="math inline">\(\mathbf{X}\)</span>, i.e., <span class="math inline">\(\mathbf{c}^\top = \mathbf{t}^\top \mathbf{X}\)</span> for some <span class="math inline">\(\mathbf{t}\)</span>.</p>
 <p>Non-estimable combinations — arising from rank deficiency or aliased parameters — cannot be uniquely estimated regardless of the data, and any hypothesis test involving them is not meaningful. The <code>emmeans</code> package performs estimability checks automatically.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="downlit sourceCode r">
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Illustration: rank-deficient design leads to non-estimable contrasts</span></span>
 <span><span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">0</span>, <span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">1</span>, <span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">0</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">3</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">rankX</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/qr.html" class="external-link">qr</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span><span class="op">$</span><span class="va">rank</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Rank of X:"</span>, <span class="va">rankX</span>, <span class="st">"  (columns:"</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span>, <span class="st">")\n"</span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
+</details><div class="cell-output cell-output-stdout">
 <pre><code>Rank of X: 2   (columns: 3 )</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb3"><pre class="downlit sourceCode r">
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Columns span a"</span>, <span class="va">rankX</span>, <span class="st">"-dimensional space —"</span>,</span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span> <span class="op">-</span> <span class="va">rankX</span>, <span class="st">"parameter(s) are not independently estimable.\n"</span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
+</details><div class="cell-output cell-output-stdout">
 <pre><code>Columns span a 2 -dimensional space — 1 parameter(s) are not independently estimable.</code></pre>
 </div>
 </div>
@@ -160,7 +160,7 @@
 <li>The F-statistic is a ratio of two chi-squared quadratic forms divided by their respective degrees of freedom.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Non-centrality parameter for a one-way ANOVA (k=3, n=5, sigma^2=9)</span></span>
 <span><span class="va">mu</span>    <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">20</span>, <span class="fl">25</span>, <span class="fl">25</span><span class="op">)</span></span>
 <span><span class="va">mubar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">mu</span><span class="op">)</span></span>
@@ -168,16 +168,16 @@
 <span><span class="va">n</span>      <span class="op">&lt;-</span> <span class="fl">5</span></span>
 <span><span class="va">lambda</span> <span class="op">&lt;-</span> <span class="va">n</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">mu</span> <span class="op">-</span> <span class="va">mubar</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">/</span> <span class="va">sigma2</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Non-centrality parameter lambda ="</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">lambda</span>, <span class="fl">5</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
+</details><div class="cell-output cell-output-stdout">
 <pre><code>Non-centrality parameter lambda = 9.25926 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb7"><pre class="downlit sourceCode r">
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Power at F_{2,12} critical value</span></span>
 <span><span class="va">df1</span> <span class="op">&lt;-</span> <span class="fl">2</span>; <span class="va">df2</span> <span class="op">&lt;-</span> <span class="fl">12</span></span>
 <span><span class="va">Fc</span>  <span class="op">&lt;-</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/Fdist.html" class="external-link">qf</a></span><span class="op">(</span><span class="fl">0.95</span>, <span class="va">df1</span>, <span class="va">df2</span><span class="op">)</span></span>
 <span><span class="va">pow</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">-</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/Fdist.html" class="external-link">pf</a></span><span class="op">(</span><span class="va">Fc</span>, <span class="va">df1</span>, <span class="va">df2</span>, ncp <span class="op">=</span> <span class="va">lambda</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Power (n = 5):"</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">pow</span>, <span class="fl">5</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
+</details><div class="cell-output cell-output-stdout">
 <pre><code><span><span class="fu">Power</span> <span class="op">(</span>n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span><span class="op">:</span> <span class="fl">0.66605</span> </span></code></pre>
 </div>
 </div>

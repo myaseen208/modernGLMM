@@ -1,5 +1,7 @@
 # Chapter 9: Multi-Level Models
 
+Code
+
 ``` r
 
 library(modernGLMM)
@@ -27,6 +29,8 @@ with \\\mathbf{b} \sim \mathcal{N}(\mathbf{0}, \mathbf{G})\\.
 Dataset: 3 sets, 2 treatments per set, arranged in blocks nested within
 sets.
 
+Code
+
 ``` r
 
 data(DataSet9.1)
@@ -43,6 +47,8 @@ str(DataSet9.1)
      $ y    : num  4.6 17.8 16.6 2.2 7.1 14.9 0.4 0.8 0.8 1 ...
 
 ### 2.1 Fit the LMM (Gaussian approximation)
+
+Code
 
 ``` r
 
@@ -93,6 +99,8 @@ summary(Exam9.1Lmer)
     fit warnings:
     fixed-effect model matrix is rank deficient so dropping 6 columns / coefficients
 
+Code
+
 ``` r
 
 stats::anova(Exam9.1Lmer, ddf = "Kenward-Roger")
@@ -104,6 +112,8 @@ stats::anova(Exam9.1Lmer, ddf = "Kenward-Roger")
 | set:trt | 447.14267 | 111.78567 |     4 | 16.00000 | 4.913512 | 0.0088978 |
 
 ### 2.2 Estimated Marginal Means
+
+Code
 
 ``` r
 
@@ -126,6 +136,8 @@ print(emm9.1)
     Degrees-of-freedom method: kenward-roger
     Confidence level used: 0.95 
 
+Code
+
 ``` r
 
 emmeans::contrast(emm9.1, method = "pairwise", by = "set")
@@ -147,6 +159,8 @@ emmeans::contrast(emm9.1, method = "pairwise", by = "set")
     P value adjustment: tukey method for comparing a family of 6 estimates 
 
 ### 2.3 Interpretation
+
+Code
 
 ``` r
 
@@ -185,6 +199,8 @@ if (requireNamespace("report", quietly = TRUE)) {
 
 ## 3 Example 9.2 — Split-Plot with Row-Column Structure
 
+Code
+
 ``` r
 
 data(DataSet9.2)
@@ -203,6 +219,8 @@ str(DataSet9.2)
      $ a    : Factor w/ 3 levels "1","2","3": 1 1 2 2 1 1 2 2 1 1 ...
      $ b    : Factor w/ 3 levels "1","2","3": 1 2 1 2 1 3 1 3 2 3 ...
      $ y    : num  19.2 23.2 15 15.9 22.4 27.1 21.3 22.9 29.6 27.4 ...
+
+Code
 
 ``` r
 
@@ -259,6 +277,8 @@ summary(Exam9.2Lmer)
     a2:b3  0.229 -0.412 -0.206 -0.217 -0.435  0.500  0.250
     a3:b3  0.229 -0.206 -0.412 -0.217 -0.435  0.250  0.500  0.500
 
+Code
+
 ``` r
 
 stats::anova(Exam9.2Lmer, ddf = "Kenward-Roger")
@@ -269,6 +289,8 @@ stats::anova(Exam9.2Lmer, ddf = "Kenward-Roger")
 | a   | 29.71284 | 14.856421 |     2 | 8.842661 |  6.617342 | 0.0175034 |
 | b   | 10.43492 |  5.217462 |     2 | 8.472110 |  2.323960 | 0.1568158 |
 | a:b | 94.71857 | 23.679643 |     4 | 5.853597 | 10.547380 | 0.0075334 |
+
+Code
 
 ``` r
 
@@ -289,6 +311,8 @@ print(emm9.2)
 
     Degrees-of-freedom method: kenward-roger
     Confidence level used: 0.95 
+
+Code
 
 ``` r
 
@@ -318,6 +342,8 @@ emmeans::contrast(emm9.2, method = "pairwise",
     P value adjustment: tukey method for comparing a family of 3 estimates 
 
 ## 4 Example 9.3 — Factorial with Blocks
+
+Code
 
 ``` r
 
@@ -350,6 +376,8 @@ str(DataSet9.3)
      $ ab   : int  0 0 0 0 0 0 0 0 1 -1 ...
      $ ac   : int  0 0 0 0 1 -1 -1 1 0 0 ...
      $ bc   : int  1 -1 -1 1 0 0 0 0 0 0 ...
+
+Code
 
 ``` r
 
@@ -400,6 +428,8 @@ summary(Exam9.3Lmer)
     c   0.000  0.000  0.000  0.000  0.000
     bc  0.000  0.000  0.000  0.000  0.000  0.000
 
+Code
+
 ``` r
 
 stats::anova(Exam9.3Lmer, ddf = "Kenward-Roger", type = 1)
@@ -416,6 +446,8 @@ stats::anova(Exam9.3Lmer, ddf = "Kenward-Roger", type = 1)
 
 ## 5 Overdispersion Diagnostics
 
+Code
+
 ``` r
 
 if (requireNamespace("performance", quietly = TRUE)) {
@@ -425,6 +457,8 @@ if (requireNamespace("performance", quietly = TRUE)) {
   )
 }
 ```
+
+Code
 
 ``` r
 

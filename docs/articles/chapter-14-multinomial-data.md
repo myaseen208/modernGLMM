@@ -1,5 +1,7 @@
 # Chapter 14: Multinomial Data
 
+Code
+
 ``` r
 
 library(modernGLMM)
@@ -34,6 +36,8 @@ categories**. Two cases arise:
 `DataSet14.1`: 10 blocks × 6 treatments × 3 ordered ratings (slight \<
 modrat \< severe), stored as frequency counts (`y`).
 
+Code
+
 ``` r
 
 data(DataSet14.1)
@@ -45,6 +49,8 @@ str(DataSet14.1)
      $ trt   : Factor w/ 6 levels "0","1","2","3",..: 1 1 1 2 2 2 3 3 3 4 ...
      $ rating: Ord.factor w/ 3 levels "slight"<"modrat"<..: 1 2 3 1 2 3 1 2 3 1 ...
      $ y     : int  1 4 23 2 7 23 4 7 18 8 ...
+
+Code
 
 ``` r
 
@@ -59,6 +65,8 @@ with(DataSet14.1, tapply(y, list(trt, rating), sum))
     3     80    110     90
     4    120    100     60
     5    170     80     30
+
+Code
 
 ``` r
 
@@ -78,6 +86,8 @@ ggplot(marg14, aes(x = trt, y = y, fill = rating)) +
 ![](chapter-14-multinomial-data_files/figure-html/fig-14-1-bar-1.png)
 
 Figure 1: Distribution of ordinal ratings by treatment (marginal counts)
+
+Code
 
 ``` r
 
@@ -126,6 +136,8 @@ average \< good), stored as frequency counts (`y`). The
 proportional-odds assumption fails; variety effects differ by rating
 boundary.
 
+Code
+
 ``` r
 
 data(DataSet14.2)
@@ -138,6 +150,8 @@ str(DataSet14.2)
      $ rating : Factor w/ 3 levels "A","B","C": 1 2 3 1 2 3 1 2 3 1 ...
      $ y      : int  16 15 15 6 33 6 22 3 21 16 ...
 
+Code
+
 ``` r
 
 ## Marginal variety × rating totals (match published table p.438)
@@ -148,6 +162,8 @@ with(DataSet14.2, tapply(y, list(variety, rating), sum))
     1 192 174 176
     2  65 395  68
     3 262  30 244
+
+Code
 
 ``` r
 
@@ -165,6 +181,8 @@ ggplot(marg14b, aes(x = variety, y = y, fill = rating)) +
 ![](chapter-14-multinomial-data_files/figure-html/fig-14-2-bar-1.png)
 
 Figure 2: Quality rating distribution by variety (marginal counts)
+
+Code
 
 ``` r
 

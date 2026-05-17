@@ -87,7 +87,7 @@
       <h1>Chapter 12: Rates and Proportions</h1>
       <p class="subtitle">Beta Regression and Binomial GLMMs for Rates</p>
       <p class="author">Muhammad Yaseen</p>
-      <p class="date">2026-05-12</p>
+      <p class="date">2026-05-17</p>
 
       <small class="dont-index">Source: <a href="https://github.com/myaseen208/modernGLMM/blob/HEAD/vignettes/chapter-12-rates-proportions.qmd"><code>vignettes/chapter-12-rates-proportions.qmd</code></a></small>
       <div class="d-none name"><code></code></div>
@@ -99,11 +99,12 @@
 
 
     <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="downlit sourceCode r">
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/myaseen208/modernGLMM">modernGLMM</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lme4/lme4/" class="external-link">lme4</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rvlenth.github.io/emmeans/" class="external-link">emmeans</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span></code></pre></div>
+</details>
 </div>
 <section class="level2" data-number="1"><h2 data-number="1" id="overview">
 <span class="header-section-number">1</span> Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
@@ -120,27 +121,27 @@
 </h2>
 <p><code>DataSet12.1</code>: 2 treatments × 12 runs × 6 dose levels = 144 observations. Response is a continuous proportion in <span class="math inline">\((0, 1)\)</span>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="downlit sourceCode r">
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">DataSet12.1</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">DataSet12.1</span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
+</details><div class="cell-output cell-output-stdout">
 <pre><code>'data.frame':   144 obs. of  4 variables:
  $ trt       : Factor w/ 2 levels "0","1": 1 1 1 1 1 1 1 1 1 1 ...
  $ run       : Factor w/ 24 levels "t0r1","t0r10",..: 1 1 1 1 1 1 2 2 2 2 ...
  $ dose      : int  0 1 2 3 4 5 0 1 2 3 ...
  $ proportion: num  0.688 0.957 0.863 0.74 0.89 ...</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb4"><pre class="downlit sourceCode r">
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Mean proportion by treatment and dose</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">DataSet12.1</span>, <span class="fu"><a href="https://rdrr.io/r/base/tapply.html" class="external-link">tapply</a></span><span class="op">(</span><span class="va">proportion</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">trt</span>, <span class="va">dose</span><span class="op">)</span>, <span class="va">mean</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
+</details><div class="cell-output cell-output-stdout">
 <pre><code>          0         1         2         3         4         5
 0 0.6939107 0.7212031 0.7210461 0.8140771 0.8964916 0.8705738
 1 0.6766403 0.7444827 0.8466202 0.9294818 0.9419682 0.9697002</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">DataSet12.1</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">dose</span>, y <span class="op">=</span> <span class="va">proportion</span>,</span>
 <span>                         colour <span class="op">=</span> <span class="va">trt</span>, group <span class="op">=</span> <span class="va">trt</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/stat_summary.html" class="external-link">stat_summary</a></span><span class="op">(</span>fun <span class="op">=</span> <span class="va">mean</span>, geom <span class="op">=</span> <span class="st">"line"</span>, linewidth <span class="op">=</span> <span class="fl">1.2</span><span class="op">)</span> <span class="op">+</span></span>
@@ -149,7 +150,7 @@
 <span>       x <span class="op">=</span> <span class="st">"Dose level"</span>, y <span class="op">=</span> <span class="st">"Mean proportion"</span>,</span>
 <span>       colour <span class="op">=</span> <span class="st">"Treatment"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output-display">
+</details><div class="cell-output-display">
 <div id="fig-12-1-dose" class="quarto-float quarto-figure quarto-figure-center">
 <figure class="quarto-float quarto-float-fig"><div aria-describedby="fig-12-1-dose-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="chapter-12-rates-proportions_files/figure-html/fig-12-1-dose-1.png" width="672">
@@ -164,7 +165,7 @@ Figure 1: Dose-response profiles by treatment
 <span class="header-section-number">2.1</span> Beta GLMM via glmmTMB<a class="anchor" aria-label="anchor" href="#beta-glmm-via-glmmtmb"></a>
 </h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="downlit sourceCode r">
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"glmmTMB"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">fit_beta</span> <span class="op">&lt;-</span> <span class="fu">glmmTMB</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html" class="external-link">glmmTMB</a></span><span class="op">(</span></span>
 <span>    <span class="va">proportion</span> <span class="op">~</span> <span class="va">trt</span> <span class="op">*</span> <span class="va">dose</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">run</span><span class="op">)</span>,</span>
@@ -173,7 +174,7 @@ Figure 1: Dose-response profiles by treatment
 <span>  <span class="op">)</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fit_beta</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
+</details><div class="cell-output cell-output-stdout">
 <pre><code> Family: beta  ( logit )
 Formula:          proportion ~ trt * dose + (1 | run)
 Data: DataSet12.1
@@ -201,7 +202,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="downlit sourceCode r">
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"glmmTMB"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">emm_beta</span> <span class="op">&lt;-</span> <span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rvlenth.github.io/emmeans/reference/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">fit_beta</span>, <span class="op">~</span> <span class="va">trt</span> <span class="op">|</span> <span class="va">dose</span>,</span>
 <span>                                at <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>dose <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span>,</span>
@@ -209,7 +210,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">emm_beta</span><span class="op">)</span></span>
 <span>  <span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rvlenth.github.io/emmeans/reference/contrast.html" class="external-link">contrast</a></span><span class="op">(</span><span class="va">emm_beta</span>, method <span class="op">=</span> <span class="st">"pairwise"</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
+</details><div class="cell-output cell-output-stdout">
 <pre><code>dose = 0:
  trt response      SE  df asymp.LCL asymp.UCL
  0      0.682 0.04020 Inf     0.599     0.755
@@ -240,10 +241,10 @@ Tests are performed on the log odds ratio scale </code></pre>
 </h2>
 <p><code>DataSet12.2</code>: 10 blocks × 6 treatments (factor A with 2 levels, factor B with 3 levels nested within A) = 60 observations. Response is count of successes <code>f</code> out of total <code>n</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="downlit sourceCode r">
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">DataSet12.2</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">DataSet12.2</span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
+</details><div class="cell-output cell-output-stdout">
 <pre><code>'data.frame':   30 obs. of  5 variables:
  $ block: Factor w/ 10 levels "1","2","3","4",..: 1 1 1 2 2 2 3 3 3 4 ...
  $ a    : Factor w/ 2 levels "setA","setB": 1 1 1 1 1 1 1 1 1 1 ...
@@ -251,17 +252,17 @@ Tests are performed on the log odds ratio scale </code></pre>
  $ f    : int  9 9 8 13 10 10 14 14 15 6 ...
  $ n    : int  20 20 20 20 20 20 20 20 20 20 ...</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb14"><pre class="downlit sourceCode r">
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Observed proportions by A and B</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">DataSet12.2</span>, <span class="fu"><a href="https://rdrr.io/r/base/tapply.html" class="external-link">tapply</a></span><span class="op">(</span><span class="va">f</span> <span class="op">/</span> <span class="va">n</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span>, <span class="va">mean</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
+</details><div class="cell-output cell-output-stdout">
 <pre><code>       B0   B1   B2
 setA 0.52 0.59 0.50
 setB 0.28 0.33 0.48</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="downlit sourceCode r">
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fit_nb</span> <span class="op">&lt;-</span> <span class="fu">lme4</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lme4/man/glmer.html" class="external-link">glmer</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">f</span>, <span class="va">n</span> <span class="op">-</span> <span class="va">f</span><span class="op">)</span> <span class="op">~</span> <span class="va">a</span> <span class="op">/</span> <span class="va">b</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">a</span> <span class="op">|</span> <span class="va">block</span><span class="op">)</span>,</span>
 <span>  family  <span class="op">=</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span>link <span class="op">=</span> <span class="st">"logit"</span><span class="op">)</span>,</span>
@@ -269,7 +270,7 @@ setB 0.28 0.33 0.48</code></pre>
 <span>  control <span class="op">=</span> <span class="fu">lme4</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmerControl.html" class="external-link">glmerControl</a></span><span class="op">(</span>optimizer <span class="op">=</span> <span class="st">"bobyqa"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fit_nb</span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
+</details><div class="cell-output cell-output-stdout">
 <pre><code>Generalized linear mixed model fit by maximum likelihood (Laplace
   Approximation) [glmerMod]
  Family: binomial  ( logit )
@@ -314,11 +315,11 @@ Model is nearly unidentifiable: large eigenvalue ratio
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="downlit sourceCode r">
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"car"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu">car</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/car/man/Anova.html" class="external-link">Anova</a></span><span class="op">(</span><span class="va">fit_nb</span>, type <span class="op">=</span> <span class="st">"III"</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<div class="cell-output-display">
+</details><div class="cell-output-display">
 <div class="kable-table">
 <table class="table caption-top">
 <thead><tr class="header">
@@ -352,11 +353,11 @@ Model is nearly unidentifiable: large eigenvalue ratio
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="downlit sourceCode r">
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## B(A) means on probability scale</span></span>
 <span><span class="va">emm_ba</span> <span class="op">&lt;-</span> <span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rvlenth.github.io/emmeans/reference/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">fit_nb</span>, <span class="op">~</span> <span class="va">b</span> <span class="op">|</span> <span class="va">a</span>, type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">emm_ba</span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
+</details><div class="cell-output cell-output-stdout">
 <pre><code>a = setA:
  b   prob     SE  df asymp.LCL asymp.UCL
  B0 0.521 0.0623 Inf     0.400     0.639

@@ -87,7 +87,7 @@
       <h1>Chapter 8: Treatment and Explanatory Variable Structure</h1>
       <p class="subtitle">Factorial Designs, Interaction Models, and Response Surface Methods</p>
       <p class="author">Muhammad Yaseen</p>
-      <p class="date">2026-05-11</p>
+      <p class="date">2026-05-17</p>
 
       <small class="dont-index">Source: <a href="https://github.com/myaseen208/modernGLMM/blob/HEAD/vignettes/chapter-08-treatment-structures.qmd"><code>vignettes/chapter-08-treatment-structures.qmd</code></a></small>
       <div class="d-none name"><code></code></div>
@@ -99,12 +99,13 @@
 
 
     <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="downlit sourceCode r">
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/myaseen208/modernGLMM">modernGLMM</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lme4/lme4/" class="external-link">lme4</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/runehaubo/lmerTestR" class="external-link">lmerTest</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rvlenth.github.io/emmeans/" class="external-link">emmeans</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span></code></pre></div>
+</details>
 </div>
 <section class="level2" data-number="1"><h2 data-number="1" id="overview">
 <span class="header-section-number">1</span> Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
@@ -125,12 +126,12 @@
 <p>The two-way factorial model:</p>
 <p><span class="math display">\[y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha\beta)_{ij} + \varepsilon_{ijk}\]</span></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="downlit sourceCode r">
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">DataSet8.1</span><span class="op">)</span></span>
 <span><span class="va">DataSet8.1</span><span class="op">$</span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">DataSet8.1</span><span class="op">$</span><span class="va">a</span><span class="op">)</span></span>
 <span><span class="va">DataSet8.1</span><span class="op">$</span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">DataSet8.1</span><span class="op">$</span><span class="va">b</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">DataSet8.1</span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
+</details><div class="cell-output cell-output-stdout">
 <pre><code>'data.frame':   24 obs. of  3 variables:
  $ a: Factor w/ 2 levels "0","1": 1 1 1 1 1 1 1 1 1 1 ...
  $ b: Factor w/ 3 levels "0","1","2": 1 1 1 1 2 2 2 2 3 3 ...
@@ -138,10 +139,10 @@
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="downlit sourceCode r">
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">Exam8.1.lm</span> <span class="op">&lt;-</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">a</span> <span class="op">*</span> <span class="va">b</span>, data <span class="op">=</span> <span class="va">DataSet8.1</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">Exam8.1.lm</span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
+</details><div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
 stats::lm(formula = y ~ a * b, data = DataSet8.1)
@@ -165,9 +166,9 @@ Residual standard error: 5.122 on 18 degrees of freedom
 Multiple R-squared:  0.7352,    Adjusted R-squared:  0.6617
 F-statistic: 9.997 on 5 and 18 DF,  p-value: 0.0001049</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">Exam8.1.lm</span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output-display">
+</details><div class="cell-output-display">
 <div class="kable-table">
 <table class="table caption-top">
 <thead><tr class="header">
@@ -217,10 +218,10 @@ F-statistic: 9.997 on 5 and 18 DF,  p-value: 0.0001049</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="downlit sourceCode r">
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">emm8.1</span> <span class="op">&lt;-</span> <span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rvlenth.github.io/emmeans/reference/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">Exam8.1.lm</span>, <span class="op">~</span> <span class="va">a</span> <span class="op">*</span> <span class="va">b</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">emm8.1</span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
+</details><div class="cell-output cell-output-stdout">
 <pre><code> a b emmean   SE df lower.CL upper.CL
  0 0   50.5 2.56 18     45.1     55.9
  1 0   67.8 2.56 18     62.4     73.1
@@ -233,13 +234,13 @@ Confidence level used: 0.95 </code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="downlit sourceCode r">
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Simple effects: b within each level of a</span></span>
 <span><span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rvlenth.github.io/emmeans/reference/contrast.html" class="external-link">contrast</a></span><span class="op">(</span></span>
 <span>  <span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rvlenth.github.io/emmeans/reference/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">Exam8.1.lm</span>, <span class="op">~</span> <span class="va">b</span> <span class="op">|</span> <span class="va">a</span><span class="op">)</span>,</span>
 <span>  method <span class="op">=</span> <span class="st">"pairwise"</span>, adjust <span class="op">=</span> <span class="st">"tukey"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
+</details><div class="cell-output cell-output-stdout">
 <pre><code>a = 0:
  contrast estimate   SE df t.ratio p.value
  b0 - b1     -9.25 3.62 18  -2.554  0.0498
@@ -256,11 +257,11 @@ P value adjustment: tukey method for comparing a family of 3 estimates </code></
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="downlit sourceCode r">
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rvlenth.github.io/emmeans/reference/emmip.html" class="external-link">emmip</a></span><span class="op">(</span><span class="va">Exam8.1.lm</span>, <span class="va">a</span> <span class="op">~</span> <span class="va">b</span>, CIs <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Chapter 8: A × B Interaction"</span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output-display">
+</details><div class="cell-output-display">
 <div id="fig-8-1" class="quarto-float quarto-figure quarto-figure-center">
 <figure class="quarto-float quarto-float-fig"><div aria-describedby="fig-8-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="chapter-08-treatment-structures_files/figure-html/fig-8-1-1.png" width="672">
@@ -277,11 +278,11 @@ Figure 1: Interaction plot: Factor A × Factor B
 <p>Analysis of covariance with treatment and continuous covariate <span class="math inline">\(x\)</span>:</p>
 <p><span class="math display">\[y_{ij} = \mu + \tau_i + \beta x_{ij} + \varepsilon_{ij}\]</span></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="downlit sourceCode r">
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">DataSet8.2</span><span class="op">)</span></span>
 <span><span class="va">DataSet8.2</span><span class="op">$</span><span class="va">trt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">DataSet8.2</span><span class="op">$</span><span class="va">trt</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">DataSet8.2</span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
+</details><div class="cell-output cell-output-stdout">
 <pre><code>'data.frame':   20 obs. of  3 variables:
  $ trt: Factor w/ 4 levels "1","2","3","4": 1 1 1 1 1 2 2 2 2 2 ...
  $ x  : int  12 13 12 7 14 10 6 12 10 11 ...
@@ -289,10 +290,10 @@ Figure 1: Interaction plot: Factor A × Factor B
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="downlit sourceCode r">
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">Exam8.2.lm</span> <span class="op">&lt;-</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">trt</span> <span class="op">+</span> <span class="va">x</span>, data <span class="op">=</span> <span class="va">DataSet8.2</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">Exam8.2.lm</span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
+</details><div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
 stats::lm(formula = y ~ trt + x, data = DataSet8.2)
@@ -315,9 +316,9 @@ Residual standard error: 2.579 on 15 degrees of freedom
 Multiple R-squared:  0.9029,    Adjusted R-squared:  0.877
 F-statistic: 34.88 on 4 and 15 DF,  p-value: 1.968e-07</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb16"><pre class="downlit sourceCode r">
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">Exam8.2.lm</span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output-display">
+</details><div class="cell-output-display">
 <div class="kable-table">
 <table class="table caption-top">
 <thead><tr class="header">
@@ -359,12 +360,12 @@ F-statistic: 34.88 on 4 and 15 DF,  p-value: 1.968e-07</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="downlit sourceCode r">
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Adjusted means (covariate at its mean)</span></span>
 <span><span class="va">emm8.2</span> <span class="op">&lt;-</span> <span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rvlenth.github.io/emmeans/reference/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">Exam8.2.lm</span>, <span class="op">~</span> <span class="va">trt</span>,</span>
 <span>                            at <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">DataSet8.2</span><span class="op">$</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">emm8.2</span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
+</details><div class="cell-output cell-output-stdout">
 <pre><code> trt emmean   SE df lower.CL upper.CL
  1     47.7 1.17 15     45.2     50.2
  2     54.6 1.19 15     52.1     57.1
@@ -373,9 +374,9 @@ F-statistic: 34.88 on 4 and 15 DF,  p-value: 1.968e-07</code></pre>
 
 Confidence level used: 0.95 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb19"><pre class="downlit sourceCode r">
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rvlenth.github.io/emmeans/reference/contrast.html" class="external-link">contrast</a></span><span class="op">(</span><span class="va">emm8.2</span>, method <span class="op">=</span> <span class="st">"pairwise"</span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
+</details><div class="cell-output cell-output-stdout">
 <pre><code> contrast    estimate   SE df t.ratio p.value
  trt1 - trt2    -6.89 1.72 15  -4.014  0.0055
  trt1 - trt3     2.83 1.76 15   1.612  0.4018
@@ -391,13 +392,13 @@ P value adjustment: tukey method for comparing a family of 4 estimates </code></
 <span class="header-section-number">4</span> Example 8.3 — Heterogeneous Slopes ANCOVA<a class="anchor" aria-label="anchor" href="#example-8-3-heterogeneous-slopes-ancova"></a>
 </h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="downlit sourceCode r">
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">DataSet8.3</span><span class="op">)</span></span>
 <span><span class="va">DataSet8.3</span><span class="op">$</span><span class="va">trt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">DataSet8.3</span><span class="op">$</span><span class="va">trt</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">Exam8.3.lm</span> <span class="op">&lt;-</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">trt</span> <span class="op">*</span> <span class="va">x</span>, data <span class="op">=</span> <span class="va">DataSet8.3</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">Exam8.3.lm</span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
+</details><div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
 stats::lm(formula = y ~ trt * x, data = DataSet8.3)
@@ -423,9 +424,9 @@ Residual standard error: 2.706 on 12 degrees of freedom
 Multiple R-squared:  0.9696,    Adjusted R-squared:  0.9519
 F-statistic:  54.7 on 7 and 12 DF,  p-value: 3.676e-08</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb23"><pre class="downlit sourceCode r">
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">Exam8.3.lm</span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output-display">
+</details><div class="cell-output-display">
 <div class="kable-table">
 <table class="table caption-top">
 <thead><tr class="header">
@@ -475,14 +476,14 @@ F-statistic:  54.7 on 7 and 12 DF,  p-value: 3.676e-08</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="downlit sourceCode r">
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">DataSet8.3</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span>, colour <span class="op">=</span> <span class="va">trt</span>, group <span class="op">=</span> <span class="va">trt</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html" class="external-link">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"lm"</span>, se <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Chapter 8: ANCOVA — Heterogeneous Slopes"</span>,</span>
 <span>       x <span class="op">=</span> <span class="st">"Covariate x"</span>, y <span class="op">=</span> <span class="st">"Response y"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output-display">
+</details><div class="cell-output-display">
 <div id="fig-8-3" class="quarto-float quarto-figure quarto-figure-center">
 <figure class="quarto-float quarto-float-fig"><div aria-describedby="fig-8-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="chapter-08-treatment-structures_files/figure-html/fig-8-3-1.png" width="672">
@@ -497,11 +498,11 @@ Figure 2: Heterogeneous slopes: y vs x by treatment
 <span class="header-section-number">5</span> Example 8.7 — Response Surface<a class="anchor" aria-label="anchor" href="#example-8-7-response-surface"></a>
 </h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="downlit sourceCode r">
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">DataSet8.7</span><span class="op">)</span></span>
 <span><span class="va">DataSet8.7</span><span class="op">$</span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">DataSet8.7</span><span class="op">$</span><span class="va">a</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">DataSet8.7</span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
+</details><div class="cell-output cell-output-stdout">
 <pre><code>'data.frame':   270 obs. of  3 variables:
  $ a: Factor w/ 2 levels "1","2": 1 1 1 1 1 1 1 1 1 1 ...
  $ x: int  0 0 0 1 1 1 2 2 2 3 ...
@@ -509,11 +510,11 @@ Figure 2: Heterogeneous slopes: y vs x by treatment
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="downlit sourceCode r">
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Quadratic response surface within groups</span></span>
 <span><span class="va">Exam8.7.lm</span> <span class="op">&lt;-</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">a</span> <span class="op">+</span> <span class="va">x</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">x</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="va">a</span><span class="op">:</span><span class="va">x</span>, data <span class="op">=</span> <span class="va">DataSet8.7</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">Exam8.7.lm</span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
+</details><div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
 stats::lm(formula = y ~ a + x + I(x^2) + a:x, data = DataSet8.7)
@@ -538,7 +539,7 @@ F-statistic: 524.1 on 4 and 265 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="downlit sourceCode r">
+<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">xseq</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">DataSet8.7</span><span class="op">$</span><span class="va">x</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">DataSet8.7</span><span class="op">$</span><span class="va">x</span><span class="op">)</span>, length.out <span class="op">=</span> <span class="fl">50L</span><span class="op">)</span></span>
 <span><span class="va">pred_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">DataSet8.7</span><span class="op">$</span><span class="va">a</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">ai</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">nd</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">ai</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">DataSet8.7</span><span class="op">$</span><span class="va">a</span><span class="op">)</span><span class="op">)</span>, x <span class="op">=</span> <span class="va">xseq</span><span class="op">)</span></span>
@@ -553,7 +554,7 @@ F-statistic: 524.1 on 4 and 265 DF,  p-value: &lt; 2.2e-16</code></pre>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Chapter 8: Response surface by group"</span>,</span>
 <span>       x <span class="op">=</span> <span class="st">"x"</span>, y <span class="op">=</span> <span class="st">"y"</span>, colour <span class="op">=</span> <span class="st">"Group"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output-display">
+</details><div class="cell-output-display">
 <div id="fig-8-7" class="quarto-float quarto-figure quarto-figure-center">
 <figure class="quarto-float quarto-float-fig"><div aria-describedby="fig-8-7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="chapter-08-treatment-structures_files/figure-html/fig-8-7-1.png" width="672">

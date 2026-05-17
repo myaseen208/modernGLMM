@@ -60,6 +60,8 @@ parameters — cannot be uniquely estimated regardless of the data, and
 any hypothesis test involving them is not meaningful. The `emmeans`
 package performs estimability checks automatically.
 
+Code
+
 ``` r
 
 ## Illustration: rank-deficient design leads to non-estimable contrasts
@@ -69,6 +71,8 @@ cat("Rank of X:", rankX, "  (columns:", ncol(X), ")\n")
 ```
 
     Rank of X: 2   (columns: 3 )
+
+Code
 
 ``` r
 
@@ -91,6 +95,8 @@ Hypothesis tests in linear models rely on **quadratic forms**
 - The F-statistic is a ratio of two chi-squared quadratic forms divided
   by their respective degrees of freedom.
 
+Code
+
 ``` r
 
 ## Non-centrality parameter for a one-way ANOVA (k=3, n=5, sigma^2=9)
@@ -103,6 +109,8 @@ cat("Non-centrality parameter lambda =", round(lambda, 5), "\n")
 ```
 
     Non-centrality parameter lambda = 9.25926 
+
+Code
 
 ``` r
 

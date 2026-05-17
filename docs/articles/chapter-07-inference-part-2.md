@@ -1,5 +1,7 @@
 # Chapter 7: Inference, Part II
 
+Code
+
 ``` r
 
 library(modernGLMM)
@@ -30,6 +32,8 @@ Key topics:
 The 2×3 factorial from Chapter 8 is used here to illustrate contrast
 coding.
 
+Code
+
 ``` r
 
 data(DataSet8.1)
@@ -40,6 +44,8 @@ fit <- stats::lm(y ~ a * b, data = DataSet8.1)
 ```
 
 ### 2.1 Estimated marginal means
+
+Code
 
 ``` r
 
@@ -58,6 +64,8 @@ print(emm)
     Confidence level used: 0.95 
 
 ### 2.2 All pairwise comparisons within each level of `a`
+
+Code
 
 ``` r
 
@@ -83,6 +91,8 @@ pairs(
 
 ### 2.3 Simple effects (ANOVA for b within each level of a)
 
+Code
+
 ``` r
 
 emmeans::joint_tests(fit, by = "a")
@@ -94,6 +104,8 @@ emmeans::joint_tests(fit, by = "a")
 | 3   | b          | 1   |   2 |  18 |   0.632 | 0.5428773 |
 
 ### 2.4 Custom contrasts
+
+Code
 
 ``` r
 

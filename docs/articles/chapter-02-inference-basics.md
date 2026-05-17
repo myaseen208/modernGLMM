@@ -1,5 +1,7 @@
 # Chapter 2: Design Matters
 
+Code
+
 ``` r
 
 library(modernGLMM)
@@ -19,6 +21,8 @@ book. Key topics include:
 
 ## 2 Example 2.B.2 — Dose-Response Binomial Data
 
+Code
+
 ``` r
 
 data(DataExam2.B.2)
@@ -29,6 +33,8 @@ str(DataExam2.B.2)
      $ x: int  0 1 2 3 4 5 6 7 8 9 ...
      $ y: int  9 10 11 16 16 14 20 21 25 21 ...
      $ n: int  27 30 19 28 20 19 20 26 26 23 ...
+
+Code
 
 ``` r
 
@@ -53,6 +59,8 @@ knitr::kable(DataExam2.B.2,
 Example 2.B.2: Dose-response binomial data {.table .caption-top}
 
 ### 2.1 Logistic regression
+
+Code
 
 ``` r
 
@@ -84,6 +92,8 @@ summary(fit_2b2)
 
     Number of Fisher Scoring iterations: 5
 
+Code
+
 ``` r
 
 if (requireNamespace("parameters", quietly = TRUE)) {
@@ -95,6 +105,8 @@ if (requireNamespace("parameters", quietly = TRUE)) {
 |:---|---:|---:|---:|---:|---:|---:|---:|---:|
 | (Intercept) | -0.8446576 | 0.2543790 | 0.95 | -1.3552905 | -0.3546914 | -3.320469 | Inf | 0.0008987 |
 | x | 0.4427542 | 0.0615358 | 0.95 | 0.3286354 | 0.5709146 | 7.195068 | Inf | 0.0000000 |
+
+Code
 
 ``` r
 
@@ -124,6 +136,8 @@ if (requireNamespace("report", quietly = TRUE)) {
 
 ### 2.2 Predicted probabilities
 
+Code
+
 ``` r
 
 xnew <- data.frame(x = seq(0, 10, by = 0.1))
@@ -144,6 +158,8 @@ Figure 1: Fitted logistic curve for Example 2.B.2
 
 ## 3 Example 2.B.3 — Three Treatment Comparison (Gaussian)
 
+Code
+
 ``` r
 
 data(DataExam2.B.3)
@@ -154,6 +170,8 @@ str(DataExam2.B.3)
     'data.frame':   6 obs. of  2 variables:
      $ trt: Factor w/ 3 levels "1","2","3": 1 1 2 2 3 3
      $ y  : num  19 19.2 21.9 20.8 21.2 23.3
+
+Code
 
 ``` r
 
@@ -181,6 +199,8 @@ summary(fit_2b3)
     Multiple R-squared:  0.7882,    Adjusted R-squared:  0.647
     F-statistic: 5.581 on 2 and 3 DF,  p-value: 0.09749
 
+Code
+
 ``` r
 
 anova(fit_2b3)
@@ -190,6 +210,8 @@ anova(fit_2b3)
 |:----------|----:|-------:|----------:|---------:|----------:|
 | trt       |   2 |  10.53 | 5.2650000 | 5.581272 | 0.0974922 |
 | Residuals |   3 |   2.83 | 0.9433333 |       NA |        NA |
+
+Code
 
 ``` r
 
@@ -203,6 +225,8 @@ print(emm_2b3)
      3     22.2 0.687  3     20.1     24.4
 
     Confidence level used: 0.95 
+
+Code
 
 ``` r
 
@@ -218,6 +242,8 @@ emmeans::contrast(emm_2b3, method = "pairwise", adjust = "tukey")
 
 ## 4 Example 2.B.4 — Binomial Response, Three Treatments
 
+Code
+
 ``` r
 
 data(DataExam2.B.4)
@@ -230,6 +256,8 @@ str(DataExam2.B.4)
      $ trt: Factor w/ 3 levels "1","2","3": 1 1 2 2 3 3
      $ Nij: int  13 7 13 13 12 15
      $ Yij: int  2 2 4 9 8 7
+
+Code
 
 ``` r
 
@@ -262,6 +290,8 @@ summary(fit_2b4)
 
     Number of Fisher Scoring iterations: 4
 
+Code
+
 ``` r
 
 emm_2b4 <- emmeans::emmeans(fit_2b4, ~ trt, type = "response")
@@ -275,6 +305,8 @@ print(emm_2b4)
 
     Confidence level used: 0.95
     Intervals are back-transformed from the logit scale 
+
+Code
 
 ``` r
 
@@ -291,6 +323,8 @@ emmeans::contrast(emm_2b4, method = "pairwise")
 
 ## 5 Example 2.B.7 — Two-Way Factorial
 
+Code
+
 ``` r
 
 data(DataExam2.B.7)
@@ -305,6 +339,8 @@ str(DataExam2.B.7)
      $ a  : Factor w/ 2 levels "1","2": 1 1 2 2 1 1 2 2 1 1 ...
      $ b  : Factor w/ 2 levels "1","2": 1 2 1 2 1 2 1 2 1 2 ...
      $ y  : num  41 40.6 42.7 37.1 40 37.1 39.3 24.2 38.2 36.5 ...
+
+Code
 
 ``` r
 
@@ -349,6 +385,8 @@ summary(fit_2b7)
     b2    -0.486  0.500
     a2:b2  0.343 -0.707 -0.707
 
+Code
+
 ``` r
 
 anova(fit_2b7)
@@ -359,6 +397,8 @@ anova(fit_2b7)
 | a   |  43.23063 |  43.23063 |     1 |     9 |  4.893071 | 0.0542653 |
 | b   | 151.90562 | 151.90562 |     1 |     9 | 17.193484 | 0.0024973 |
 | a:b |  47.26562 |  47.26562 |     1 |     9 |  5.349774 | 0.0460132 |
+
+Code
 
 ``` r
 
