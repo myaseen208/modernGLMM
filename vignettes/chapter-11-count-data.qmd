@@ -10,7 +10,7 @@ format:
   html:
     toc: true
     number-sections: true
-    theme: [cosmo, theme.scss]
+    theme: cosmo
     code-fold: show
 execute:
   echo: true

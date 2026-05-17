@@ -18,9 +18,8 @@
 <link href="../deps/JetBrains_Mono-0.4.10/font.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><script src="chapter-11-count-data_files/libs/quarto-html/quarto.js" type="module"></script><script src="chapter-11-count-data_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script><script src="chapter-11-count-data_files/libs/quarto-html/popper.min.js"></script><script src="chapter-11-count-data_files/libs/quarto-html/tippy.umd.min.js"></script><link href="chapter-11-count-data_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<script src="chapter-11-count-data_files/libs/bootstrap/bootstrap.min.js"></script><link href="chapter-11-count-data_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="chapter-11-count-data_files/libs/bootstrap/bootstrap-d99caf98774e672e0f982c3b5d890058.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><script src="chapter-11-count-data_files/libs/quarto-html/popper.min.js"></script><script src="chapter-11-count-data_files/libs/quarto-html/tippy.umd.min.js"></script><link href="chapter-11-count-data_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="chapter-11-count-data_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Chapter 11: Counts">
 <script>
 window.MathJax = {
@@ -94,10 +93,10 @@ window.MathJax = {
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1></h1>
+      <h1>Chapter 11: Counts</h1>
 
-
-
+      <p class="author">Muhammad Yaseen</p>
+      <p class="date">2026-05-17</p>
 
       <small class="dont-index">Source: <a href="https://github.com/myaseen208/modernGLMM/blob/HEAD/vignettes/chapter-11-count-data.qmd"><code>vignettes/chapter-11-count-data.qmd</code></a></small>
       <div class="d-none name"><code></code></div>
@@ -106,30 +105,16 @@ window.MathJax = {
 
 
 
-<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-
-<main class="content" id="quarto-document-content"></main>
-</div>
-
-<div class="meta">
-  <h1>Chapter 11: Counts</h1>
 
 
-  <p class="author">Muhammad Yaseen</p>
-
-  <p class="date">May 17, 2026</p>
-
-
-</div>
-
-<main><div class="cell">
+    <div class="cell">
 <details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/knitr/man/opts_chunk.html" class="external-link">opts_chunk</a></span><span class="op">$</span><span class="fu">set</span><span class="op">(</span>collapse <span class="op">=</span> <span class="cn">TRUE</span>, comment <span class="op">=</span> <span class="st">"#&gt;"</span><span class="op">)</span></span></code></pre></div>
 </details>
 </div>
-<section class="section level3" data-number="1"><h3 data-number="1" data-anchor-id="count-models" id="count-models">
+<section class="level2" data-number="1"><h2 data-number="1" id="count-models">
 <span class="header-section-number">1</span> Count Models<a class="anchor" aria-label="anchor" href="#count-models"></a>
-</h3>
+</h2>
 <p>Chapter 11 develops GLMMs for non-negative integer responses. The Poisson model assumes</p>
 <p><span class="math display">\[
 Y_i \mid b_i \sim \operatorname{Poisson}(\lambda_i),
@@ -146,9 +131,9 @@ Y_i \mid b_i \sim \operatorname{NB}(\lambda_i, \phi),
 \qquad
 \operatorname{Var}(Y_i \mid b_i) = \lambda_i(1 + \phi\lambda_i).
 \]</span></p>
-</section><section class="section level3" data-number="2"><h3 data-number="2" data-anchor-id="example-11.1" id="example-11-1">
+</section><section class="level2" data-number="2"><h2 data-number="2" id="example-11-1">
 <span class="header-section-number">2</span> Example 11.1<a class="anchor" aria-label="anchor" href="#example-11-1"></a>
-</h3>
+</h2>
 <p>Section 11.1.2 compares pre-GLM ANOVA methods and a Poisson-normal GLMM for a two-treatment completely randomized count dataset.</p>
 <div class="cell">
 <details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb2"><pre class="downlit sourceCode r">
@@ -164,9 +149,9 @@ Y_i \mid b_i \sim \operatorname{NB}(\lambda_i, \phi),
 <span><span class="co">#&gt; 2   2  15.0</span></span></code></pre></div>
 </details>
 </div>
-<section class="level3" data-number="2.1"><h4 data-number="2.1" data-anchor-id="anova-on-counts" id="anova-on-counts">
+<section class="level3" data-number="2.1"><h3 data-number="2.1" id="anova-on-counts">
 <span class="header-section-number">2.1</span> ANOVA on Counts<a class="anchor" aria-label="anchor" href="#anova-on-counts"></a>
-</h4>
+</h3>
 <div class="cell">
 <details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fit_count</span> <span class="op">&lt;-</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">count</span> <span class="op">~</span> <span class="va">trt</span>, data <span class="op">=</span> <span class="va">DataSet11.1</span><span class="op">)</span></span>
@@ -188,9 +173,9 @@ Y_i \mid b_i \sim \operatorname{NB}(\lambda_i, \phi),
 </details>
 </div>
 <p>The reconstructed counts reproduce the printed treatment means, residual mean square, F statistic, and p-value for the untransformed ANOVA.</p>
-</section><section class="level3" data-number="2.2"><h4 data-number="2.2" data-anchor-id="anova-on-log-counts" id="anova-on-log-counts">
+</section><section class="level3" data-number="2.2"><h3 data-number="2.2" id="anova-on-log-counts">
 <span class="header-section-number">2.2</span> ANOVA on Log Counts<a class="anchor" aria-label="anchor" href="#anova-on-log-counts"></a>
-</h4>
+</h3>
 <div class="cell">
 <details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">DataSet11.1</span><span class="op">$</span><span class="va">log_count</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">DataSet11.1</span><span class="op">$</span><span class="va">count</span><span class="op">)</span></span>
@@ -212,9 +197,9 @@ Y_i \mid b_i \sim \operatorname{NB}(\lambda_i, \phi),
 <span><span class="co">#&gt; Confidence level used: 0.95</span></span></code></pre></div>
 </details>
 </div>
-</section><section class="level3" data-number="2.3"><h4 data-number="2.3" data-anchor-id="poisson-glm" id="poisson-glm">
+</section><section class="level3" data-number="2.3"><h3 data-number="2.3" id="poisson-glm">
 <span class="header-section-number">2.3</span> Poisson GLM<a class="anchor" aria-label="anchor" href="#poisson-glm"></a>
-</h4>
+</h3>
 <div class="cell">
 <details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fit_pois_glm</span> <span class="op">&lt;-</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span></span>
@@ -236,9 +221,9 @@ Y_i \mid b_i \sim \operatorname{NB}(\lambda_i, \phi),
 </details>
 </div>
 <p>The Pearson chi-square/DF is much larger than one, indicating that the Poisson GLM has not accounted for the unit-level source of variation.</p>
-</section><section class="level3" data-number="2.4"><h4 data-number="2.4" data-anchor-id="poisson-normal-glmm" id="poisson-normal-glmm">
+</section><section class="level3" data-number="2.4"><h3 data-number="2.4" id="poisson-normal-glmm">
 <span class="header-section-number">2.4</span> Poisson-Normal GLMM<a class="anchor" aria-label="anchor" href="#poisson-normal-glmm"></a>
-</h4>
+</h3>
 <div class="cell">
 <details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fit_pois_normal</span> <span class="op">&lt;-</span> <span class="fu">lme4</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lme4/man/glmer.html" class="external-link">glmer</a></span><span class="op">(</span></span>
@@ -299,7 +284,7 @@ Y_i \mid b_i \sim \operatorname{NB}(\lambda_i, \phi),
 <span><span class="op">}</span></span></code></pre></div>
 </details><div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="chapter-11-count-data_files/figure-html/unnamed-chunk-6-1.png" width="672" class="figure-img"></p>
+<figure><p><img src="chapter-11-count-data_files/figure-html/unnamed-chunk-6-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -326,9 +311,9 @@ Y_i \mid b_i \sim \operatorname{NB}(\lambda_i, \phi),
 <span><span class="co">#&gt; version of the dataset. 95% Confidence Intervals (CIs) and p-values were</span></span>
 <span><span class="co">#&gt; computed using a Wald z-distribution approximation.</span></span></code></pre>
 </div>
-</section></section><section class="section level3" data-number="3"><h3 data-number="3" data-anchor-id="example-11.3" id="example-11-3">
+</section></section><section class="level2" data-number="3"><h2 data-number="3" id="example-11-3">
 <span class="header-section-number">3</span> Example 11.3<a class="anchor" aria-label="anchor" href="#example-11-3"></a>
-</h3>
+</h2>
 <p>Section 11.4 uses a randomized complete block design with three treatments and ten blocks to show how overdispersion changes inference.</p>
 <div class="cell">
 <details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb9"><pre class="downlit sourceCode r">
@@ -345,9 +330,9 @@ Y_i \mid b_i \sim \operatorname{NB}(\lambda_i, \phi),
 <span><span class="co">#&gt; 3   3  25.7</span></span></code></pre></div>
 </details>
 </div>
-<section class="level3" data-number="3.1"><h4 data-number="3.1" data-anchor-id="naive-poisson-glmm" id="naive-poisson-glmm">
+<section class="level3" data-number="3.1"><h3 data-number="3.1" id="naive-poisson-glmm">
 <span class="header-section-number">3.1</span> Naive Poisson GLMM<a class="anchor" aria-label="anchor" href="#naive-poisson-glmm"></a>
-</h4>
+</h3>
 <div class="cell">
 <details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fit_naive</span> <span class="op">&lt;-</span> <span class="fu">lme4</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lme4/man/glmer.html" class="external-link">glmer</a></span><span class="op">(</span></span>
@@ -373,9 +358,9 @@ Y_i \mid b_i \sim \operatorname{NB}(\lambda_i, \phi),
 </details>
 </div>
 <p>The diagnostic remains high, so the naive model should not be used for final inference.</p>
-</section><section class="level3" data-number="3.2"><h4 data-number="3.2" data-anchor-id="poisson-normal-glmm-1" id="poisson-normal-glmm-1">
+</section><section class="level3" data-number="3.2"><h3 data-number="3.2" id="poisson-normal-glmm-1">
 <span class="header-section-number">3.2</span> Poisson-Normal GLMM<a class="anchor" aria-label="anchor" href="#poisson-normal-glmm-1"></a>
-</h4>
+</h3>
 <div class="cell">
 <details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fit_unit</span> <span class="op">&lt;-</span> <span class="fu">lme4</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lme4/man/glmer.html" class="external-link">glmer</a></span><span class="op">(</span></span>
@@ -401,9 +386,9 @@ Y_i \mid b_i \sim \operatorname{NB}(\lambda_i, \phi),
 </details>
 </div>
 <p>The block-by-treatment random term is the conditional-model analogue of the unit-level source of variation in the repurposed ANOVA.</p>
-</section><section class="level3" data-number="3.3"><h4 data-number="3.3" data-anchor-id="negative-binomial-glmm" id="negative-binomial-glmm">
+</section><section class="level3" data-number="3.3"><h3 data-number="3.3" id="negative-binomial-glmm">
 <span class="header-section-number">3.3</span> Negative-Binomial GLMM<a class="anchor" aria-label="anchor" href="#negative-binomial-glmm"></a>
-</h4>
+</h3>
 <div class="cell">
 <details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"glmmTMB"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
@@ -429,7 +414,7 @@ Y_i \mid b_i \sim \operatorname{NB}(\lambda_i, \phi),
 <span><span class="op">}</span></span></code></pre></div>
 </details><div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="chapter-11-count-data_files/figure-html/unnamed-chunk-11-1.png" width="672" class="figure-img"></p>
+<figure><p><img src="chapter-11-count-data_files/figure-html/unnamed-chunk-11-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -461,9 +446,9 @@ Y_i \mid b_i \sim \operatorname{NB}(\lambda_i, \phi),
 <span><span class="co">#&gt; version of the dataset. 95% Confidence Intervals (CIs) and p-values were</span></span>
 <span><span class="co">#&gt; computed using a Wald z-distribution approximation.</span></span></code></pre>
 </div>
-</section></section><section class="section level3" data-number="4"><h3 data-number="4" data-anchor-id="example-11.4" id="example-11-4">
+</section></section><section class="level2" data-number="4"><h2 data-number="4" id="example-11-4">
 <span class="header-section-number">4</span> Example 11.4<a class="anchor" aria-label="anchor" href="#example-11-4"></a>
-</h3>
+</h2>
 <p>Section 11.5 considers a multi-level split-plot design with a 7 by 4 factorial treatment structure. The package data are synthetic because the original <code>sp_counts</code> file was not available.</p>
 <div class="cell">
 <details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb15"><pre class="downlit sourceCode r">
@@ -568,19 +553,16 @@ Y_i \mid b_i \sim \operatorname{NB}(\lambda_i, \phi),
 <span><span class="op">}</span></span></code></pre></div>
 </details><div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="chapter-11-count-data_files/figure-html/unnamed-chunk-14-1.png" width="672" class="figure-img"></p>
+<figure><p><img src="chapter-11-count-data_files/figure-html/unnamed-chunk-14-1.png" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-</section><section class="section level3" data-number="5"><h3 data-number="5" data-anchor-id="chapter-summary" id="chapter-summary">
+</section><section class="level2" data-number="5"><h2 data-number="5" id="chapter-summary">
 <span class="header-section-number">5</span> Chapter Summary<a class="anchor" aria-label="anchor" href="#chapter-summary"></a>
-</h3>
+</h2>
 <p>Poisson GLMMs are useful starting points for count data, but their mean-variance restriction is often too rigid. The practical workflow is to fit a model that matches the design skeleton, check overdispersion, and then choose an inference target. Conditional inference uses random effects and distributions such as Poisson-normal or negative binomial; marginal inference uses working covariance or quasi-likelihood machinery.</p>
-</section></main><div class="includes-after">
-
-<!-- /main column -->
-<script id="quarto-html-after-body" type="application/javascript">
+</section><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
@@ -611,7 +593,7 @@ Y_i \mid b_i \sim \operatorname{NB}(\lambda_i, \phi),
         },
         interactive: true,
         interactiveBorder: 10,
-        theme: 'quarto',
+        theme: 'light-border',
         placement: 'bottom-start',
       };
       if (contentFn) {
@@ -663,466 +645,7 @@ Y_i \mid b_i \sim \operatorname{NB}(\lambda_i, \phi),
       }
     }
   });
-  </script>
-</div> <!-- /content -->
-
-
-    <div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/knitr/man/opts_chunk.html" class="external-link">opts_chunk</a></span><span class="op">$</span><span class="fu">set</span><span class="op">(</span>collapse <span class="op">=</span> <span class="cn">TRUE</span>, comment <span class="op">=</span> <span class="st">"#&gt;"</span><span class="op">)</span></span></code></pre></div>
-</details>
-</div>
-<section class="section level3" data-number="1"><h3 data-number="1" data-anchor-id="count-models" id="count-models-1">
-<span class="header-section-number">1</span> Count Models<a class="anchor" aria-label="anchor" href="#count-models-1"></a>
-</h3>
-<p>Chapter 11 develops GLMMs for non-negative integer responses. The Poisson model assumes</p>
-<p><span class="math display">\[
-Y_i \mid b_i \sim \operatorname{Poisson}(\lambda_i),
-\qquad
-\operatorname{E}(Y_i \mid b_i) = \operatorname{Var}(Y_i \mid b_i) = \lambda_i.
-\]</span></p>
-<p>With a log link,</p>
-<p><span class="math display">\[
-\log(\lambda_i) = x_i^\top \beta + z_i^\top b.
-\]</span></p>
-<p>Overdispersion is present when the conditional variance is larger than the Poisson variance. A negative-binomial GLMM adds a scale parameter:</p>
-<p><span class="math display">\[
-Y_i \mid b_i \sim \operatorname{NB}(\lambda_i, \phi),
-\qquad
-\operatorname{Var}(Y_i \mid b_i) = \lambda_i(1 + \phi\lambda_i).
-\]</span></p>
-</section><section class="section level3" data-number="2"><h3 data-number="2" data-anchor-id="example-11.1" id="example-11-1-1">
-<span class="header-section-number">2</span> Example 11.1<a class="anchor" aria-label="anchor" href="#example-11-1-1"></a>
-</h3>
-<p>Section 11.1.2 compares pre-GLM ANOVA methods and a Poisson-normal GLMM for a two-treatment completely randomized count dataset.</p>
-<div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">DataSet11.1</span>, package <span class="op">=</span> <span class="st">"modernGLMM"</span><span class="op">)</span></span>
-<span><span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">DataSet11.1</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 'data.frame':    10 obs. of  3 variables:</span></span>
-<span><span class="co">#&gt;  $ trt  : Factor w/ 2 levels "1","2": 1 1 1 1 1 2 2 2 2 2</span></span>
-<span><span class="co">#&gt;  $ unit : Factor w/ 5 levels "1","2","3","4",..: 1 2 3 4 5 1 2 3 4 5</span></span>
-<span><span class="co">#&gt;  $ count: int  2 2 3 5 12 6 11 12 12 34</span></span>
-<span><span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate</a></span><span class="op">(</span><span class="va">count</span> <span class="op">~</span> <span class="va">trt</span>, data <span class="op">=</span> <span class="va">DataSet11.1</span>, FUN <span class="op">=</span> <span class="va">mean</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   trt count</span></span>
-<span><span class="co">#&gt; 1   1   4.8</span></span>
-<span><span class="co">#&gt; 2   2  15.0</span></span></code></pre></div>
-</details>
-</div>
-<section class="level3" data-number="2.1"><h4 data-number="2.1" data-anchor-id="anova-on-counts" id="anova-on-counts-1">
-<span class="header-section-number">2.1</span> ANOVA on Counts<a class="anchor" aria-label="anchor" href="#anova-on-counts-1"></a>
-</h4>
-<div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">fit_count</span> <span class="op">&lt;-</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">count</span> <span class="op">~</span> <span class="va">trt</span>, data <span class="op">=</span> <span class="va">DataSet11.1</span><span class="op">)</span></span>
-<span><span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">fit_count</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Analysis of Variance Table</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Response: count</span></span>
-<span><span class="co">#&gt;           Df Sum Sq Mean Sq F value  Pr(&gt;F)  </span></span>
-<span><span class="co">#&gt; trt        1  260.1  260.10  3.8054 0.08689 .</span></span>
-<span><span class="co">#&gt; Residuals  8  546.8   68.35                  </span></span>
-<span><span class="co">#&gt; ---</span></span>
-<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
-<span><span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rvlenth.github.io/emmeans/reference/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">fit_count</span>, specs <span class="op">=</span> <span class="op">~</span> <span class="va">trt</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  trt emmean  SE df lower.CL upper.CL</span></span>
-<span><span class="co">#&gt;  1      4.8 3.7  8    -3.73     13.3</span></span>
-<span><span class="co">#&gt;  2     15.0 3.7  8     6.47     23.5</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Confidence level used: 0.95</span></span></code></pre></div>
-</details>
-</div>
-<p>The reconstructed counts reproduce the printed treatment means, residual mean square, F statistic, and p-value for the untransformed ANOVA.</p>
-</section><section class="level3" data-number="2.2"><h4 data-number="2.2" data-anchor-id="anova-on-log-counts" id="anova-on-log-counts-1">
-<span class="header-section-number">2.2</span> ANOVA on Log Counts<a class="anchor" aria-label="anchor" href="#anova-on-log-counts-1"></a>
-</h4>
-<div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">DataSet11.1</span><span class="op">$</span><span class="va">log_count</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">DataSet11.1</span><span class="op">$</span><span class="va">count</span><span class="op">)</span></span>
-<span><span class="va">fit_log</span> <span class="op">&lt;-</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">log_count</span> <span class="op">~</span> <span class="va">trt</span>, data <span class="op">=</span> <span class="va">DataSet11.1</span><span class="op">)</span></span>
-<span><span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">fit_log</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Analysis of Variance Table</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Response: log_count</span></span>
-<span><span class="co">#&gt;           Df Sum Sq Mean Sq F value  Pr(&gt;F)  </span></span>
-<span><span class="co">#&gt; trt        1 3.7290  3.7290  7.7798 0.02359 *</span></span>
-<span><span class="co">#&gt; Residuals  8 3.8346  0.4793                  </span></span>
-<span><span class="co">#&gt; ---</span></span>
-<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
-<span><span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rvlenth.github.io/emmeans/reference/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">fit_log</span>, specs <span class="op">=</span> <span class="op">~</span> <span class="va">trt</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  trt emmean   SE df lower.CL upper.CL</span></span>
-<span><span class="co">#&gt;  1     1.32 0.31  8    0.602     2.03</span></span>
-<span><span class="co">#&gt;  2     2.54 0.31  8    1.823     3.25</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Confidence level used: 0.95</span></span></code></pre></div>
-</details>
-</div>
-</section><section class="level3" data-number="2.3"><h4 data-number="2.3" data-anchor-id="poisson-glm" id="poisson-glm-1">
-<span class="header-section-number">2.3</span> Poisson GLM<a class="anchor" aria-label="anchor" href="#poisson-glm-1"></a>
-</h4>
-<div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">fit_pois_glm</span> <span class="op">&lt;-</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span></span>
-<span>  <span class="va">count</span> <span class="op">~</span> <span class="va">trt</span>,</span>
-<span>  family <span class="op">=</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">poisson</a></span><span class="op">(</span>link <span class="op">=</span> <span class="st">"log"</span><span class="op">)</span>,</span>
-<span>  data <span class="op">=</span> <span class="va">DataSet11.1</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rvlenth.github.io/emmeans/reference/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">fit_pois_glm</span>, specs <span class="op">=</span> <span class="op">~</span> <span class="va">trt</span>, type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  trt rate   SE  df asymp.LCL asymp.UCL</span></span>
-<span><span class="co">#&gt;  1    4.8 0.98 Inf      3.22      7.16</span></span>
-<span><span class="co">#&gt;  2   15.0 1.73 Inf     11.96     18.81</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Confidence level used: 0.95 </span></span>
-<span><span class="co">#&gt; Intervals are back-transformed from the log scale</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/residuals.html" class="external-link">residuals</a></span><span class="op">(</span><span class="va">fit_pois_glm</span>, type <span class="op">=</span> <span class="st">"pearson"</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">/</span></span>
-<span>  <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/df.residual.html" class="external-link">df.residual</a></span><span class="op">(</span><span class="va">fit_pois_glm</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 5.810417</span></span></code></pre></div>
-</details>
-</div>
-<p>The Pearson chi-square/DF is much larger than one, indicating that the Poisson GLM has not accounted for the unit-level source of variation.</p>
-</section><section class="level3" data-number="2.4"><h4 data-number="2.4" data-anchor-id="poisson-normal-glmm" id="poisson-normal-glmm-2">
-<span class="header-section-number">2.4</span> Poisson-Normal GLMM<a class="anchor" aria-label="anchor" href="#poisson-normal-glmm-2"></a>
-</h4>
-<div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">fit_pois_normal</span> <span class="op">&lt;-</span> <span class="fu">lme4</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lme4/man/glmer.html" class="external-link">glmer</a></span><span class="op">(</span></span>
-<span>  <span class="va">count</span> <span class="op">~</span> <span class="va">trt</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">trt</span><span class="op">:</span><span class="va">unit</span><span class="op">)</span>,</span>
-<span>  family <span class="op">=</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">poisson</a></span><span class="op">(</span>link <span class="op">=</span> <span class="st">"log"</span><span class="op">)</span>,</span>
-<span>  data <span class="op">=</span> <span class="va">DataSet11.1</span>,</span>
-<span>  nAGQ <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>  control <span class="op">=</span> <span class="fu">lme4</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmerControl.html" class="external-link">glmerControl</a></span><span class="op">(</span>optimizer <span class="op">=</span> <span class="st">"bobyqa"</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fit_pois_normal</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Generalized linear mixed model fit by maximum likelihood (Adaptive</span></span>
-<span><span class="co">#&gt;   Gauss-Hermite Quadrature, nAGQ = 0) [glmerMod]</span></span>
-<span><span class="co">#&gt;  Family: poisson  ( log )</span></span>
-<span><span class="co">#&gt; Formula: count ~ trt + (1 | trt:unit)</span></span>
-<span><span class="co">#&gt;    Data: DataSet11.1</span></span>
-<span><span class="co">#&gt; Control: lme4::glmerControl(optimizer = "bobyqa")</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;       AIC       BIC    logLik -2*log(L)  df.resid </span></span>
-<span><span class="co">#&gt;      65.2      66.1     -29.6      59.2         7 </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Scaled residuals: </span></span>
-<span><span class="co">#&gt;      Min       1Q   Median       3Q      Max </span></span>
-<span><span class="co">#&gt; -0.65465 -0.56392 -0.11551  0.07439  0.85875 </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Random effects:</span></span>
-<span><span class="co">#&gt;  Groups   Name        Variance Std.Dev.</span></span>
-<span><span class="co">#&gt;  trt:unit (Intercept) 0.2908   0.5392  </span></span>
-<span><span class="co">#&gt; Number of obs: 10, groups:  trt:unit, 10</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Fixed effects:</span></span>
-<span><span class="co">#&gt;             Estimate Std. Error z value Pr(&gt;|z|)    </span></span>
-<span><span class="co">#&gt; (Intercept)   1.4732     0.3235   4.554 5.28e-06 ***</span></span>
-<span><span class="co">#&gt; trt2          1.1178     0.4227   2.644  0.00819 ** </span></span>
-<span><span class="co">#&gt; ---</span></span>
-<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Correlation of Fixed Effects:</span></span>
-<span><span class="co">#&gt;      (Intr)</span></span>
-<span><span class="co">#&gt; trt2 -0.765</span></span>
-<span><span class="fu">lme4</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/nlme/man/VarCorr.html" class="external-link">VarCorr</a></span><span class="op">(</span><span class="va">fit_pois_normal</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  Groups   Name        Std.Dev.</span></span>
-<span><span class="co">#&gt;  trt:unit (Intercept) 0.53924</span></span>
-<span><span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rvlenth.github.io/emmeans/reference/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">fit_pois_normal</span>, specs <span class="op">=</span> <span class="op">~</span> <span class="va">trt</span>, type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  trt  rate   SE  df asymp.LCL asymp.UCL</span></span>
-<span><span class="co">#&gt;  1    4.36 1.41 Inf      2.31      8.23</span></span>
-<span><span class="co">#&gt;  2   13.34 3.63 Inf      7.83     22.74</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Confidence level used: 0.95 </span></span>
-<span><span class="co">#&gt; Intervals are back-transformed from the log scale</span></span></code></pre></div>
-</details>
-</div>
-<div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"DHARMa"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">sim_11_1</span> <span class="op">&lt;-</span> <span class="fu">DHARMa</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/DHARMa/man/simulateResiduals.html" class="external-link">simulateResiduals</a></span><span class="op">(</span><span class="va">fit_pois_normal</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span>  <span class="fu">DHARMa</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/DHARMa/man/testDispersion.html" class="external-link">testDispersion</a></span><span class="op">(</span><span class="va">sim_11_1</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code></pre></div>
-</details><div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="chapter-11-count-data_files/figure-html/unnamed-chunk-6-1.png" width="672" class="figure-img"></p>
-</figure>
-</div>
-</div>
-<pre><code><span><span class="co">#&gt;</span></span>
-<span><span class="co">#&gt;  DHARMa nonparametric dispersion test via sd of residuals fitted vs.</span></span>
-<span><span class="co">#&gt;  simulated</span></span>
-<span><span class="co">#&gt;</span></span>
-<span><span class="co">#&gt; data:  simulationOutput</span></span>
-<span><span class="co">#&gt; dispersion = 1.2129, p-value = 0.464</span></span>
-<span><span class="co">#&gt; alternative hypothesis: two.sided</span></span>
-<span></span>
-<span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"report"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu">report</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/report/reference/report.html" class="external-link">report</a></span><span class="op">(</span><span class="va">fit_pois_normal</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span><span class="co">#&gt; We fitted a poisson mixed model (estimated using ML and BOBYQA optimizer) to</span></span>
-<span><span class="co">#&gt; predict count with trt (formula: count ~ trt). The model included trt as random</span></span>
-<span><span class="co">#&gt; effects (formula: ~1 | trt:unit). The model's intercept, corresponding to trt =</span></span>
-<span><span class="co">#&gt; 1, is at 1.47 (95% CI [0.84, 2.11], p &lt; .001). Within this model:</span></span>
-<span><span class="co">#&gt;</span></span>
-<span><span class="co">#&gt;   - The effect of trt [2] is statistically significant and positive (beta = 1.12,</span></span>
-<span><span class="co">#&gt; 95% CI [0.29, 1.95], p = 0.008; Std. beta = 1.12, 95% CI [0.29, 1.95])</span></span>
-<span><span class="co">#&gt;</span></span>
-<span><span class="co">#&gt; Standardized parameters were obtained by fitting the model on a standardized</span></span>
-<span><span class="co">#&gt; version of the dataset. 95% Confidence Intervals (CIs) and p-values were</span></span>
-<span><span class="co">#&gt; computed using a Wald z-distribution approximation.</span></span></code></pre>
-</div>
-</section></section><section class="section level3" data-number="3"><h3 data-number="3" data-anchor-id="example-11.3" id="example-11-3-1">
-<span class="header-section-number">3</span> Example 11.3<a class="anchor" aria-label="anchor" href="#example-11-3-1"></a>
-</h3>
-<p>Section 11.4 uses a randomized complete block design with three treatments and ten blocks to show how overdispersion changes inference.</p>
-<div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">DataSet11.3</span>, package <span class="op">=</span> <span class="st">"modernGLMM"</span><span class="op">)</span></span>
-<span><span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">DataSet11.3</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 'data.frame':    30 obs. of  3 variables:</span></span>
-<span><span class="co">#&gt;  $ block: Factor w/ 10 levels "1","2","3","4",..: 1 2 3 4 5 6 7 8 9 10 ...</span></span>
-<span><span class="co">#&gt;  $ trt  : Factor w/ 3 levels "1","2","3": 1 1 1 1 1 1 1 1 1 1 ...</span></span>
-<span><span class="co">#&gt;  $ count: int  8 7 5 3 25 10 5 9 0 8 ...</span></span>
-<span><span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate</a></span><span class="op">(</span><span class="va">count</span> <span class="op">~</span> <span class="va">trt</span>, data <span class="op">=</span> <span class="va">DataSet11.3</span>, FUN <span class="op">=</span> <span class="va">mean</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   trt count</span></span>
-<span><span class="co">#&gt; 1   1   8.0</span></span>
-<span><span class="co">#&gt; 2   2  13.3</span></span>
-<span><span class="co">#&gt; 3   3  25.7</span></span></code></pre></div>
-</details>
-</div>
-<section class="level3" data-number="3.1"><h4 data-number="3.1" data-anchor-id="naive-poisson-glmm" id="naive-poisson-glmm-1">
-<span class="header-section-number">3.1</span> Naive Poisson GLMM<a class="anchor" aria-label="anchor" href="#naive-poisson-glmm-1"></a>
-</h4>
-<div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">fit_naive</span> <span class="op">&lt;-</span> <span class="fu">lme4</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lme4/man/glmer.html" class="external-link">glmer</a></span><span class="op">(</span></span>
-<span>  <span class="va">count</span> <span class="op">~</span> <span class="va">trt</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">block</span><span class="op">)</span>,</span>
-<span>  family <span class="op">=</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">poisson</a></span><span class="op">(</span>link <span class="op">=</span> <span class="st">"log"</span><span class="op">)</span>,</span>
-<span>  data <span class="op">=</span> <span class="va">DataSet11.3</span>,</span>
-<span>  nAGQ <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  control <span class="op">=</span> <span class="fu">lme4</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmerControl.html" class="external-link">glmerControl</a></span><span class="op">(</span>optimizer <span class="op">=</span> <span class="st">"bobyqa"</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">pearson_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/residuals.html" class="external-link">residuals</a></span><span class="op">(</span><span class="va">fit_naive</span>, type <span class="op">=</span> <span class="st">"pearson"</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">/</span></span>
-<span>  <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/df.residual.html" class="external-link">df.residual</a></span><span class="op">(</span><span class="va">fit_naive</span><span class="op">)</span></span>
-<span><span class="va">pearson_df</span></span>
-<span><span class="co">#&gt; [1] 7.129416</span></span>
-<span><span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rvlenth.github.io/emmeans/reference/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">fit_naive</span>, specs <span class="op">=</span> <span class="op">~</span> <span class="va">trt</span>, type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  trt  rate   SE  df asymp.LCL asymp.UCL</span></span>
-<span><span class="co">#&gt;  1    4.28 1.60 Inf      2.06      8.92</span></span>
-<span><span class="co">#&gt;  2    7.12 2.62 Inf      3.46     14.64</span></span>
-<span><span class="co">#&gt;  3   13.76 4.99 Inf      6.76     28.03</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Confidence level used: 0.95 </span></span>
-<span><span class="co">#&gt; Intervals are back-transformed from the log scale</span></span></code></pre></div>
-</details>
-</div>
-<p>The diagnostic remains high, so the naive model should not be used for final inference.</p>
-</section><section class="level3" data-number="3.2"><h4 data-number="3.2" data-anchor-id="poisson-normal-glmm-1" id="poisson-normal-glmm-1-1">
-<span class="header-section-number">3.2</span> Poisson-Normal GLMM<a class="anchor" aria-label="anchor" href="#poisson-normal-glmm-1-1"></a>
-</h4>
-<div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">fit_unit</span> <span class="op">&lt;-</span> <span class="fu">lme4</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lme4/man/glmer.html" class="external-link">glmer</a></span><span class="op">(</span></span>
-<span>  <span class="va">count</span> <span class="op">~</span> <span class="va">trt</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">block</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">block</span><span class="op">:</span><span class="va">trt</span><span class="op">)</span>,</span>
-<span>  family <span class="op">=</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">poisson</a></span><span class="op">(</span>link <span class="op">=</span> <span class="st">"log"</span><span class="op">)</span>,</span>
-<span>  data <span class="op">=</span> <span class="va">DataSet11.3</span>,</span>
-<span>  nAGQ <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>  control <span class="op">=</span> <span class="fu">lme4</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmerControl.html" class="external-link">glmerControl</a></span><span class="op">(</span>optimizer <span class="op">=</span> <span class="st">"bobyqa"</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">lme4</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/nlme/man/VarCorr.html" class="external-link">VarCorr</a></span><span class="op">(</span><span class="va">fit_unit</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  Groups    Name        Std.Dev.</span></span>
-<span><span class="co">#&gt;  block:trt (Intercept) 0.88323 </span></span>
-<span><span class="co">#&gt;  block     (Intercept) 0.84608</span></span>
-<span><span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rvlenth.github.io/emmeans/reference/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">fit_unit</span>, specs <span class="op">=</span> <span class="op">~</span> <span class="va">trt</span>, type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  trt rate   SE  df asymp.LCL asymp.UCL</span></span>
-<span><span class="co">#&gt;  1   6.02 2.48 Inf      2.68      13.5</span></span>
-<span><span class="co">#&gt;  2   6.55 2.70 Inf      2.91      14.7</span></span>
-<span><span class="co">#&gt;  3   9.47 3.88 Inf      4.24      21.1</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Confidence level used: 0.95 </span></span>
-<span><span class="co">#&gt; Intervals are back-transformed from the log scale</span></span></code></pre></div>
-</details>
-</div>
-<p>The block-by-treatment random term is the conditional-model analogue of the unit-level source of variation in the repurposed ANOVA.</p>
-</section><section class="level3" data-number="3.3"><h4 data-number="3.3" data-anchor-id="negative-binomial-glmm" id="negative-binomial-glmm-1">
-<span class="header-section-number">3.3</span> Negative-Binomial GLMM<a class="anchor" aria-label="anchor" href="#negative-binomial-glmm-1"></a>
-</h4>
-<div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"glmmTMB"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">fit_nb</span> <span class="op">&lt;-</span> <span class="fu">glmmTMB</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html" class="external-link">glmmTMB</a></span><span class="op">(</span></span>
-<span>    <span class="va">count</span> <span class="op">~</span> <span class="va">trt</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">block</span><span class="op">)</span>,</span>
-<span>    family <span class="op">=</span> <span class="fu">glmmTMB</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/glmmTMB/man/nbinom2.html" class="external-link">nbinom2</a></span><span class="op">(</span>link <span class="op">=</span> <span class="st">"log"</span><span class="op">)</span>,</span>
-<span>    data <span class="op">=</span> <span class="va">DataSet11.3</span></span>
-<span>  <span class="op">)</span></span>
-<span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fit_nb</span><span class="op">)</span></span>
-<span>  <span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rvlenth.github.io/emmeans/reference/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">fit_nb</span>, specs <span class="op">=</span> <span class="op">~</span> <span class="va">trt</span>, type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span></span>
-<span>  <span class="fl">1</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/stats/sigma.html" class="external-link">sigma</a></span><span class="op">(</span><span class="va">fit_nb</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span><span class="co">#&gt; [1] 0.6829583</span></span></code></pre></div>
-</details>
-</div>
-<div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"glmmTMB"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">&amp;&amp;</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"DHARMa"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">sim_11_3</span> <span class="op">&lt;-</span> <span class="fu">DHARMa</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/DHARMa/man/simulateResiduals.html" class="external-link">simulateResiduals</a></span><span class="op">(</span><span class="va">fit_nb</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span>  <span class="fu">DHARMa</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/DHARMa/man/testDispersion.html" class="external-link">testDispersion</a></span><span class="op">(</span><span class="va">sim_11_3</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code></pre></div>
-</details><div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="chapter-11-count-data_files/figure-html/unnamed-chunk-11-1.png" width="672" class="figure-img"></p>
-</figure>
-</div>
-</div>
-<pre><code><span><span class="co">#&gt;</span></span>
-<span><span class="co">#&gt;  DHARMa nonparametric dispersion test via sd of residuals fitted vs.</span></span>
-<span><span class="co">#&gt;  simulated</span></span>
-<span><span class="co">#&gt;</span></span>
-<span><span class="co">#&gt; data:  simulationOutput</span></span>
-<span><span class="co">#&gt; dispersion = 1.2991, p-value = 0.424</span></span>
-<span><span class="co">#&gt; alternative hypothesis: two.sided</span></span>
-<span></span>
-<span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"glmmTMB"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">&amp;&amp;</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"report"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu">report</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/report/reference/report.html" class="external-link">report</a></span><span class="op">(</span><span class="va">fit_nb</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span><span class="co">#&gt; We fitted a negative-binomial mixed model (estimated using ML and nlminb</span></span>
-<span><span class="co">#&gt; optimizer) to predict count with trt (formula: count ~ trt). The model included</span></span>
-<span><span class="co">#&gt; block as random effect (formula: ~1 | block). The model's total explanatory</span></span>
-<span><span class="co">#&gt; power is substantial (conditional R2 = 0.62) and the part related to the fixed</span></span>
-<span><span class="co">#&gt; effects alone (marginal R2) is of 0.05. The model's intercept, corresponding to</span></span>
-<span><span class="co">#&gt; trt = 1, is at 1.90 (95% CI [1.07, 2.73], p &lt; .001). Within this model:</span></span>
-<span><span class="co">#&gt;</span></span>
-<span><span class="co">#&gt;   - The effect of trt [2] is statistically non-significant and positive (beta =</span></span>
-<span><span class="co">#&gt; 0.30, 95% CI [-0.55, 1.14], p = 0.495)</span></span>
-<span><span class="co">#&gt;   - The effect of trt [3] is statistically non-significant and positive (beta =</span></span>
-<span><span class="co">#&gt; 0.68, 95% CI [-0.17, 1.52], p = 0.116)</span></span>
-<span><span class="co">#&gt;</span></span>
-<span><span class="co">#&gt; Standardized parameters were obtained by fitting the model on a standardized</span></span>
-<span><span class="co">#&gt; version of the dataset. 95% Confidence Intervals (CIs) and p-values were</span></span>
-<span><span class="co">#&gt; computed using a Wald z-distribution approximation.</span></span></code></pre>
-</div>
-</section></section><section class="section level3" data-number="4"><h3 data-number="4" data-anchor-id="example-11.4" id="example-11-4-1">
-<span class="header-section-number">4</span> Example 11.4<a class="anchor" aria-label="anchor" href="#example-11-4-1"></a>
-</h3>
-<p>Section 11.5 considers a multi-level split-plot design with a 7 by 4 factorial treatment structure. The package data are synthetic because the original <code>sp_counts</code> file was not available.</p>
-<div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">DataSet11.4</span>, package <span class="op">=</span> <span class="st">"modernGLMM"</span><span class="op">)</span></span>
-<span><span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">DataSet11.4</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 'data.frame':    112 obs. of  4 variables:</span></span>
-<span><span class="co">#&gt;  $ block: Factor w/ 4 levels "1","2","3","4": 1 2 3 4 1 2 3 4 1 2 ...</span></span>
-<span><span class="co">#&gt;  $ a    : Factor w/ 7 levels "1","2","3","4",..: 1 1 1 1 2 2 2 2 3 3 ...</span></span>
-<span><span class="co">#&gt;  $ b    : Factor w/ 4 levels "1","2","3","4": 1 1 1 1 1 1 1 1 1 1 ...</span></span>
-<span><span class="co">#&gt;  $ count: int  11 10 10 12 13 17 16 19 19 24 ...</span></span>
-<span><span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate</a></span><span class="op">(</span><span class="va">count</span> <span class="op">~</span> <span class="va">a</span> <span class="op">+</span> <span class="va">b</span>, data <span class="op">=</span> <span class="va">DataSet11.4</span>, FUN <span class="op">=</span> <span class="va">mean</span><span class="op">)</span></span>
-<span><span class="co">#&gt;    a b count</span></span>
-<span><span class="co">#&gt; 1  1 1 10.75</span></span>
-<span><span class="co">#&gt; 2  2 1 16.25</span></span>
-<span><span class="co">#&gt; 3  3 1 21.75</span></span>
-<span><span class="co">#&gt; 4  4 1 27.00</span></span>
-<span><span class="co">#&gt; 5  5 1 32.50</span></span>
-<span><span class="co">#&gt; 6  6 1 38.00</span></span>
-<span><span class="co">#&gt; 7  7 1 43.75</span></span>
-<span><span class="co">#&gt; 8  1 2  8.75</span></span>
-<span><span class="co">#&gt; 9  2 2 14.25</span></span>
-<span><span class="co">#&gt; 10 3 2 19.50</span></span>
-<span><span class="co">#&gt; 11 4 2 24.75</span></span>
-<span><span class="co">#&gt; 12 5 2 30.25</span></span>
-<span><span class="co">#&gt; 13 6 2 35.25</span></span>
-<span><span class="co">#&gt; 14 7 2 40.50</span></span>
-<span><span class="co">#&gt; 15 1 3 19.75</span></span>
-<span><span class="co">#&gt; 16 2 3 20.50</span></span>
-<span><span class="co">#&gt; 17 3 3 21.25</span></span>
-<span><span class="co">#&gt; 18 4 3 22.00</span></span>
-<span><span class="co">#&gt; 19 5 3 22.50</span></span>
-<span><span class="co">#&gt; 20 6 3 23.25</span></span>
-<span><span class="co">#&gt; 21 7 3 24.00</span></span>
-<span><span class="co">#&gt; 22 1 4  6.50</span></span>
-<span><span class="co">#&gt; 23 2 4  8.75</span></span>
-<span><span class="co">#&gt; 24 3 4 10.50</span></span>
-<span><span class="co">#&gt; 25 4 4 12.25</span></span>
-<span><span class="co">#&gt; 26 5 4 14.25</span></span>
-<span><span class="co">#&gt; 27 6 4 16.25</span></span>
-<span><span class="co">#&gt; 28 7 4 18.50</span></span></code></pre></div>
-</details>
-</div>
-<div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"glmmTMB"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">fit_sp_nb</span> <span class="op">&lt;-</span> <span class="fu">glmmTMB</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html" class="external-link">glmmTMB</a></span><span class="op">(</span></span>
-<span>    <span class="va">count</span> <span class="op">~</span> <span class="va">a</span> <span class="op">*</span> <span class="va">b</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">block</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">block</span><span class="op">:</span><span class="va">a</span><span class="op">)</span>,</span>
-<span>    family <span class="op">=</span> <span class="fu">glmmTMB</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/glmmTMB/man/nbinom2.html" class="external-link">nbinom2</a></span><span class="op">(</span>link <span class="op">=</span> <span class="st">"log"</span><span class="op">)</span>,</span>
-<span>    data <span class="op">=</span> <span class="va">DataSet11.4</span></span>
-<span>  <span class="op">)</span></span>
-<span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fit_sp_nb</span><span class="op">)</span></span>
-<span>  <span class="va">emm_sp</span> <span class="op">&lt;-</span> <span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rvlenth.github.io/emmeans/reference/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">fit_sp_nb</span>, specs <span class="op">=</span> <span class="op">~</span> <span class="va">a</span> <span class="op">*</span> <span class="va">b</span>, type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span></span>
-<span>  <span class="va">emm_sp</span></span>
-<span><span class="op">}</span></span>
-<span><span class="co">#&gt;  a b response   SE  df asymp.LCL asymp.UCL</span></span>
-<span><span class="co">#&gt;  1 1    10.72 1.69 Inf      7.87     14.59</span></span>
-<span><span class="co">#&gt;  2 1    16.20 2.11 Inf     12.55     20.91</span></span>
-<span><span class="co">#&gt;  3 1    21.68 2.48 Inf     17.34     27.12</span></span>
-<span><span class="co">#&gt;  4 1    26.92 2.80 Inf     21.96     33.00</span></span>
-<span><span class="co">#&gt;  5 1    32.40 3.11 Inf     26.84     39.12</span></span>
-<span><span class="co">#&gt;  6 1    37.88 3.41 Inf     31.75     45.20</span></span>
-<span><span class="co">#&gt;  7 1    43.62 3.72 Inf     36.91     51.54</span></span>
-<span><span class="co">#&gt;  1 2     8.72 1.51 Inf      6.21     12.26</span></span>
-<span><span class="co">#&gt;  2 2    14.21 1.96 Inf     10.84     18.62</span></span>
-<span><span class="co">#&gt;  3 2    19.44 2.33 Inf     15.37     24.59</span></span>
-<span><span class="co">#&gt;  4 2    24.67 2.66 Inf     19.97     30.49</span></span>
-<span><span class="co">#&gt;  5 2    30.16 2.99 Inf     24.84     36.62</span></span>
-<span><span class="co">#&gt;  6 2    35.14 3.27 Inf     29.29     42.16</span></span>
-<span><span class="co">#&gt;  7 2    40.38 3.55 Inf     33.99     47.96</span></span>
-<span><span class="co">#&gt;  1 3    19.69 2.35 Inf     15.59     24.87</span></span>
-<span><span class="co">#&gt;  2 3    20.44 2.40 Inf     16.24     25.72</span></span>
-<span><span class="co">#&gt;  3 3    21.18 2.44 Inf     16.90     26.56</span></span>
-<span><span class="co">#&gt;  4 3    21.93 2.49 Inf     17.55     27.40</span></span>
-<span><span class="co">#&gt;  5 3    22.43 2.52 Inf     17.99     27.96</span></span>
-<span><span class="co">#&gt;  6 3    23.18 2.57 Inf     18.65     28.81</span></span>
-<span><span class="co">#&gt;  7 3    23.93 2.62 Inf     19.31     29.65</span></span>
-<span><span class="co">#&gt;  1 4     6.48 1.30 Inf      4.38      9.59</span></span>
-<span><span class="co">#&gt;  2 4     8.72 1.51 Inf      6.21     12.26</span></span>
-<span><span class="co">#&gt;  3 4    10.47 1.67 Inf      7.66     14.30</span></span>
-<span><span class="co">#&gt;  4 4    12.21 1.81 Inf      9.13     16.33</span></span>
-<span><span class="co">#&gt;  5 4    14.21 1.96 Inf     10.84     18.62</span></span>
-<span><span class="co">#&gt;  6 4    16.20 2.11 Inf     12.55     20.91</span></span>
-<span><span class="co">#&gt;  7 4    18.44 2.26 Inf     14.50     23.46</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Confidence level used: 0.95 </span></span>
-<span><span class="co">#&gt; Intervals are back-transformed from the log scale</span></span></code></pre></div>
-</details>
-</div>
-<div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"glmmTMB"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">emm_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">emm_sp</span><span class="op">)</span></span>
-<span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span></span>
-<span>    <span class="va">emm_df</span>,</span>
-<span>    <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">b</span>, y <span class="op">=</span> <span class="va">response</span>, group <span class="op">=</span> <span class="va">a</span>, colour <span class="op">=</span> <span class="va">a</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span>linewidth <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Factor B"</span>, y <span class="op">=</span> <span class="st">"Estimated count"</span>, colour <span class="op">=</span> <span class="st">"Factor A"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code></pre></div>
-</details><div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="chapter-11-count-data_files/figure-html/unnamed-chunk-14-1.png" width="672" class="figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-</section><section class="section level3" data-number="5"><h3 data-number="5" data-anchor-id="chapter-summary" id="chapter-summary-1">
-<span class="header-section-number">5</span> Chapter Summary<a class="anchor" aria-label="anchor" href="#chapter-summary-1"></a>
-</h3>
-<p>Poisson GLMMs are useful starting points for count data, but their mean-variance restriction is often too rigid. The practical workflow is to fit a model that matches the design skeleton, check overdispersion, and then choose an inference target. Conditional inference uses random effects and distributions such as Poisson-normal or negative binomial; marginal inference uses working covariance or quasi-likelihood machinery.</p>
-</section></main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+  </script></main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>
 
