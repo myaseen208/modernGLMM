@@ -21,6 +21,7 @@ Exam9.2 Incomplete strip-plot
 ## Examples
 
 ``` r
+
 data(DataSet9.2)
 DataSet9.2$block <- factor(x = DataSet9.2$block)
 DataSet9.2$a <- factor(x = DataSet9.2$a)

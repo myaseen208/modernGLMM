@@ -1,6 +1,7 @@
 # Chapter 8: Treatment and Explanatory Variable Structure
 
 ``` r
+
 library(modernGLMM)
 library(lme4)
 library(lmerTest)
@@ -25,6 +26,7 @@ The two-way factorial model:
 \varepsilon\_{ijk}\\
 
 ``` r
+
 data(DataSet8.1)
 DataSet8.1$a <- factor(DataSet8.1$a)
 DataSet8.1$b <- factor(DataSet8.1$b)
@@ -37,9 +39,11 @@ str(DataSet8.1)
      $ y: int  55 48 51 48 60 59 66 54 75 61 ...
 
 ``` r
+
 Exam8.1.lm <- stats::lm(y ~ a * b, data = DataSet8.1)
 summary(Exam8.1.lm)
 ```
+
 
     Call:
     stats::lm(formula = y ~ a * b, data = DataSet8.1)
@@ -64,6 +68,7 @@ summary(Exam8.1.lm)
     F-statistic: 9.997 on 5 and 18 DF,  p-value: 0.0001049
 
 ``` r
+
 anova(Exam8.1.lm)
 ```
 
@@ -75,6 +80,7 @@ anova(Exam8.1.lm)
 | Residuals |  18 | 472.2500 |  26.23611 |        NA |        NA |
 
 ``` r
+
 emm8.1 <- emmeans::emmeans(Exam8.1.lm, ~ a * b)
 print(emm8.1)
 ```
@@ -90,6 +96,7 @@ print(emm8.1)
     Confidence level used: 0.95 
 
 ``` r
+
 ## Simple effects: b within each level of a
 emmeans::contrast(
   emmeans::emmeans(Exam8.1.lm, ~ b | a),
@@ -112,6 +119,7 @@ emmeans::contrast(
     P value adjustment: tukey method for comparing a family of 3 estimates 
 
 ``` r
+
 emmeans::emmip(Exam8.1.lm, a ~ b, CIs = TRUE) +
   theme_bw() +
   labs(title = "Chapter 8: A × B Interaction")
@@ -128,6 +136,7 @@ Analysis of covariance with treatment and continuous covariate \\x\\:
 \\y\_{ij} = \mu + \tau_i + \beta x\_{ij} + \varepsilon\_{ij}\\
 
 ``` r
+
 data(DataSet8.2)
 DataSet8.2$trt <- factor(DataSet8.2$trt)
 str(DataSet8.2)
@@ -139,9 +148,11 @@ str(DataSet8.2)
      $ y  : num  46 41.8 46.9 57 36.9 ...
 
 ``` r
+
 Exam8.2.lm <- stats::lm(y ~ trt + x, data = DataSet8.2)
 summary(Exam8.2.lm)
 ```
+
 
     Call:
     stats::lm(formula = y ~ trt + x, data = DataSet8.2)
@@ -165,6 +176,7 @@ summary(Exam8.2.lm)
     F-statistic: 34.88 on 4 and 15 DF,  p-value: 1.968e-07
 
 ``` r
+
 anova(Exam8.2.lm)
 ```
 
@@ -175,6 +187,7 @@ anova(Exam8.2.lm)
 | Residuals |  15 |  99.79838 |   6.653225 |       NA |       NA |
 
 ``` r
+
 ## Adjusted means (covariate at its mean)
 emm8.2 <- emmeans::emmeans(Exam8.2.lm, ~ trt,
                             at = list(x = mean(DataSet8.2$x)))
@@ -190,6 +203,7 @@ print(emm8.2)
     Confidence level used: 0.95 
 
 ``` r
+
 emmeans::contrast(emm8.2, method = "pairwise")
 ```
 
@@ -206,12 +220,14 @@ emmeans::contrast(emm8.2, method = "pairwise")
 ## 4 Example 8.3 — Heterogeneous Slopes ANCOVA
 
 ``` r
+
 data(DataSet8.3)
 DataSet8.3$trt <- factor(DataSet8.3$trt)
 
 Exam8.3.lm <- stats::lm(y ~ trt * x, data = DataSet8.3)
 summary(Exam8.3.lm)
 ```
+
 
     Call:
     stats::lm(formula = y ~ trt * x, data = DataSet8.3)
@@ -238,6 +254,7 @@ summary(Exam8.3.lm)
     F-statistic:  54.7 on 7 and 12 DF,  p-value: 3.676e-08
 
 ``` r
+
 anova(Exam8.3.lm)
 ```
 
@@ -249,6 +266,7 @@ anova(Exam8.3.lm)
 | Residuals |  12 |   87.85615 |    7.321346 |         NA |        NA |
 
 ``` r
+
 ggplot(DataSet8.3, aes(x = x, y = y, colour = trt, group = trt)) +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE) +
@@ -264,6 +282,7 @@ Figure 2: Heterogeneous slopes: y vs x by treatment
 ## 5 Example 8.7 — Response Surface
 
 ``` r
+
 data(DataSet8.7)
 DataSet8.7$a <- factor(DataSet8.7$a)
 str(DataSet8.7)
@@ -275,10 +294,12 @@ str(DataSet8.7)
      $ y: num  3.5 3 7.3 5.2 5.2 5.5 3.1 7.1 5 6.3 ...
 
 ``` r
+
 ## Quadratic response surface within groups
 Exam8.7.lm <- stats::lm(y ~ a + x + I(x^2) + a:x, data = DataSet8.7)
 summary(Exam8.7.lm)
 ```
+
 
     Call:
     stats::lm(formula = y ~ a + x + I(x^2) + a:x, data = DataSet8.7)
@@ -302,6 +323,7 @@ summary(Exam8.7.lm)
     F-statistic: 524.1 on 4 and 265 DF,  p-value: < 2.2e-16
 
 ``` r
+
 xseq <- seq(min(DataSet8.7$x), max(DataSet8.7$x), length.out = 50L)
 pred_df <- do.call(rbind, lapply(levels(DataSet8.7$a), function(ai) {
   nd <- data.frame(a = factor(ai, levels = levels(DataSet8.7$a)), x = xseq)

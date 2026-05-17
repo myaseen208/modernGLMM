@@ -1,6 +1,7 @@
 # Chapter 7: Inference, Part II
 
 ``` r
+
 library(modernGLMM)
 library(emmeans)
 library(car)
@@ -14,9 +15,8 @@ functions, computing contrasts, and performing multiple comparisons in
 
 Key topics:
 
-- **Estimability**: not all linear combinations of
-  \\\boldsymbol{\beta}\\ can be estimated; `emmeans` handles this
-  transparently.
+- **Estimability**: not all linear combinations of \\\pmb{\beta}\\ can
+  be estimated; `emmeans` handles this transparently.
 - **Contrasts**: custom linear combinations via
   [`emmeans::contrast()`](https://rvlenth.github.io/emmeans/reference/contrast.html).
 - **Multiple comparisons**: Tukey, Bonferroni, Scheffé, and FDR
@@ -31,6 +31,7 @@ The 2×3 factorial from Chapter 8 is used here to illustrate contrast
 coding.
 
 ``` r
+
 data(DataSet8.1)
 DataSet8.1$a <- factor(DataSet8.1$a)
 DataSet8.1$b <- factor(DataSet8.1$b)
@@ -41,6 +42,7 @@ fit <- stats::lm(y ~ a * b, data = DataSet8.1)
 ### 2.1 Estimated marginal means
 
 ``` r
+
 emm <- emmeans::emmeans(fit, ~ a * b)
 print(emm)
 ```
@@ -58,6 +60,7 @@ print(emm)
 ### 2.2 All pairwise comparisons within each level of `a`
 
 ``` r
+
 pairs(
   emmeans::emmeans(fit, ~ b | a),
   adjust = "tukey"
@@ -81,6 +84,7 @@ pairs(
 ### 2.3 Simple effects (ANOVA for b within each level of a)
 
 ``` r
+
 emmeans::joint_tests(fit, by = "a")
 ```
 
@@ -92,6 +96,7 @@ emmeans::joint_tests(fit, by = "a")
 ### 2.4 Custom contrasts
 
 ``` r
+
 emmeans::contrast(emm, list(
   "a0: b0 vs b1" = c(1, -1, 0, 0, 0, 0),
   "a1: b0 vs b1" = c(0, 0, 0, 1, -1, 0)

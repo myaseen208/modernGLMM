@@ -1,6 +1,7 @@
 # Chapter 16: Smoothing Splines and Additive Models
 
 ``` r
+
 library(modernGLMM)
 library(lme4)
 library(lmerTest)
@@ -14,12 +15,12 @@ Chapter 16 uses the **mixed model representation of penalized splines**
 to fit smooth curves. The key insight is that a penalized spline fit can
 be expressed as a LMM:
 
-\\\mathbf{y} = \mathbf{X}\boldsymbol{\beta} + \mathbf{Z}\mathbf{u} +
-\boldsymbol{\varepsilon}\\
+\\\mathbf{y} = \mathbf{X}\pmb{\beta} + \mathbf{Z}\mathbf{u} +
+\pmb{\varepsilon}\\
 
-where: - \\\mathbf{X}\boldsymbol{\beta}\\: polynomial fixed effects
-(trend) - \\\mathbf{Z}\mathbf{u}\\: spline basis random effects
-(\\\mathbf{u} \sim \mathcal{N}(\mathbf{0}, \sigma^2_u\mathbf{I})\\)
+where: - \\\mathbf{X}\pmb{\beta}\\: polynomial fixed effects (trend) -
+\\\mathbf{Z}\mathbf{u}\\: spline basis random effects (\\\mathbf{u} \sim
+\mathcal{N}(\mathbf{0}, \sigma^2_u\mathbf{I})\\)
 
 The ratio \\\sigma^2_e / \sigma^2_u\\ controls the smoothing penalty.
 
@@ -28,6 +29,7 @@ The ratio \\\sigma^2_e / \sigma^2_u\\ controls the smoothing penalty.
 DataSet8.7 contains spline regression data from Chapter 8.
 
 ``` r
+
 data(DataSet8.7)
 DataSet8.7$a <- factor(DataSet8.7$a)
 str(DataSet8.7)
@@ -41,6 +43,7 @@ str(DataSet8.7)
 ### 2.1 Truncated power basis spline (mixed model)
 
 ``` r
+
 # Create knots at quantiles of x
 knots <- quantile(DataSet8.7$x, probs = seq(0.1, 0.9, by = 0.1))
 
@@ -61,9 +64,11 @@ spline_form <- as.formula(paste(
 ### 2.2 Natural cubic spline via ns()
 
 ``` r
+
 fit_ns <- stats::lm(y ~ splines::ns(x, df = 6) + a, data = DataSet8.7)
 summary(fit_ns)
 ```
+
 
     Call:
     stats::lm(formula = y ~ splines::ns(x, df = 6) + a, data = DataSet8.7)
@@ -90,6 +95,7 @@ summary(fit_ns)
     F-statistic: 292.2 on 7 and 262 DF,  p-value: < 2.2e-16
 
 ``` r
+
 pred_data <- DataSet8.7
 pred_data$fitted <- stats::fitted(fit_ns)
 
@@ -110,6 +116,7 @@ ggplot2::ggplot(pred_data, ggplot2::aes(x = x, y = y, colour = a, group = a)) +
 ### 2.3 Penalized spline via mgcv
 
 ``` r
+
 if (requireNamespace("mgcv", quietly = TRUE)) {
   s <- mgcv::s
   fit_gam <- mgcv::gam(
@@ -132,6 +139,7 @@ if (requireNamespace("mgcv", quietly = TRUE)) {
 ### 2.4 Additive mixed model via gamm4
 
 ``` r
+
 if (requireNamespace("gamm4", quietly = TRUE)) {
   s <- mgcv::s
   fit_gamm4 <- gamm4::gamm4(

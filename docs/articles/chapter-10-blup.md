@@ -1,6 +1,7 @@
 # Chapter 10: Best Linear Unbiased Prediction
 
 ``` r
+
 library(modernGLMM)
 library(lme4)
 library(lmerTest)
@@ -33,6 +34,7 @@ DataSet 10.1: 12 groups, 2 observations each (continuous response
 \\y\\).
 
 ``` r
+
 data(DataSet10.1)
 DataSet10.1$a <- factor(DataSet10.1$a)
 str(DataSet10.1)
@@ -45,6 +47,7 @@ str(DataSet10.1)
 ### 2.1 Random effects model
 
 ``` r
+
 Exam10.1Lmer <- lmerTest::lmer(
   y ~ 1 + (1 | a),
   data    = DataSet10.1,
@@ -80,6 +83,7 @@ summary(Exam10.1Lmer)
 ### 2.2 Variance components
 
 ``` r
+
 as.data.frame(lme4::VarCorr(Exam10.1Lmer))
 ```
 
@@ -94,6 +98,7 @@ variance attributable to group differences:
 \\\text{ICC} = \frac{\sigma^2_a}{\sigma^2_a + \sigma^2_e}\\
 
 ``` r
+
 if (requireNamespace("performance", quietly = TRUE)) {
   performance::icc(Exam10.1Lmer)
 }
@@ -106,6 +111,7 @@ if (requireNamespace("performance", quietly = TRUE)) {
 ### 2.3 BLUPs (Best Linear Unbiased Predictors)
 
 ``` r
+
 blup <- unlist(lme4::ranef(Exam10.1Lmer))
 blup_df <- data.frame(
   group    = names(blup),
@@ -131,11 +137,12 @@ knitr::kable(blup_df, digits = 3,
 | a.(Intercept)11 | a.(Intercept)11 |    -2.634 |     13.266 |
 | a.(Intercept)12 | a.(Intercept)12 |    -0.702 |     15.198 |
 
-Table 10.1: BLUP estimates
+Table 10.1: BLUP estimates {.table .caption-top}
 
 ### 2.4 Overall mean (narrow inference)
 
 ``` r
+
 emm10.1 <- emmeans::emmeans(Exam10.1Lmer, ~ 1)
 print(emm10.1)
 ```
@@ -149,6 +156,7 @@ print(emm10.1)
 ### 2.5 Report
 
 ``` r
+
 if (requireNamespace("report", quietly = TRUE)) {
   report::report(Exam10.1Lmer)
 }
@@ -166,6 +174,7 @@ if (requireNamespace("report", quietly = TRUE)) {
 ## 3 Example 10.2 — Two-Way Nested Random Effects Model
 
 ``` r
+
 data(DataSet10.2)
 DataSet10.2$a <- factor(DataSet10.2$a)
 DataSet10.2$b <- factor(DataSet10.2$b)
@@ -178,6 +187,7 @@ str(DataSet10.2)
      $ y: num  17 17.1 17.7 17 18.8 18.6 20 20.1 17.6 19.5 ...
 
 ``` r
+
 Exam10.2Lmer <- lmerTest::lmer(
   y ~ 1 + (1 | a / b),
   data    = DataSet10.2,
@@ -212,6 +222,7 @@ summary(Exam10.2Lmer)
     Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 ``` r
+
 emm10.2 <- emmeans::emmeans(Exam10.2Lmer, ~ 1)
 print(emm10.2)
 ```
@@ -225,6 +236,7 @@ print(emm10.2)
 ## 4 Example 10.4 — BLUP vs Fixed Effect Estimators
 
 ``` r
+
 data(DataSet10.4)
 DataSet10.4$a <- factor(DataSet10.4$a)
 DataSet10.4$b <- factor(DataSet10.4$b)
@@ -237,6 +249,7 @@ str(DataSet10.4)
      $ y: num  12.9 13.6 10 9.8 16 13.6 11.3 16.1 12.4 14.3 ...
 
 ``` r
+
 Exam10.4Lmer <- lmerTest::lmer(
   y ~ a + (1 | b) + (1 | b:a),
   data    = DataSet10.4,
@@ -250,6 +263,7 @@ stats::anova(Exam10.4Lmer, ddf = "Kenward-Roger")
 | a   | 11.68332 | 11.68332 |     1 |     7 | 3.203379 | 0.1166121 |
 
 ``` r
+
 emmeans::emmeans(Exam10.4Lmer, ~ a)
 ```
 
@@ -263,6 +277,7 @@ emmeans::emmeans(Exam10.4Lmer, ~ a)
 ## 5 Diagnostics
 
 ``` r
+
 if (requireNamespace("DHARMa", quietly = TRUE)) {
   sim_r <- DHARMa::simulateResiduals(Exam10.1Lmer, plot = TRUE)
 }

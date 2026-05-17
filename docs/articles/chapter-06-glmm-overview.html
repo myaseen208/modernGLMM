@@ -21,15 +21,6 @@
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><script src="chapter-06-glmm-overview_files/libs/quarto-html/popper.min.js"></script><script src="chapter-06-glmm-overview_files/libs/quarto-html/tippy.umd.min.js"></script><link href="chapter-06-glmm-overview_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="chapter-06-glmm-overview_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Chapter 6: Inference, Part I">
-<script>
-window.MathJax = {
-  tex: {
-    macros: {
-      boldsymbol: ["\\pmb{#1}", 1]
-    }
-  }
-};
-</script>
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -96,7 +87,7 @@ window.MathJax = {
       <h1>Chapter 6: Inference, Part I</h1>
       <p class="subtitle">The Unified Framework for Generalised Linear Mixed Models</p>
       <p class="author">Muhammad Yaseen</p>
-      <p class="date">2026-05-11</p>
+      <p class="date">2026-05-17</p>
 
       <small class="dont-index">Source: <a href="https://github.com/myaseen208/modernGLMM/blob/HEAD/vignettes/chapter-06-glmm-overview.qmd"><code>vignettes/chapter-06-glmm-overview.qmd</code></a></small>
       <div class="d-none name"><code></code></div>
@@ -124,7 +115,7 @@ window.MathJax = {
 <strong>Random component</strong>: <span class="math inline">\(Y_i \mid \mathbf{b} \sim\)</span> exponential family with mean <span class="math inline">\(\mu_i\)</span>
 </li>
 <li>
-<strong>Systematic component</strong> (linear predictor): <span class="math inline">\(\eta_i = \mathbf{x}_i^\top\boldsymbol{\beta} + \mathbf{z}_i^\top\mathbf{b}\)</span>
+<strong>Systematic component</strong> (linear predictor): <span class="math inline">\(\eta_i = \mathbf{x}_i^\top\pmb{\beta} + \mathbf{z}_i^\top\mathbf{b}\)</span>
 </li>
 <li>
 <strong>Link function</strong>: <span class="math inline">\(g(\mu_i) = \eta_i\)</span>
@@ -169,8 +160,8 @@ window.MathJax = {
 </table></section><section class="level3" data-number="1.2"><h3 data-number="1.2" id="random-effects-structure">
 <span class="header-section-number">1.2</span> Random effects structure<a class="anchor" aria-label="anchor" href="#random-effects-structure"></a>
 </h3>
-<p><span class="math display">\[\mathbf{b} \sim \mathcal{N}(\mathbf{0}, \mathbf{G}(\boldsymbol{\theta}))\]</span></p>
-<p>The variance component vector <span class="math inline">\(\boldsymbol{\theta}\)</span> is estimated by REML (for Gaussian) or by maximum likelihood / Laplace approximation (for non-Gaussian families).</p>
+<p><span class="math display">\[\mathbf{b} \sim \mathcal{N}(\mathbf{0}, \mathbf{G}(\pmb{\theta}))\]</span></p>
+<p>The variance component vector <span class="math inline">\(\pmb{\theta}\)</span> is estimated by REML (for Gaussian) or by maximum likelihood / Laplace approximation (for non-Gaussian families).</p>
 </section></section><section class="level2" data-number="2"><h2 data-number="2" id="the-lme4-formula-language">
 <span class="header-section-number">2</span> The lme4 Formula Language<a class="anchor" aria-label="anchor" href="#the-lme4-formula-language"></a>
 </h2>

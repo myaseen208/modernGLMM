@@ -1,6 +1,7 @@
 # Chapter 18: Correlated Errors, Part II: Spatial Variability
 
 ``` r
+
 library(modernGLMM)
 library(nlme)
 library(lme4)
@@ -30,6 +31,7 @@ sill.
 column blocks (columns 1–4, 5–8, 9–12). 144 plots total.
 
 ``` r
+
 data(DataSet18.1)
 str(DataSet18.1)
 ```
@@ -42,6 +44,7 @@ str(DataSet18.1)
      $ y    : num  60.1 86.2 49.6 75.2 69.2 ...
 
 ``` r
+
 with(DataSet18.1, table(block))
 ```
 
@@ -50,6 +53,7 @@ with(DataSet18.1, table(block))
     48 48 48 
 
 ``` r
+
 ggplot(DataSet18.1, aes(x = col, y = row, fill = y)) +
   geom_tile(colour = "white", linewidth = 0.3) +
   scale_fill_viridis_c(option = "magma") +
@@ -66,6 +70,7 @@ Figure 1: Spatial yield map (12×12 grid)
 ### 2.1 Baseline: complete block model (no spatial covariance)
 
 ``` r
+
 fit_rcb <- stats::lm(y ~ trt + block, data = DataSet18.1)
 cat("RCB AIC:", stats::AIC(fit_rcb), "\n")
 ```
@@ -75,6 +80,7 @@ cat("RCB AIC:", stats::AIC(fit_rcb), "\n")
 ### 2.2 Spatial models via nlme::gls
 
 ``` r
+
 ## Spherical covariance (SP(SPH) — best model in book)
 fit_sph <- nlme::gls(
   model       = y ~ trt + block,
@@ -103,6 +109,7 @@ stats::AIC(fit_sph, fit_exp)
 ### 2.3 Spatial range and sill from best model
 
 ``` r
+
 tryCatch(
   nlme::intervals(fit_sph, which = "var-cov"),
   error = function(e) {
@@ -122,6 +129,7 @@ tryCatch(
 ### 2.4 Empirical variogram
 
 ``` r
+
 vario <- nlme::Variogram(fit_sph, form = ~ row + col, resType = "normalized")
 plot(vario, smooth = TRUE, main = "Chapter 18: Empirical variogram (spherical)")
 ```
@@ -137,6 +145,7 @@ blocks), 64 plots. Response is number of Hessian fly-damaged plants out
 of total (`y / n`).
 
 ``` r
+
 data(DataSet18.2)
 str(DataSet18.2)
 ```
@@ -150,6 +159,7 @@ str(DataSet18.2)
      $ n      : int  20 20 20 20 20 20 20 20 20 20 ...
 
 ``` r
+
 ## Observed resistance rates by variety
 with(DataSet18.2, tapply(y / n, variety, mean))
 ```
@@ -160,6 +170,7 @@ with(DataSet18.2, tapply(y / n, variety, mean))
     0.1875 0.1875 0.1250 0.0000 0.1000 
 
 ``` r
+
 ggplot(DataSet18.2, aes(x = col, y = row, fill = y / n)) +
   geom_tile(colour = "white", linewidth = 0.5) +
   scale_fill_viridis_c(option = "inferno", direction = -1) +
@@ -176,6 +187,7 @@ Figure 3: Hessian fly damage map (spatial layout)
 ### 3.1 RCB model (baseline)
 
 ``` r
+
 fit_rcb18 <- lme4::glmer(
   cbind(y, n - y) ~ variety + (1 | block),
   family  = stats::binomial(link = "logit"),
@@ -231,6 +243,7 @@ summary(fit_rcb18)
 ### 3.2 G-side spherical spatial GLMM via glmmTMB
 
 ``` r
+
 if (requireNamespace("glmmTMB", quietly = TRUE)) {
   DataSet18.2$pos <- glmmTMB::numFactor(DataSet18.2$row, DataSet18.2$col)
 

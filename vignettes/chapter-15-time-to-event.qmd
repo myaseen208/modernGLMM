@@ -38,10 +38,10 @@ Core concepts:
 
 - **Survival function**: $S(t) = P(T > t)$
 - **Hazard function**: $h(t) = \lim_{\Delta t \to 0} P(t \le T < t + \Delta t \mid T \ge t) / \Delta t$
-- **Cox PH model**: $h(t \mid \mathbf{x}) = h_0(t) \exp(\mathbf{x}^\top\boldsymbol{\beta})$
+- **Cox PH model**: $h(t \mid \mathbf{x}) = h_0(t) \exp(\mathbf{x}^\top\pmb{\beta})$
 - **Frailty model**: adds a random effect $u_i$ on the log hazard scale
 
-$$h(t \mid \mathbf{x}_i, u_i) = h_0(t) \exp(\mathbf{x}_i^\top\boldsymbol{\beta} + u_i), \quad u_i \sim \mathcal{N}(0, \sigma^2)$$
+$$h(t \mid \mathbf{x}_i, u_i) = h_0(t) \exp(\mathbf{x}_i^\top\pmb{\beta} + u_i), \quad u_i \sim \mathcal{N}(0, \sigma^2)$$
 
 ## Kaplan-Meier Curves
 

@@ -1,6 +1,7 @@
 # Chapter 2: Design Matters
 
 ``` r
+
 library(modernGLMM)
 library(emmeans)
 library(ggplot2)
@@ -19,6 +20,7 @@ book. Key topics include:
 ## 2 Example 2.B.2 — Dose-Response Binomial Data
 
 ``` r
+
 data(DataExam2.B.2)
 str(DataExam2.B.2)
 ```
@@ -29,6 +31,7 @@ str(DataExam2.B.2)
      $ n: int  27 30 19 28 20 19 20 26 26 23 ...
 
 ``` r
+
 knitr::kable(DataExam2.B.2,
              caption = "Example 2.B.2: Dose-response binomial data")
 ```
@@ -47,11 +50,12 @@ knitr::kable(DataExam2.B.2,
 |   9 |  21 |  23 |
 |  10 |  28 |  28 |
 
-Example 2.B.2: Dose-response binomial data
+Example 2.B.2: Dose-response binomial data {.table .caption-top}
 
 ### 2.1 Logistic regression
 
 ``` r
+
 fit_2b2 <- stats::glm(
   cbind(y, n - y) ~ x,
   family = stats::binomial(link = "logit"),
@@ -59,6 +63,7 @@ fit_2b2 <- stats::glm(
 )
 summary(fit_2b2)
 ```
+
 
     Call:
     stats::glm(formula = cbind(y, n - y) ~ x, family = stats::binomial(link = "logit"),
@@ -80,17 +85,19 @@ summary(fit_2b2)
     Number of Fisher Scoring iterations: 5
 
 ``` r
+
 if (requireNamespace("parameters", quietly = TRUE)) {
   parameters::model_parameters(fit_2b2)
 }
 ```
 
-| Parameter   | Coefficient |        SE |   CI |     CI_low |    CI_high |         z | df_error |         p |
-|:------------|------------:|----------:|-----:|-----------:|-----------:|----------:|---------:|----------:|
-| (Intercept) |  -0.8446576 | 0.2543790 | 0.95 | -1.3552905 | -0.3546914 | -3.320469 |      Inf | 0.0008987 |
-| x           |   0.4427542 | 0.0615358 | 0.95 |  0.3286354 |  0.5709146 |  7.195068 |      Inf | 0.0000000 |
+| Parameter | Coefficient | SE | CI | CI_low | CI_high | z | df_error | p |
+|:---|---:|---:|---:|---:|---:|---:|---:|---:|
+| (Intercept) | -0.8446576 | 0.2543790 | 0.95 | -1.3552905 | -0.3546914 | -3.320469 | Inf | 0.0008987 |
+| x | 0.4427542 | 0.0615358 | 0.95 | 0.3286354 | 0.5709146 | 7.195068 | Inf | 0.0000000 |
 
 ``` r
+
 if (requireNamespace("report", quietly = TRUE)) {
   report::report(fit_2b2)
 }
@@ -118,6 +125,7 @@ if (requireNamespace("report", quietly = TRUE)) {
 ### 2.2 Predicted probabilities
 
 ``` r
+
 xnew <- data.frame(x = seq(0, 10, by = 0.1))
 xnew$p_hat <- stats::predict(fit_2b2, newdata = xnew, type = "response")
 
@@ -137,6 +145,7 @@ Figure 1: Fitted logistic curve for Example 2.B.2
 ## 3 Example 2.B.3 — Three Treatment Comparison (Gaussian)
 
 ``` r
+
 data(DataExam2.B.3)
 DataExam2.B.3$trt <- factor(DataExam2.B.3$trt)
 str(DataExam2.B.3)
@@ -147,9 +156,11 @@ str(DataExam2.B.3)
      $ y  : num  19 19.2 21.9 20.8 21.2 23.3
 
 ``` r
+
 fit_2b3 <- stats::lm(y ~ trt, data = DataExam2.B.3)
 summary(fit_2b3)
 ```
+
 
     Call:
     stats::lm(formula = y ~ trt, data = DataExam2.B.3)
@@ -171,6 +182,7 @@ summary(fit_2b3)
     F-statistic: 5.581 on 2 and 3 DF,  p-value: 0.09749
 
 ``` r
+
 anova(fit_2b3)
 ```
 
@@ -180,6 +192,7 @@ anova(fit_2b3)
 | Residuals |   3 |   2.83 | 0.9433333 |       NA |        NA |
 
 ``` r
+
 emm_2b3 <- emmeans::emmeans(fit_2b3, ~ trt)
 print(emm_2b3)
 ```
@@ -192,6 +205,7 @@ print(emm_2b3)
     Confidence level used: 0.95 
 
 ``` r
+
 emmeans::contrast(emm_2b3, method = "pairwise", adjust = "tukey")
 ```
 
@@ -205,6 +219,7 @@ emmeans::contrast(emm_2b3, method = "pairwise", adjust = "tukey")
 ## 4 Example 2.B.4 — Binomial Response, Three Treatments
 
 ``` r
+
 data(DataExam2.B.4)
 DataExam2.B.4$trt <- factor(DataExam2.B.4$trt)
 str(DataExam2.B.4)
@@ -217,6 +232,7 @@ str(DataExam2.B.4)
      $ Yij: int  2 2 4 9 8 7
 
 ``` r
+
 fit_2b4 <- stats::glm(
   cbind(Yij, Nij - Yij) ~ trt,
   family = stats::binomial(link = "logit"),
@@ -224,6 +240,7 @@ fit_2b4 <- stats::glm(
 )
 summary(fit_2b4)
 ```
+
 
     Call:
     stats::glm(formula = cbind(Yij, Nij - Yij) ~ trt, family = stats::binomial(link = "logit"),
@@ -246,6 +263,7 @@ summary(fit_2b4)
     Number of Fisher Scoring iterations: 4
 
 ``` r
+
 emm_2b4 <- emmeans::emmeans(fit_2b4, ~ trt, type = "response")
 print(emm_2b4)
 ```
@@ -259,6 +277,7 @@ print(emm_2b4)
     Intervals are back-transformed from the logit scale 
 
 ``` r
+
 emmeans::contrast(emm_2b4, method = "pairwise")
 ```
 
@@ -273,6 +292,7 @@ emmeans::contrast(emm_2b4, method = "pairwise")
 ## 5 Example 2.B.7 — Two-Way Factorial
 
 ``` r
+
 data(DataExam2.B.7)
 DataExam2.B.7$Rep <- factor(DataExam2.B.7$Rep)
 DataExam2.B.7$a   <- factor(DataExam2.B.7$a)
@@ -287,6 +307,7 @@ str(DataExam2.B.7)
      $ y  : num  41 40.6 42.7 37.1 40 37.1 39.3 24.2 38.2 36.5 ...
 
 ``` r
+
 fit_2b7 <- lmerTest::lmer(
   y ~ a * b + (1 | Rep),
   data    = DataExam2.B.7,
@@ -329,6 +350,7 @@ summary(fit_2b7)
     a2:b2  0.343 -0.707 -0.707
 
 ``` r
+
 anova(fit_2b7)
 ```
 
@@ -339,6 +361,7 @@ anova(fit_2b7)
 | a:b |  47.26562 |  47.26562 |     1 |     9 |  5.349774 | 0.0460132 |
 
 ``` r
+
 emm_2b7 <- emmeans::emmeans(fit_2b7, ~ a * b)
 emmeans::contrast(emm_2b7, method = "pairwise",
                   by = "a", adjust = "tukey")

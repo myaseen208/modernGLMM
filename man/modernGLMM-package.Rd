@@ -65,7 +65,7 @@ if (requireNamespace("report", quietly = TRUE)) {
 \section{GLMM Model Framework}{
 
 A generalized linear mixed model can be written as
-\deqn{g(\mu_{ij}) = \mathbf{x}_{ij}^\top \boldsymbol{\beta} + \mathbf{z}_{ij}^\top \mathbf{b}_i}
+\deqn{g(\mu_{ij}) = \mathbf{x}_{ij}^\top \pmb{\beta} + \mathbf{z}_{ij}^\top \mathbf{b}_i}
 with random effects \eqn{\mathbf{b}_i \sim \mathcal{N}(\mathbf{0}, \mathbf{G})}
 and conditional responses drawn from an exponential-family distribution.
 }

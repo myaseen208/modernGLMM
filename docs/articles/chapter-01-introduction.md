@@ -1,6 +1,7 @@
 # Chapter 1: Modeling Basics
 
 ``` r
+
 library(modernGLMM)
 library(ggplot2)
 library(emmeans)
@@ -27,6 +28,7 @@ Table 1.1 records the number of successes \\y\\ out of \\N_x\\ trials
 across 11 dose levels \\x = 0, 1, \ldots, 10\\.
 
 ``` r
+
 data(Table1.1)
 knitr::kable(Table1.1, caption = "Table 1.1: Dose-response data")
 ```
@@ -45,7 +47,7 @@ knitr::kable(Table1.1, caption = "Table 1.1: Dose-response data")
 |   9 |  16 |  16 |
 |  10 |  10 |   9 |
 
-Table 1.1: Dose-response data
+Table 1.1: Dose-response data {.table .caption-top}
 
 The observed proportion \\p = y / N_x\\ and the two candidate model
 predictions are shown in Figure 1.1 below.
@@ -58,16 +60,17 @@ The LM fits a straight line on the probability scale:
 \mathcal{N}(0, \sigma^2)\\
 
 ``` r
+
 Exam1.1.lm <- stats::lm(formula = y / Nx ~ x, data = Table1.1)
 if (requireNamespace("parameters", quietly = TRUE)) {
   parameters::model_parameters(Exam1.1.lm)
 }
 ```
 
-| Parameter   | Coefficient |        SE |   CI |     CI_low |   CI_high |         t | df_error |         p |
-|:------------|------------:|----------:|-----:|-----------:|----------:|----------:|---------:|----------:|
-| (Intercept) |  -0.0894399 | 0.0662511 | 0.95 | -0.2393102 | 0.0604305 | -1.350014 |        9 | 0.2099820 |
-| x           |   0.1115152 | 0.0111985 | 0.95 |  0.0861824 | 0.1368479 |  9.958067 |        9 | 0.0000037 |
+| Parameter | Coefficient | SE | CI | CI_low | CI_high | t | df_error | p |
+|:---|---:|---:|---:|---:|---:|---:|---:|---:|
+| (Intercept) | -0.0894399 | 0.0662511 | 0.95 | -0.2393102 | 0.0604305 | -1.350014 | 9 | 0.2099820 |
+| x | 0.1115152 | 0.0111985 | 0.95 | 0.0861824 | 0.1368479 | 9.958067 | 9 | 0.0000037 |
 
 **Problem**: the fitted line can exceed \\\[0, 1\]\\ and assumes
 constant variance — neither of which is appropriate for proportions.
@@ -81,6 +84,7 @@ The logistic GLM uses:
 so fitted values are automatically constrained to \\(0, 1)\\.
 
 ``` r
+
 Exam1.1.glm <- stats::glm(
   formula = cbind(y, Nx - y) ~ x,
   family  = stats::binomial(link = "logit"),
@@ -91,12 +95,13 @@ if (requireNamespace("parameters", quietly = TRUE)) {
 }
 ```
 
-| Parameter   | Coefficient |        SE |   CI |     CI_low |   CI_high |         z | df_error |   p |
-|:------------|------------:|----------:|-----:|-----------:|----------:|----------:|---------:|----:|
-| (Intercept) |  -4.1085728 | 0.7421399 | 0.95 | -5.7305417 | -2.795709 | -5.536116 |      Inf |   0 |
-| x           |   0.7640431 | 0.1272572 | 0.95 |  0.5397411 |  1.043573 |  6.003930 |      Inf |   0 |
+| Parameter | Coefficient | SE | CI | CI_low | CI_high | z | df_error | p |
+|:---|---:|---:|---:|---:|---:|---:|---:|---:|
+| (Intercept) | -4.1085728 | 0.7421399 | 0.95 | -5.7305417 | -2.795709 | -5.536116 | Inf | 0 |
+| x | 0.7640431 | 0.1272572 | 0.95 | 0.5397411 | 1.043573 | 6.003930 | Inf | 0 |
 
 ``` r
+
 if (requireNamespace("report", quietly = TRUE)) {
   tryCatch(
     print(report::report(Exam1.1.glm)),
@@ -126,6 +131,7 @@ if (requireNamespace("report", quietly = TRUE)) {
 ## 5 Comparison: LM vs GLM
 
 ``` r
+
 Table1.1$p_obs <- Table1.1$y / Table1.1$Nx
 Table1.1$p_lm  <- Exam1.1.lm$fitted.values
 Table1.1$p_glm <- Exam1.1.glm$fitted.values
@@ -160,12 +166,14 @@ proportions
 ## 6 Correlation of Fitted Values with Observed
 
 ``` r
+
 cat("LM  correlation with observed:", round(cor(Table1.1$p_obs, Table1.1$p_lm),  4), "\n")
 ```
 
     LM  correlation with observed: 0.9575 
 
 ``` r
+
 cat("GLM correlation with observed:", round(cor(Table1.1$p_obs, Table1.1$p_glm), 4), "\n")
 ```
 
@@ -177,6 +185,7 @@ correct probability model.
 ## 7 Estimated Marginal Means
 
 ``` r
+
 emm <- emmeans::emmeans(Exam1.1.glm, ~ 1, type = "response")
 print(emm)
 ```

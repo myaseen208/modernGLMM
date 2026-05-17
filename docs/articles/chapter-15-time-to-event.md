@@ -1,6 +1,7 @@
 # Chapter 15: Time-to-Event Data
 
 ``` r
+
 library(modernGLMM)
 library(ggplot2)
 ```
@@ -17,17 +18,18 @@ Core concepts:
 - **Hazard function**: \\h(t) = \lim\_{\Delta t \to 0} P(t \le T \< t +
   \Delta t \mid T \ge t) / \Delta t\\
 - **Cox PH model**: \\h(t \mid \mathbf{x}) = h_0(t)
-  \exp(\mathbf{x}^\top\boldsymbol{\beta})\\
+  \exp(\mathbf{x}^\top\pmb{\beta})\\
 - **Frailty model**: adds a random effect \\u_i\\ on the log hazard
   scale
 
 \\h(t \mid \mathbf{x}\_i, u_i) = h_0(t)
-\exp(\mathbf{x}\_i^\top\boldsymbol{\beta} + u_i), \quad u_i \sim
-\mathcal{N}(0, \sigma^2)\\
+\exp(\mathbf{x}\_i^\top\pmb{\beta} + u_i), \quad u_i \sim \mathcal{N}(0,
+\sigma^2)\\
 
 ## 2 Kaplan-Meier Curves
 
 ``` r
+
 if (requireNamespace("survival", quietly = TRUE)) {
   # Simulated survival data: 3 treatments, 4 clusters
   set.seed(99)
@@ -63,6 +65,7 @@ if (requireNamespace("survival", quietly = TRUE)) {
 ## 3 Cox Proportional Hazards Frailty Model
 
 ``` r
+
 if (requireNamespace("survival", quietly = TRUE) && exists("surv_data")) {
   frailty <- survival::frailty
   cox_frailty <- survival::coxph(
@@ -81,6 +84,7 @@ if (requireNamespace("survival", quietly = TRUE) && exists("surv_data")) {
 ## 4 Cox Mixed-Effects Model
 
 ``` r
+
 if (requireNamespace("survival", quietly = TRUE) &&
     requireNamespace("coxme", quietly = TRUE) &&
     exists("surv_data")) {

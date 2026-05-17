@@ -41,10 +41,10 @@ categories**.  Two cases arise:
 
 ### Proportional-Odds Model (Cumulative Logit)
 
-$$\text{logit}[P(Y \le j \mid x)] = \theta_j - \mathbf{x}^\top\boldsymbol{\beta}$$
+$$\text{logit}[P(Y \le j \mid x)] = \theta_j - \mathbf{x}^\top\pmb{\beta}$$
 
 - $\theta_1 < \theta_2 < \cdots < \theta_{J-1}$: threshold intercepts
-- $\boldsymbol{\beta}$: common slope vector (proportional odds assumption)
+- $\pmb{\beta}$: common slope vector (proportional odds assumption)
 - The minus sign convention means larger $\beta$ → higher probability of
   higher categories
 

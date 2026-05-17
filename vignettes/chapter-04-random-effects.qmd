@@ -37,21 +37,21 @@ or datasets.  The core topics are:
 
 ## Ordinary Least Squares
 
-For a linear model $\mathbf{y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon}$
-with $\boldsymbol{\varepsilon} \sim \mathcal{N}(\mathbf{0}, \sigma^2 \mathbf{I})$,
+For a linear model $\mathbf{y} = \mathbf{X}\pmb{\beta} + \pmb{\varepsilon}$
+with $\pmb{\varepsilon} \sim \mathcal{N}(\mathbf{0}, \sigma^2 \mathbf{I})$,
 the OLS estimator is:
 
-$$\hat{\boldsymbol{\beta}}_{\text{OLS}} = (\mathbf{X}^\top \mathbf{X})^{-} \mathbf{X}^\top \mathbf{y}$$
+$$\hat{\pmb{\beta}}_{\text{OLS}} = (\mathbf{X}^\top \mathbf{X})^{-} \mathbf{X}^\top \mathbf{y}$$
 
 where $(-)$ denotes a generalised inverse.  OLS is BLUE when errors are
 homoscedastic and uncorrelated (Gauss-Markov theorem).
 
 ## Generalised Least Squares
 
-When $\text{Var}(\boldsymbol{\varepsilon}) = \sigma^2 \mathbf{V}$ with
+When $\text{Var}(\pmb{\varepsilon}) = \sigma^2 \mathbf{V}$ with
 $\mathbf{V} \ne \mathbf{I}$, GLS applies:
 
-$$\hat{\boldsymbol{\beta}}_{\text{GLS}} = (\mathbf{X}^\top \mathbf{V}^{-1} \mathbf{X})^{-}
+$$\hat{\pmb{\beta}}_{\text{GLS}} = (\mathbf{X}^\top \mathbf{V}^{-1} \mathbf{X})^{-}
 \mathbf{X}^\top \mathbf{V}^{-1} \mathbf{y}$$
 
 GLS is BLUE under the correctly specified $\mathbf{V}$.  In practice
@@ -60,18 +60,18 @@ estimation machinery of Chapter 5.
 
 ## Best Linear Unbiased Estimators (BLUE)
 
-An estimator $\hat{\boldsymbol{\ell}} = \mathbf{c}^\top \hat{\boldsymbol{\beta}}$
-is BLUE for $\boldsymbol{\ell} = \mathbf{c}^\top \boldsymbol{\beta}$ if:
+An estimator $\hat{\pmb{\ell}} = \mathbf{c}^\top \hat{\pmb{\beta}}$
+is BLUE for $\pmb{\ell} = \mathbf{c}^\top \pmb{\beta}$ if:
 
 1. It is **linear** in $\mathbf{y}$.
-2. It is **unbiased**: $\mathsf{E}[\hat{\boldsymbol{\ell}}] = \boldsymbol{\ell}$.
+2. It is **unbiased**: $\mathsf{E}[\hat{\pmb{\ell}}] = \pmb{\ell}$.
 3. It has **minimum variance** among all linear unbiased estimators.
 
 The GLS estimator achieves this under the correct $\mathbf{V}$.
 
 ## Estimable Functions
 
-A linear combination $\mathbf{c}^\top \boldsymbol{\beta}$ is **estimable**
+A linear combination $\mathbf{c}^\top \pmb{\beta}$ is **estimable**
 if and only if $\mathbf{c}^\top$ lies in the row space of $\mathbf{X}$,
 i.e., $\mathbf{c}^\top = \mathbf{t}^\top \mathbf{X}$ for some $\mathbf{t}$.
 
@@ -94,10 +94,10 @@ cat("Columns span a", rankX, "-dimensional space —",
 Hypothesis tests in linear models rely on **quadratic forms**
 $\mathbf{y}^\top \mathbf{A} \mathbf{y}$.  Key results:
 
-- If $\mathbf{y} \sim \mathcal{N}(\boldsymbol{\mu}, \sigma^2 \mathbf{I})$
+- If $\mathbf{y} \sim \mathcal{N}(\pmb{\mu}, \sigma^2 \mathbf{I})$
   and $\mathbf{A}$ is idempotent of rank $r$, then
   $\mathbf{y}^\top \mathbf{A} \mathbf{y} / \sigma^2 \sim \chi^2_r(\lambda)$
-  with non-centrality $\lambda = \boldsymbol{\mu}^\top \mathbf{A} \boldsymbol{\mu} / \sigma^2$.
+  with non-centrality $\lambda = \pmb{\mu}^\top \mathbf{A} \pmb{\mu} / \sigma^2$.
 - The F-statistic is a ratio of two chi-squared quadratic forms
   divided by their respective degrees of freedom.
 

@@ -1,6 +1,7 @@
 # Chapter 13: Zero-Inflated and Hurdle Models
 
 ``` r
+
 library(modernGLMM)
 library(emmeans)
 ```
@@ -12,10 +13,10 @@ standard Poisson or binomial model predicts.
 
 Two modelling strategies:
 
-| Model                        | Structure                                 | Interpretation                                         |
-|------------------------------|-------------------------------------------|--------------------------------------------------------|
-| **Zero-Inflated (ZIP/ZINB)** | Mixture: structural zeros + count process | Some units can **never** have a non-zero count         |
-| **Hurdle**                   | Two-part: binary + truncated count        | All non-zero counts come from a separate count process |
+| Model | Structure | Interpretation |
+|----|----|----|
+| **Zero-Inflated (ZIP/ZINB)** | Mixture: structural zeros + count process | Some units can **never** have a non-zero count |
+| **Hurdle** | Two-part: binary + truncated count | All non-zero counts come from a separate count process |
 
 The zero-inflated Poisson model:
 
@@ -25,6 +26,7 @@ The zero-inflated Poisson model:
 ## 2 Zero-Inflated Poisson GLMM
 
 ``` r
+
 if (requireNamespace("glmmTMB", quietly = TRUE)) {
   simulate_zinb <- function(n, mu, size, zprob) {
     structural_zero <- stats::rbinom(n, size = 1, prob = zprob) == 1
@@ -87,6 +89,7 @@ if (requireNamespace("glmmTMB", quietly = TRUE)) {
 ## 3 Hurdle Model
 
 ``` r
+
 if (requireNamespace("glmmTMB", quietly = TRUE) && exists("zi_data")) {
   fit_hurdle <- glmmTMB::glmmTMB(
     count ~ trt + (1 | block),
@@ -132,6 +135,7 @@ if (requireNamespace("glmmTMB", quietly = TRUE) && exists("zi_data")) {
 ## 4 Diagnostics
 
 ``` r
+
 if (requireNamespace("glmmTMB", quietly = TRUE) &&
     requireNamespace("DHARMa", quietly = TRUE) &&
     exists("fit_zip")) {
@@ -143,6 +147,7 @@ if (requireNamespace("glmmTMB", quietly = TRUE) &&
 ![](chapter-13-zero-inflated_files/figure-html/unnamed-chunk-3-1.png)
 
 ![](chapter-13-zero-inflated_files/figure-html/unnamed-chunk-3-2.png)
+
 
         DHARMa zero-inflation test via comparison to expected zeros with
         simulation under H0 = fitted model

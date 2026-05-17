@@ -3,6 +3,7 @@
 Code
 
 ``` r
+
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
@@ -33,6 +34,7 @@ for a two-treatment completely randomized count dataset.
 Code
 
 ``` r
+
 data(DataSet11.1, package = "modernGLMM")
 utils::str(DataSet11.1)
 #> 'data.frame':    10 obs. of  3 variables:
@@ -50,6 +52,7 @@ stats::aggregate(count ~ trt, data = DataSet11.1, FUN = mean)
 Code
 
 ``` r
+
 fit_count <- stats::lm(count ~ trt, data = DataSet11.1)
 stats::anova(fit_count)
 #> Analysis of Variance Table
@@ -76,6 +79,7 @@ mean square, F statistic, and p-value for the untransformed ANOVA.
 Code
 
 ``` r
+
 DataSet11.1$log_count <- log(DataSet11.1$count)
 fit_log <- stats::lm(log_count ~ trt, data = DataSet11.1)
 stats::anova(fit_log)
@@ -100,6 +104,7 @@ emmeans::emmeans(fit_log, specs = ~ trt)
 Code
 
 ``` r
+
 fit_pois_glm <- stats::glm(
   count ~ trt,
   family = stats::poisson(link = "log"),
@@ -126,6 +131,7 @@ Poisson GLM has not accounted for the unit-level source of variation.
 Code
 
 ``` r
+
 fit_pois_normal <- lme4::glmer(
   count ~ trt + (1 | trt:unit),
   family = stats::poisson(link = "log"),
@@ -179,6 +185,7 @@ emmeans::emmeans(fit_pois_normal, specs = ~ trt, type = "response")
 Code
 
 ``` r
+
 if (requireNamespace("DHARMa", quietly = TRUE)) {
   sim_11_1 <- DHARMa::simulateResiduals(fit_pois_normal, plot = FALSE)
   DHARMa::testDispersion(sim_11_1)
@@ -218,6 +225,7 @@ treatments and ten blocks to show how overdispersion changes inference.
 Code
 
 ``` r
+
 data(DataSet11.3, package = "modernGLMM")
 utils::str(DataSet11.3)
 #> 'data.frame':    30 obs. of  3 variables:
@@ -236,6 +244,7 @@ stats::aggregate(count ~ trt, data = DataSet11.3, FUN = mean)
 Code
 
 ``` r
+
 fit_naive <- lme4::glmer(
   count ~ trt + (1 | block),
   family = stats::poisson(link = "log"),
@@ -266,6 +275,7 @@ final inference.
 Code
 
 ``` r
+
 fit_unit <- lme4::glmer(
   count ~ trt + (1 | block) + (1 | block:trt),
   family = stats::poisson(link = "log"),
@@ -296,6 +306,7 @@ the unit-level source of variation in the repurposed ANOVA.
 Code
 
 ``` r
+
 if (requireNamespace("glmmTMB", quietly = TRUE)) {
   fit_nb <- glmmTMB::glmmTMB(
     count ~ trt + (1 | block),
@@ -313,6 +324,7 @@ if (requireNamespace("glmmTMB", quietly = TRUE)) {
 Code
 
 ``` r
+
 if (requireNamespace("glmmTMB", quietly = TRUE) &&
     requireNamespace("DHARMa", quietly = TRUE)) {
   sim_11_3 <- DHARMa::simulateResiduals(fit_nb, plot = FALSE)
@@ -359,6 +371,7 @@ the original `sp_counts` file was not available.
 Code
 
 ``` r
+
 data(DataSet11.4, package = "modernGLMM")
 utils::str(DataSet11.4)
 #> 'data.frame':    112 obs. of  4 variables:
@@ -401,6 +414,7 @@ stats::aggregate(count ~ a + b, data = DataSet11.4, FUN = mean)
 Code
 
 ``` r
+
 if (requireNamespace("glmmTMB", quietly = TRUE)) {
   fit_sp_nb <- glmmTMB::glmmTMB(
     count ~ a * b + (1 | block) + (1 | block:a),
@@ -449,6 +463,7 @@ if (requireNamespace("glmmTMB", quietly = TRUE)) {
 Code
 
 ``` r
+
 if (requireNamespace("glmmTMB", quietly = TRUE)) {
   emm_df <- as.data.frame(emm_sp)
   ggplot2::ggplot(

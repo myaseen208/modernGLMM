@@ -65,6 +65,7 @@ ecosystem:
 ## Workflow Example
 
 
+
     data(DataSet11.1)
     fit <- stats::glm(y ~ trt, family = stats::poisson(link = "log"), data = DataSet11.1)
     summary(fit)
@@ -80,7 +81,7 @@ ecosystem:
 ## GLMM Model Framework
 
 A generalized linear mixed model can be written as \$\$g(\mu\_{ij}) =
-\mathbf{x}\_{ij}^\top \boldsymbol{\beta} + \mathbf{z}\_{ij}^\top
+\mathbf{x}\_{ij}^\top \pmb{\beta} + \mathbf{z}\_{ij}^\top
 \mathbf{b}\_i\$\$ with random effects \\\mathbf{b}\_i \sim
 \mathcal{N}(\mathbf{0}, \mathbf{G})\\ and conditional responses drawn
 from an exponential-family distribution.

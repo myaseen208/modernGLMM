@@ -21,6 +21,7 @@ Exam9.3 explains Response surface design with incomplete blocking
 ## Examples
 
 ``` r
+
 ## Response Surface Design with incomplete blocking
 data(DataSet9.3)
 DataSet9.3$block <- factor(x = DataSet9.3$block)

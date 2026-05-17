@@ -21,6 +21,7 @@ Exam9.1 Nested factorial structure
 ## Examples
 
 ``` r
+
 data(DataSet9.1)
 DataSet9.1$block <- factor(x = DataSet9.1$block)
 DataSet9.1$set   <- factor(x = DataSet9.1$set)

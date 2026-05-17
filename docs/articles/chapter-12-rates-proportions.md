@@ -1,6 +1,7 @@
 # Chapter 12: Rates and Proportions
 
 ``` r
+
 library(modernGLMM)
 library(lme4)
 library(emmeans)
@@ -27,6 +28,7 @@ Two primary approaches:
 observations. Response is a continuous proportion in \\(0, 1)\\.
 
 ``` r
+
 data(DataSet12.1)
 str(DataSet12.1)
 ```
@@ -38,6 +40,7 @@ str(DataSet12.1)
      $ proportion: num  0.688 0.957 0.863 0.74 0.89 ...
 
 ``` r
+
 ## Mean proportion by treatment and dose
 with(DataSet12.1, tapply(proportion, list(trt, dose), mean))
 ```
@@ -47,6 +50,7 @@ with(DataSet12.1, tapply(proportion, list(trt, dose), mean))
     1 0.6766403 0.7444827 0.8466202 0.9294818 0.9419682 0.9697002
 
 ``` r
+
 ggplot(DataSet12.1, aes(x = dose, y = proportion,
                          colour = trt, group = trt)) +
   stat_summary(fun = mean, geom = "line", linewidth = 1.2) +
@@ -64,6 +68,7 @@ Figure 1: Dose-response profiles by treatment
 ### 2.1 Beta GLMM via glmmTMB
 
 ``` r
+
 if (requireNamespace("glmmTMB", quietly = TRUE)) {
   fit_beta <- glmmTMB::glmmTMB(
     proportion ~ trt * dose + (1 | run),
@@ -100,6 +105,7 @@ if (requireNamespace("glmmTMB", quietly = TRUE)) {
     Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 ``` r
+
 if (requireNamespace("glmmTMB", quietly = TRUE)) {
   emm_beta <- emmeans::emmeans(fit_beta, ~ trt | dose,
                                 at = list(dose = c(0, 5)),
@@ -139,6 +145,7 @@ B with 3 levels nested within A) = 60 observations. Response is count of
 successes `f` out of total `n`.
 
 ``` r
+
 data(DataSet12.2)
 str(DataSet12.2)
 ```
@@ -151,6 +158,7 @@ str(DataSet12.2)
      $ n    : int  20 20 20 20 20 20 20 20 20 20 ...
 
 ``` r
+
 ## Observed proportions by A and B
 with(DataSet12.2, tapply(f / n, list(a, b), mean))
 ```
@@ -160,6 +168,7 @@ with(DataSet12.2, tapply(f / n, list(a, b), mean))
     setB 0.28 0.33 0.48
 
 ``` r
+
 fit_nb <- lme4::glmer(
   cbind(f, n - f) ~ a / b + (1 + a | block),
   family  = stats::binomial(link = "logit"),
@@ -212,6 +221,7 @@ summary(fit_nb)
      - Rescale variables?
 
 ``` r
+
 if (requireNamespace("car", quietly = TRUE)) {
   car::Anova(fit_nb, type = "III")
 }
@@ -224,6 +234,7 @@ if (requireNamespace("car", quietly = TRUE)) {
 | a:b         | 12.3267596 |   4 |   0.0150798 |
 
 ``` r
+
 ## B(A) means on probability scale
 emm_ba <- emmeans::emmeans(fit_nb, ~ b | a, type = "response")
 print(emm_ba)
@@ -246,10 +257,10 @@ print(emm_ba)
 
 ## 4 Comparing Approaches
 
-| Approach      | Distribution         | When to use                                                   |
-|---------------|----------------------|---------------------------------------------------------------|
-| Beta GLMM     | Beta\\(μφ, (1-μ)φ)\\ | Continuous proportions in \\(0,1)\\; run-level random effects |
-| Binomial GLMM | Binomial\\(n, π)\\   | Count/total with known \\n\\; factorial or nested designs     |
+| Approach | Distribution | When to use |
+|----|----|----|
+| Beta GLMM | Beta\\(μφ, (1-μ)φ)\\ | Continuous proportions in \\(0,1)\\; run-level random effects |
+| Binomial GLMM | Binomial\\(n, π)\\ | Count/total with known \\n\\; factorial or nested designs |
 
 ## 5 Key Takeaways
 

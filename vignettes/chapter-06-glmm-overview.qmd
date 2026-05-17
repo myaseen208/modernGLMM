@@ -40,7 +40,7 @@ The GLMM has three components:
 1. **Random component**: $Y_i \mid \mathbf{b} \sim$ exponential family
    with mean $\mu_i$
 2. **Systematic component** (linear predictor):
-   $\eta_i = \mathbf{x}_i^\top\boldsymbol{\beta} + \mathbf{z}_i^\top\mathbf{b}$
+   $\eta_i = \mathbf{x}_i^\top\pmb{\beta} + \mathbf{z}_i^\top\mathbf{b}$
 3. **Link function**: $g(\mu_i) = \eta_i$
 
 ### Common link functions
@@ -55,9 +55,9 @@ The GLMM has three components:
 
 ### Random effects structure
 
-$$\mathbf{b} \sim \mathcal{N}(\mathbf{0}, \mathbf{G}(\boldsymbol{\theta}))$$
+$$\mathbf{b} \sim \mathcal{N}(\mathbf{0}, \mathbf{G}(\pmb{\theta}))$$
 
-The variance component vector $\boldsymbol{\theta}$ is estimated by
+The variance component vector $\pmb{\theta}$ is estimated by
 REML (for Gaussian) or by maximum likelihood / Laplace approximation
 (for non-Gaussian families).
 

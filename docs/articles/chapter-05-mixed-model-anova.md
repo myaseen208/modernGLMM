@@ -36,6 +36,7 @@ Key members relevant to GLMMs:
 | Gamma    | reciprocal | \\-\log(-\theta)\\     | \\-1/\theta\\             |
 
 ``` r
+
 ## Canonical link and variance function for common families
 fams <- list(
   Gaussian  = stats::gaussian(link = "identity"),
@@ -49,12 +50,14 @@ cat("Family    | Link\n")
     Family    | Link
 
 ``` r
+
 cat("----------|---------\n")
 ```
 
     ----------|---------
 
 ``` r
+
 for (nm in names(fams)) cat(sprintf("%-10s| %s\n", nm, fams[[nm]]$link))
 ```
 
@@ -65,36 +68,37 @@ for (nm in names(fams)) cat(sprintf("%-10s| %s\n", nm, fams[[nm]]$link))
 
 ## 3 Maximum Likelihood Estimation
 
-The ML estimate maximises the log-likelihood \\\ell(\boldsymbol{\theta};
-\mathbf{y})\\. For a GLMM with fixed effects \\\boldsymbol{\beta}\\ and
-variance components \\\boldsymbol{\psi}\\, the marginal log-likelihood
+The ML estimate maximises the log-likelihood \\\ell(\pmb{\theta};
+\mathbf{y})\\. For a GLMM with fixed effects \\\pmb{\beta}\\ and
+variance components \\\pmb{\psi}\\, the marginal log-likelihood
 integrates over the random effects \\\mathbf{b}\\:
 
-\\\ell(\boldsymbol{\beta}, \boldsymbol{\psi}) = \log \int
-f(\mathbf{y}\mid\mathbf{b};\boldsymbol{\beta})\\
-p(\mathbf{b};\boldsymbol{\psi})\\d\mathbf{b}\\
+\\\ell(\pmb{\beta}, \pmb{\psi}) = \log \int
+f(\mathbf{y}\mid\mathbf{b};\pmb{\beta})\\
+p(\mathbf{b};\pmb{\psi})\\d\mathbf{b}\\
 
 This integral is intractable in general and requires approximation
 (Laplace, AGHQ) or pseudo-likelihood methods.
 
 ## 4 Restricted Maximum Likelihood (REML)
 
-REML removes the contribution of \\\boldsymbol{\beta}\\ from the
-likelihood before estimating \\\boldsymbol{\psi}\\. For Gaussian LMMs
-this is equivalent to maximising:
+REML removes the contribution of \\\pmb{\beta}\\ from the likelihood
+before estimating \\\pmb{\psi}\\. For Gaussian LMMs this is equivalent
+to maximising:
 
-\\\ell_R(\boldsymbol{\psi}) = -\tfrac{1}{2}\log\|\mathbf{V}\|
+\\\ell_R(\pmb{\psi}) = -\tfrac{1}{2}\log\|\mathbf{V}\|
 -\tfrac{1}{2}\log\|\mathbf{X}^\top\mathbf{V}^{-1}\mathbf{X}\|
--\tfrac{1}{2}(\mathbf{y}-\mathbf{X}\hat{\boldsymbol{\beta}})^\top
-\mathbf{V}^{-1}(\mathbf{y}-\mathbf{X}\hat{\boldsymbol{\beta}})\\
+-\tfrac{1}{2}(\mathbf{y}-\mathbf{X}\hat{\pmb{\beta}})^\top
+\mathbf{V}^{-1}(\mathbf{y}-\mathbf{X}\hat{\pmb{\beta}})\\
 
 REML produces **less biased** variance component estimates than ML
 because it accounts for the degrees of freedom used by
-\\\hat{\boldsymbol{\beta}}\\. Use REML for final estimates; use ML when
+\\\hat{\pmb{\beta}}\\. Use REML for final estimates; use ML when
 comparing models with different fixed effects via likelihood ratio
 tests.
 
 ``` r
+
 ## Illustration: ML vs REML variance component estimates
 if (requireNamespace("lme4", quietly = TRUE)) {
   set.seed(42)
@@ -123,14 +127,13 @@ if (requireNamespace("lme4", quietly = TRUE)) {
 
 Both algorithms iterate:
 
-\\\boldsymbol{\theta}^{(t+1)} = \boldsymbol{\theta}^{(t)} +
-\mathbf{H}^{-1}(\boldsymbol{\theta}^{(t)})\\
-\mathbf{s}(\boldsymbol{\theta}^{(t)})\\
+\\\pmb{\theta}^{(t+1)} = \pmb{\theta}^{(t)} +
+\mathbf{H}^{-1}(\pmb{\theta}^{(t)})\\ \mathbf{s}(\pmb{\theta}^{(t)})\\
 
-where \\\mathbf{s} = \partial\ell/\partial\boldsymbol{\theta}\\ is the
-score and \\\mathbf{H}\\ is the negative Hessian. Fisher scoring
-replaces \\\mathbf{H}\\ with the **expected information** matrix,
-guaranteeing positive-definiteness and simplifying computation for GLMs.
+where \\\mathbf{s} = \partial\ell/\partial\pmb{\theta}\\ is the score
+and \\\mathbf{H}\\ is the negative Hessian. Fisher scoring replaces
+\\\mathbf{H}\\ with the **expected information** matrix, guaranteeing
+positive-definiteness and simplifying computation for GLMs.
 
 ## 6 Quasi-Likelihood
 
@@ -138,10 +141,10 @@ When the full likelihood is unknown or intractable, **quasi-likelihood**
 uses only the mean-variance relationship \\V(\mu)\\ to construct
 estimating equations identical in form to the score equations:
 
-\\U(\boldsymbol{\beta}) = \mathbf{D}^\top \mathbf{V}^{-1}(\mathbf{y} -
-\boldsymbol{\mu}) = \mathbf{0}\\
+\\U(\pmb{\beta}) = \mathbf{D}^\top \mathbf{V}^{-1}(\mathbf{y} -
+\pmb{\mu}) = \mathbf{0}\\
 
-Quasi-likelihood estimates of \\\boldsymbol{\beta}\\ are consistent and
+Quasi-likelihood estimates of \\\pmb{\beta}\\ are consistent and
 asymptotically normal under weak moment assumptions. The dispersion
 parameter \\\phi\\ is estimated by the Pearson statistic divided by
 residual degrees of freedom.
@@ -151,8 +154,8 @@ residual degrees of freedom.
 For non-Gaussian GLMMs, the marginal likelihood is approximated at the
 mode \\\hat{\mathbf{b}}\\ of the integrand:
 
-\\\ell(\boldsymbol{\beta},\boldsymbol{\psi}) \approx
-\ell(\boldsymbol{\beta}, \hat{\mathbf{b}}, \boldsymbol{\psi}) -
+\\\ell(\pmb{\beta},\pmb{\psi}) \approx \ell(\pmb{\beta},
+\hat{\mathbf{b}}, \pmb{\psi}) -
 \tfrac{1}{2}\log\left\|{\mathbf{H}\_{\hat{\mathbf{b}}}}\right\| +
 \text{const}\\
 

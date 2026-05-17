@@ -1,6 +1,7 @@
 # Chapter 17: Correlated Errors, Part I: Repeated Measures
 
 ``` r
+
 library(modernGLMM)
 library(nlme)
 library(emmeans)
@@ -32,6 +33,7 @@ equally-spaced time points per period (2 periods), plus a baseline
 covariate. 492 observations total.
 
 ``` r
+
 data(DataSet17.1)
 str(DataSet17.1)
 ```
@@ -46,19 +48,23 @@ str(DataSet17.1)
      $ y       : num  6.83 4.74 6.1 7.01 7.26 ...
 
 ``` r
+
 cat("Subjects per sequence:\n")
 ```
 
     Subjects per sequence:
 
 ``` r
+
 print(table(unique(DataSet17.1[, c("id", "sequence")])$sequence))
 ```
+
 
     01 10
     17 24 
 
 ``` r
+
 ggplot(DataSet17.1,
        aes(x = t, y = y, group = id, colour = trt)) +
   geom_line(alpha = 0.4) +
@@ -78,6 +84,7 @@ Figure 1: Individual trajectories by treatment and period
 ### 2.1 Covariance model comparison: CS, AR(1), ARH(1)
 
 ``` r
+
 ## CS: compound symmetry via random subject intercept
 fit_cs <- nlme::lme(
   fixed   = y ~ period + trt / t + baseline,
@@ -117,6 +124,7 @@ stats::AIC(fit_cs, fit_ar1, fit_arh1)
 ### 2.2 Treatment contrasts (equal intercepts, equal slopes)
 
 ``` r
+
 emm_int <- emmeans::emmeans(fit_arh1, ~ trt, at = list(t = 0))
 emmeans::contrast(emm_int, method = "pairwise")
 ```
@@ -128,6 +136,7 @@ emmeans::contrast(emm_int, method = "pairwise")
     Degrees-of-freedom method: containment 
 
 ``` r
+
 emm_slp <- emmeans::emtrends(fit_arh1, ~ trt, var = "t")
 emmeans::contrast(emm_slp, method = "pairwise")
 ```
@@ -145,6 +154,7 @@ emmeans::contrast(emm_slp, method = "pairwise")
 369 possible observations are present (sparse).
 
 ``` r
+
 data(DataSet17.2)
 str(DataSet17.2)
 ```
@@ -156,25 +166,30 @@ str(DataSet17.2)
      $ y      : num  -0.123 -19.122 6.697 8.426 -36.56 ...
 
 ``` r
+
 cat("Observations per treatment:\n")
 ```
 
     Observations per treatment:
 
 ``` r
+
 print(table(DataSet17.2$trt))
 ```
+
 
      1  2
     48 53 
 
 ``` r
+
 cat("Unique times:", sort(unique(DataSet17.2$time)), "\n")
 ```
 
     Unique times: 0 1 2 4 8 16 32 64 128 
 
 ``` r
+
 ggplot(DataSet17.2,
        aes(x = time, y = y, group = subject, colour = trt)) +
   geom_line(alpha = 0.4) +
@@ -193,6 +208,7 @@ Figure 2: Sparse longitudinal profiles by treatment
 ### 3.1 SP(POW) model: spatial-power covariance for unequal times
 
 ``` r
+
 ## SP(POW) approximated via corExp (exponential = continuous AR(1))
 fit_sppow <- nlme::lme(
   fixed       = y ~ trt + time + trt:time,
@@ -243,6 +259,7 @@ summary(fit_sppow)
     Number of Groups: 41 
 
 ``` r
+
 emm_trt <- emmeans::emmeans(fit_sppow, ~ trt,
                               at = list(time = c(0, 1, 4, 16, 64)))
 print(emm_trt)

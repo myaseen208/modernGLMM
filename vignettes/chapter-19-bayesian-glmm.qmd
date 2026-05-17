@@ -34,12 +34,12 @@ library(emmeans)
 Chapter 19 introduces the **Bayesian approach** to GLMMs. The Bayesian
 framework treats all unknowns
 
-- fixed effects $\boldsymbol{\beta}$,random effects $\mathbf{b}$, and variance components $\boldsymbol{\theta}$
+- fixed effects $\pmb{\beta}$,random effects $\mathbf{b}$, and variance components $\pmb{\theta}$
 - as random variables with prior distributions.
 
 **Bayes' Theorem** for mixed models:
 
-$$p(\boldsymbol{\beta}, \mathbf{b}, \boldsymbol{\theta} \mid \mathbf{y}) \propto p(\mathbf{y} \mid \boldsymbol{\beta}, \mathbf{b}, \boldsymbol{\theta}) \cdot p(\boldsymbol{\beta}) \cdot p(\mathbf{b} \mid \boldsymbol{\theta}) \cdot p(\boldsymbol{\theta})$$
+$$p(\pmb{\beta}, \mathbf{b}, \pmb{\theta} \mid \mathbf{y}) \propto p(\mathbf{y} \mid \pmb{\beta}, \mathbf{b}, \pmb{\theta}) \cdot p(\pmb{\beta}) \cdot p(\mathbf{b} \mid \pmb{\theta}) \cdot p(\pmb{\theta})$$
 
 Key advantages over REML/ML:
 

@@ -21,6 +21,7 @@ Exam8.7 is an explanation of segmented regression
 ## Examples
 
 ``` r
+
 DataSet8.7$a <- factor(x = DataSet8.7$a)
 
 ## Cubic B-spline with GLIMMIX-equivalent RANGEFRACTION knots

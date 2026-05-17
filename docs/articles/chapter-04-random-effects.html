@@ -21,15 +21,6 @@
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><script src="chapter-04-random-effects_files/libs/quarto-html/popper.min.js"></script><script src="chapter-04-random-effects_files/libs/quarto-html/tippy.umd.min.js"></script><link href="chapter-04-random-effects_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="chapter-04-random-effects_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Chapter 4: Pre-GLMM Estimation and Inference Basics">
-<script>
-window.MathJax = {
-  tex: {
-    macros: {
-      boldsymbol: ["\\pmb{#1}", 1]
-    }
-  }
-};
-</script>
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -96,7 +87,7 @@ window.MathJax = {
       <h1>Chapter 4: Pre-GLMM Estimation and Inference Basics</h1>
       <p class="subtitle">OLS, GLS, BLUE, Estimable Functions, and Quadratic Forms</p>
       <p class="author">Muhammad Yaseen</p>
-      <p class="date">2026-05-12</p>
+      <p class="date">2026-05-17</p>
 
       <small class="dont-index">Source: <a href="https://github.com/myaseen208/modernGLMM/blob/HEAD/vignettes/chapter-04-random-effects.qmd"><code>vignettes/chapter-04-random-effects.qmd</code></a></small>
       <div class="d-none name"><code></code></div>
@@ -119,30 +110,30 @@ window.MathJax = {
 </ul></section><section class="level2" data-number="2"><h2 data-number="2" id="ordinary-least-squares">
 <span class="header-section-number">2</span> Ordinary Least Squares<a class="anchor" aria-label="anchor" href="#ordinary-least-squares"></a>
 </h2>
-<p>For a linear model <span class="math inline">\(\mathbf{y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon}\)</span> with <span class="math inline">\(\boldsymbol{\varepsilon} \sim \mathcal{N}(\mathbf{0}, \sigma^2 \mathbf{I})\)</span>, the OLS estimator is:</p>
-<p><span class="math display">\[\hat{\boldsymbol{\beta}}_{\text{OLS}} = (\mathbf{X}^\top \mathbf{X})^{-} \mathbf{X}^\top \mathbf{y}\]</span></p>
+<p>For a linear model <span class="math inline">\(\mathbf{y} = \mathbf{X}\pmb{\beta} + \pmb{\varepsilon}\)</span> with <span class="math inline">\(\pmb{\varepsilon} \sim \mathcal{N}(\mathbf{0}, \sigma^2 \mathbf{I})\)</span>, the OLS estimator is:</p>
+<p><span class="math display">\[\hat{\pmb{\beta}}_{\text{OLS}} = (\mathbf{X}^\top \mathbf{X})^{-} \mathbf{X}^\top \mathbf{y}\]</span></p>
 <p>where <span class="math inline">\((-)\)</span> denotes a generalised inverse. OLS is BLUE when errors are homoscedastic and uncorrelated (Gauss-Markov theorem).</p>
 </section><section class="level2" data-number="3"><h2 data-number="3" id="generalised-least-squares">
 <span class="header-section-number">3</span> Generalised Least Squares<a class="anchor" aria-label="anchor" href="#generalised-least-squares"></a>
 </h2>
-<p>When <span class="math inline">\(\text{Var}(\boldsymbol{\varepsilon}) = \sigma^2 \mathbf{V}\)</span> with <span class="math inline">\(\mathbf{V} \ne \mathbf{I}\)</span>, GLS applies:</p>
-<p><span class="math display">\[\hat{\boldsymbol{\beta}}_{\text{GLS}} = (\mathbf{X}^\top \mathbf{V}^{-1} \mathbf{X})^{-}
+<p>When <span class="math inline">\(\text{Var}(\pmb{\varepsilon}) = \sigma^2 \mathbf{V}\)</span> with <span class="math inline">\(\mathbf{V} \ne \mathbf{I}\)</span>, GLS applies:</p>
+<p><span class="math display">\[\hat{\pmb{\beta}}_{\text{GLS}} = (\mathbf{X}^\top \mathbf{V}^{-1} \mathbf{X})^{-}
 \mathbf{X}^\top \mathbf{V}^{-1} \mathbf{y}\]</span></p>
 <p>GLS is BLUE under the correctly specified <span class="math inline">\(\mathbf{V}\)</span>. In practice <span class="math inline">\(\mathbf{V}\)</span> is unknown and must be estimated, leading to the REML/ML estimation machinery of Chapter 5.</p>
 </section><section class="level2" data-number="4"><h2 data-number="4" id="best-linear-unbiased-estimators-blue">
 <span class="header-section-number">4</span> Best Linear Unbiased Estimators (BLUE)<a class="anchor" aria-label="anchor" href="#best-linear-unbiased-estimators-blue"></a>
 </h2>
-<p>An estimator <span class="math inline">\(\hat{\boldsymbol{\ell}} = \mathbf{c}^\top \hat{\boldsymbol{\beta}}\)</span> is BLUE for <span class="math inline">\(\boldsymbol{\ell} = \mathbf{c}^\top \boldsymbol{\beta}\)</span> if:</p>
+<p>An estimator <span class="math inline">\(\hat{\pmb{\ell}} = \mathbf{c}^\top \hat{\pmb{\beta}}\)</span> is BLUE for <span class="math inline">\(\pmb{\ell} = \mathbf{c}^\top \pmb{\beta}\)</span> if:</p>
 <ol type="1">
 <li>It is <strong>linear</strong> in <span class="math inline">\(\mathbf{y}\)</span>.</li>
-<li>It is <strong>unbiased</strong>: <span class="math inline">\(\mathsf{E}[\hat{\boldsymbol{\ell}}] = \boldsymbol{\ell}\)</span>.</li>
+<li>It is <strong>unbiased</strong>: <span class="math inline">\(\mathsf{E}[\hat{\pmb{\ell}}] = \pmb{\ell}\)</span>.</li>
 <li>It has <strong>minimum variance</strong> among all linear unbiased estimators.</li>
 </ol>
 <p>The GLS estimator achieves this under the correct <span class="math inline">\(\mathbf{V}\)</span>.</p>
 </section><section class="level2" data-number="5"><h2 data-number="5" id="estimable-functions">
 <span class="header-section-number">5</span> Estimable Functions<a class="anchor" aria-label="anchor" href="#estimable-functions"></a>
 </h2>
-<p>A linear combination <span class="math inline">\(\mathbf{c}^\top \boldsymbol{\beta}\)</span> is <strong>estimable</strong> if and only if <span class="math inline">\(\mathbf{c}^\top\)</span> lies in the row space of <span class="math inline">\(\mathbf{X}\)</span>, i.e., <span class="math inline">\(\mathbf{c}^\top = \mathbf{t}^\top \mathbf{X}\)</span> for some <span class="math inline">\(\mathbf{t}\)</span>.</p>
+<p>A linear combination <span class="math inline">\(\mathbf{c}^\top \pmb{\beta}\)</span> is <strong>estimable</strong> if and only if <span class="math inline">\(\mathbf{c}^\top\)</span> lies in the row space of <span class="math inline">\(\mathbf{X}\)</span>, i.e., <span class="math inline">\(\mathbf{c}^\top = \mathbf{t}^\top \mathbf{X}\)</span> for some <span class="math inline">\(\mathbf{t}\)</span>.</p>
 <p>Non-estimable combinations — arising from rank deficiency or aliased parameters — cannot be uniquely estimated regardless of the data, and any hypothesis test involving them is not meaningful. The <code>emmeans</code> package performs estimability checks automatically.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="downlit sourceCode r">
@@ -165,7 +156,7 @@ window.MathJax = {
 </h2>
 <p>Hypothesis tests in linear models rely on <strong>quadratic forms</strong> <span class="math inline">\(\mathbf{y}^\top \mathbf{A} \mathbf{y}\)</span>. Key results:</p>
 <ul>
-<li>If <span class="math inline">\(\mathbf{y} \sim \mathcal{N}(\boldsymbol{\mu}, \sigma^2 \mathbf{I})\)</span> and <span class="math inline">\(\mathbf{A}\)</span> is idempotent of rank <span class="math inline">\(r\)</span>, then <span class="math inline">\(\mathbf{y}^\top \mathbf{A} \mathbf{y} / \sigma^2 \sim \chi^2_r(\lambda)\)</span> with non-centrality <span class="math inline">\(\lambda = \boldsymbol{\mu}^\top \mathbf{A} \boldsymbol{\mu} / \sigma^2\)</span>.</li>
+<li>If <span class="math inline">\(\mathbf{y} \sim \mathcal{N}(\pmb{\mu}, \sigma^2 \mathbf{I})\)</span> and <span class="math inline">\(\mathbf{A}\)</span> is idempotent of rank <span class="math inline">\(r\)</span>, then <span class="math inline">\(\mathbf{y}^\top \mathbf{A} \mathbf{y} / \sigma^2 \sim \chi^2_r(\lambda)\)</span> with non-centrality <span class="math inline">\(\lambda = \pmb{\mu}^\top \mathbf{A} \pmb{\mu} / \sigma^2\)</span>.</li>
 <li>The F-statistic is a ratio of two chi-squared quadratic forms divided by their respective degrees of freedom.</li>
 </ul>
 <div class="cell">

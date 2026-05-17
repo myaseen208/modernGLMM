@@ -36,7 +36,7 @@ computing contrasts, and performing multiple comparisons in (G)LMMs.
 
 Key topics:
 
-- **Estimability**: not all linear combinations of $\boldsymbol{\beta}$ can be
+- **Estimability**: not all linear combinations of $\pmb{\beta}$ can be
   estimated; `emmeans` handles this transparently.
 - **Contrasts**: custom linear combinations via `emmeans::contrast()`.
 - **Multiple comparisons**: Tukey, Bonferroni, Scheffé, and FDR adjustments.

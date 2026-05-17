@@ -39,7 +39,7 @@ among $n_i$ trials.
 
 The canonical link for both is the **logit**:
 
-$$\eta_i = \text{logit}(p_i) = \log\frac{p_i}{1-p_i} = \mathbf{x}_i^\top\boldsymbol{\beta} + \mathbf{z}_i^\top\mathbf{b}$$
+$$\eta_i = \text{logit}(p_i) = \log\frac{p_i}{1-p_i} = \mathbf{x}_i^\top\pmb{\beta} + \mathbf{z}_i^\top\mathbf{b}$$
 
 with $\mathbf{b} \sim \mathcal{N}(\mathbf{0}, \mathbf{G})$.
 

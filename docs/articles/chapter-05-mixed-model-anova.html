@@ -21,15 +21,6 @@
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><script src="chapter-05-mixed-model-anova_files/libs/quarto-html/popper.min.js"></script><script src="chapter-05-mixed-model-anova_files/libs/quarto-html/tippy.umd.min.js"></script><link href="chapter-05-mixed-model-anova_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="chapter-05-mixed-model-anova_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Chapter 5: GLMM Estimation">
-<script>
-window.MathJax = {
-  tex: {
-    macros: {
-      boldsymbol: ["\\pmb{#1}", 1]
-    }
-  }
-};
-</script>
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -96,7 +87,7 @@ window.MathJax = {
       <h1>Chapter 5: GLMM Estimation</h1>
       <p class="subtitle">Exponential Family, ML, REML, and Quasi-Likelihood</p>
       <p class="author">Muhammad Yaseen</p>
-      <p class="date">2026-05-12</p>
+      <p class="date">2026-05-17</p>
 
       <small class="dont-index">Source: <a href="https://github.com/myaseen208/modernGLMM/blob/HEAD/vignettes/chapter-05-mixed-model-anova.qmd"><code>vignettes/chapter-05-mixed-model-anova.qmd</code></a></small>
       <div class="d-none name"><code></code></div>
@@ -189,19 +180,19 @@ window.MathJax = {
 </section><section class="level2" data-number="3"><h2 data-number="3" id="maximum-likelihood-estimation">
 <span class="header-section-number">3</span> Maximum Likelihood Estimation<a class="anchor" aria-label="anchor" href="#maximum-likelihood-estimation"></a>
 </h2>
-<p>The ML estimate maximises the log-likelihood <span class="math inline">\(\ell(\boldsymbol{\theta}; \mathbf{y})\)</span>. For a GLMM with fixed effects <span class="math inline">\(\boldsymbol{\beta}\)</span> and variance components <span class="math inline">\(\boldsymbol{\psi}\)</span>, the marginal log-likelihood integrates over the random effects <span class="math inline">\(\mathbf{b}\)</span>:</p>
-<p><span class="math display">\[\ell(\boldsymbol{\beta}, \boldsymbol{\psi}) = \log \int f(\mathbf{y}\mid\mathbf{b};\boldsymbol{\beta})\,
-p(\mathbf{b};\boldsymbol{\psi})\,d\mathbf{b}\]</span></p>
+<p>The ML estimate maximises the log-likelihood <span class="math inline">\(\ell(\pmb{\theta}; \mathbf{y})\)</span>. For a GLMM with fixed effects <span class="math inline">\(\pmb{\beta}\)</span> and variance components <span class="math inline">\(\pmb{\psi}\)</span>, the marginal log-likelihood integrates over the random effects <span class="math inline">\(\mathbf{b}\)</span>:</p>
+<p><span class="math display">\[\ell(\pmb{\beta}, \pmb{\psi}) = \log \int f(\mathbf{y}\mid\mathbf{b};\pmb{\beta})\,
+p(\mathbf{b};\pmb{\psi})\,d\mathbf{b}\]</span></p>
 <p>This integral is intractable in general and requires approximation (Laplace, AGHQ) or pseudo-likelihood methods.</p>
 </section><section class="level2" data-number="4"><h2 data-number="4" id="restricted-maximum-likelihood-reml">
 <span class="header-section-number">4</span> Restricted Maximum Likelihood (REML)<a class="anchor" aria-label="anchor" href="#restricted-maximum-likelihood-reml"></a>
 </h2>
-<p>REML removes the contribution of <span class="math inline">\(\boldsymbol{\beta}\)</span> from the likelihood before estimating <span class="math inline">\(\boldsymbol{\psi}\)</span>. For Gaussian LMMs this is equivalent to maximising:</p>
-<p><span class="math display">\[\ell_R(\boldsymbol{\psi}) = -\tfrac{1}{2}\log|\mathbf{V}|
+<p>REML removes the contribution of <span class="math inline">\(\pmb{\beta}\)</span> from the likelihood before estimating <span class="math inline">\(\pmb{\psi}\)</span>. For Gaussian LMMs this is equivalent to maximising:</p>
+<p><span class="math display">\[\ell_R(\pmb{\psi}) = -\tfrac{1}{2}\log|\mathbf{V}|
   -\tfrac{1}{2}\log|\mathbf{X}^\top\mathbf{V}^{-1}\mathbf{X}|
-  -\tfrac{1}{2}(\mathbf{y}-\mathbf{X}\hat{\boldsymbol{\beta}})^\top
-    \mathbf{V}^{-1}(\mathbf{y}-\mathbf{X}\hat{\boldsymbol{\beta}})\]</span></p>
-<p>REML produces <strong>less biased</strong> variance component estimates than ML because it accounts for the degrees of freedom used by <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span>. Use REML for final estimates; use ML when comparing models with different fixed effects via likelihood ratio tests.</p>
+  -\tfrac{1}{2}(\mathbf{y}-\mathbf{X}\hat{\pmb{\beta}})^\top
+    \mathbf{V}^{-1}(\mathbf{y}-\mathbf{X}\hat{\pmb{\beta}})\]</span></p>
+<p>REML produces <strong>less biased</strong> variance component estimates than ML because it accounts for the degrees of freedom used by <span class="math inline">\(\hat{\pmb{\beta}}\)</span>. Use REML for final estimates; use ML when comparing models with different fixed effects via likelihood ratio tests.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Illustration: ML vs REML variance component estimates</span></span>
@@ -232,21 +223,21 @@ Residual variance— ML: 1.6294  |  REML: 1.6294</code></pre>
 <span class="header-section-number">5</span> Newton-Raphson and Fisher Scoring<a class="anchor" aria-label="anchor" href="#newton-raphson-and-fisher-scoring"></a>
 </h2>
 <p>Both algorithms iterate:</p>
-<p><span class="math display">\[\boldsymbol{\theta}^{(t+1)} = \boldsymbol{\theta}^{(t)} +
-  \mathbf{H}^{-1}(\boldsymbol{\theta}^{(t)})\,
-  \mathbf{s}(\boldsymbol{\theta}^{(t)})\]</span></p>
-<p>where <span class="math inline">\(\mathbf{s} = \partial\ell/\partial\boldsymbol{\theta}\)</span> is the score and <span class="math inline">\(\mathbf{H}\)</span> is the negative Hessian. Fisher scoring replaces <span class="math inline">\(\mathbf{H}\)</span> with the <strong>expected information</strong> matrix, guaranteeing positive-definiteness and simplifying computation for GLMs.</p>
+<p><span class="math display">\[\pmb{\theta}^{(t+1)} = \pmb{\theta}^{(t)} +
+  \mathbf{H}^{-1}(\pmb{\theta}^{(t)})\,
+  \mathbf{s}(\pmb{\theta}^{(t)})\]</span></p>
+<p>where <span class="math inline">\(\mathbf{s} = \partial\ell/\partial\pmb{\theta}\)</span> is the score and <span class="math inline">\(\mathbf{H}\)</span> is the negative Hessian. Fisher scoring replaces <span class="math inline">\(\mathbf{H}\)</span> with the <strong>expected information</strong> matrix, guaranteeing positive-definiteness and simplifying computation for GLMs.</p>
 </section><section class="level2" data-number="6"><h2 data-number="6" id="quasi-likelihood">
 <span class="header-section-number">6</span> Quasi-Likelihood<a class="anchor" aria-label="anchor" href="#quasi-likelihood"></a>
 </h2>
 <p>When the full likelihood is unknown or intractable, <strong>quasi-likelihood</strong> uses only the mean-variance relationship <span class="math inline">\(V(\mu)\)</span> to construct estimating equations identical in form to the score equations:</p>
-<p><span class="math display">\[U(\boldsymbol{\beta}) = \mathbf{D}^\top \mathbf{V}^{-1}(\mathbf{y} - \boldsymbol{\mu}) = \mathbf{0}\]</span></p>
-<p>Quasi-likelihood estimates of <span class="math inline">\(\boldsymbol{\beta}\)</span> are consistent and asymptotically normal under weak moment assumptions. The dispersion parameter <span class="math inline">\(\phi\)</span> is estimated by the Pearson statistic divided by residual degrees of freedom.</p>
+<p><span class="math display">\[U(\pmb{\beta}) = \mathbf{D}^\top \mathbf{V}^{-1}(\mathbf{y} - \pmb{\mu}) = \mathbf{0}\]</span></p>
+<p>Quasi-likelihood estimates of <span class="math inline">\(\pmb{\beta}\)</span> are consistent and asymptotically normal under weak moment assumptions. The dispersion parameter <span class="math inline">\(\phi\)</span> is estimated by the Pearson statistic divided by residual degrees of freedom.</p>
 </section><section class="level2" data-number="7"><h2 data-number="7" id="laplace-approximation">
 <span class="header-section-number">7</span> Laplace Approximation<a class="anchor" aria-label="anchor" href="#laplace-approximation"></a>
 </h2>
 <p>For non-Gaussian GLMMs, the marginal likelihood is approximated at the mode <span class="math inline">\(\hat{\mathbf{b}}\)</span> of the integrand:</p>
-<p><span class="math display">\[\ell(\boldsymbol{\beta},\boldsymbol{\psi}) \approx \ell(\boldsymbol{\beta}, \hat{\mathbf{b}}, \boldsymbol{\psi})
+<p><span class="math display">\[\ell(\pmb{\beta},\pmb{\psi}) \approx \ell(\pmb{\beta}, \hat{\mathbf{b}}, \pmb{\psi})
   - \tfrac{1}{2}\log\left|{\mathbf{H}_{\hat{\mathbf{b}}}}\right| + \text{const}\]</span></p>
 <p>Laplace is exact for Gaussian random effects when the conditional distribution is also Gaussian (i.e., the Gaussian LMM). For other GLMMs it introduces <span class="math inline">\(O(n^{-1})\)</span> approximation error. Adaptive Gauss-Hermite quadrature (AGHQ) achieves higher accuracy at greater computational cost.</p>
 </section><section class="level2" data-number="8"><h2 data-number="8" id="key-takeaways">

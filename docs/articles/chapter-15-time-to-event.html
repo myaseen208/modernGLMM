@@ -21,15 +21,6 @@
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><script src="chapter-15-time-to-event_files/libs/quarto-html/popper.min.js"></script><script src="chapter-15-time-to-event_files/libs/quarto-html/tippy.umd.min.js"></script><link href="chapter-15-time-to-event_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="chapter-15-time-to-event_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Chapter 15: Time-to-Event Data">
-<script>
-window.MathJax = {
-  tex: {
-    macros: {
-      boldsymbol: ["\\pmb{#1}", 1]
-    }
-  }
-};
-</script>
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -125,12 +116,12 @@ window.MathJax = {
 <strong>Hazard function</strong>: <span class="math inline">\(h(t) = \lim_{\Delta t \to 0} P(t \le T &lt; t + \Delta t \mid T \ge t) / \Delta t\)</span>
 </li>
 <li>
-<strong>Cox PH model</strong>: <span class="math inline">\(h(t \mid \mathbf{x}) = h_0(t) \exp(\mathbf{x}^\top\boldsymbol{\beta})\)</span>
+<strong>Cox PH model</strong>: <span class="math inline">\(h(t \mid \mathbf{x}) = h_0(t) \exp(\mathbf{x}^\top\pmb{\beta})\)</span>
 </li>
 <li>
 <strong>Frailty model</strong>: adds a random effect <span class="math inline">\(u_i\)</span> on the log hazard scale</li>
 </ul>
-<p><span class="math display">\[h(t \mid \mathbf{x}_i, u_i) = h_0(t) \exp(\mathbf{x}_i^\top\boldsymbol{\beta} + u_i), \quad u_i \sim \mathcal{N}(0, \sigma^2)\]</span></p>
+<p><span class="math display">\[h(t \mid \mathbf{x}_i, u_i) = h_0(t) \exp(\mathbf{x}_i^\top\pmb{\beta} + u_i), \quad u_i \sim \mathcal{N}(0, \sigma^2)\]</span></p>
 </section><section class="level2" data-number="2"><h2 data-number="2" id="kaplan-meier-curves">
 <span class="header-section-number">2</span> Kaplan-Meier Curves<a class="anchor" aria-label="anchor" href="#kaplan-meier-curves"></a>
 </h2>
