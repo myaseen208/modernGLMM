@@ -95,11 +95,12 @@ if (requireNamespace("brms", quietly = TRUE)) {
 ```{r}
 if (requireNamespace("brms", quietly = TRUE)) {
   data(DataSet12.2)
-  DataSet12.2$a <- factor(DataSet12.2$a)
-  DataSet12.2$b <- factor(DataSet12.2$b)
+  DataSet12.2$a     <- factor(DataSet12.2$a)
+  DataSet12.2$b     <- factor(DataSet12.2$b)
+  DataSet12.2$block <- factor(DataSet12.2$block)
 
   fit20.3 <- brms::brm(
-    count | trials(total) ~ a * b + (1 | rep),
+    f | trials(n) ~ a * b + (1 | block),
     data   = DataSet12.2,
     family = binomial(),
     prior  = brms::prior(normal(0, 5), class = b) +
@@ -116,12 +117,13 @@ if (requireNamespace("brms", quietly = TRUE)) {
 ```{r}
 if (requireNamespace("brms", quietly = TRUE)) {
   data(DataSet14.1)
-  DataSet14.1$trt   <- factor(DataSet14.1$trt)
-  DataSet14.1$block <- factor(DataSet14.1$block)
-  DataSet14.1$score <- ordered(DataSet14.1$score)
+  DataSet14.1$trt    <- factor(DataSet14.1$trt)
+  DataSet14.1$blk    <- factor(DataSet14.1$blk)
+  DataSet14.1$rating <- ordered(DataSet14.1$rating,
+                                levels = c("slight", "modrat", "severe"))
 
   fit20.4 <- brms::brm(
-    score ~ trt + (1 | block),
+    rating ~ trt + (1 | blk),
     data   = DataSet14.1,
     family = brms::cumulative("probit"),
     prior  = brms::prior(normal(0, 5), class = b) +
@@ -138,12 +140,12 @@ if (requireNamespace("brms", quietly = TRUE)) {
 ```{r}
 if (requireNamespace("brms", quietly = TRUE)) {
   data(DataSet17.1)
-  DataSet17.1$subject <- factor(DataSet17.1$subject)
-  DataSet17.1$trt     <- factor(DataSet17.1$trt)
-  DataSet17.1$time    <- factor(DataSet17.1$time)
+  DataSet17.1$id  <- factor(DataSet17.1$id)
+  DataSet17.1$trt <- factor(DataSet17.1$trt)
+  DataSet17.1$t   <- factor(DataSet17.1$t)
 
   fit20.5 <- brms::brm(
-    y ~ trt * time + (1 | subject),
+    y ~ trt * t + (1 | id),
     data   = DataSet17.1,
     prior  = brms::prior(normal(0, 10), class = b) +
              brms::prior(cauchy(0, 5), class = sd) +
@@ -152,7 +154,7 @@ if (requireNamespace("brms", quietly = TRUE)) {
     silent = 2
   )
   summary(fit20.5)
-  emmeans::emmeans(fit20.5, ~ trt | time)
+  emmeans::emmeans(fit20.5, ~ trt | t)
 }
 ```
 

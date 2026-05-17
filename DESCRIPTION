@@ -19,7 +19,6 @@ Authors@R: c(
            email = "ptukhim@whitman.edu",
            role  = c("aut", "ctb")),
     person("Soumit", "Garai",
-           email = "wstroup@unl.edu",
            role  = c("aut", "ctb"))
   )
 Maintainer: Muhammad Yaseen <myaseen208@gmail.com>
